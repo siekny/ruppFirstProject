@@ -82,7 +82,7 @@ public class CreateAccount extends JPanel {
 		//panel_4.setPreferredSize(new Dimension(100, 30));
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\user_1.png"));
+		lblNewLabel_4.setIcon(new ImageIcon("images/user_1.png"));
 		panel_4.add(lblNewLabel_4, BorderLayout.NORTH);
 		//lblNewLabel_4.setPreferredSize(new Dimension(100, 50));
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);

@@ -63,7 +63,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnProfile);
 		
 		btnHome = new JButton("");
-		btnHome.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\home.png"));
+		btnHome.setIcon(new ImageIcon("images/home.png"));
 		btnHome.setBackground(new Color(34,45,50));
 		btnHome.setFocusPainted(false);
 		btnHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -74,7 +74,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnHome);
 		
 		btnUser = new JButton("");
-		btnUser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\users.png"));
+		btnUser.setIcon(new ImageIcon("images/users.png"));
 		btnUser.setFocusPainted(false);
 		btnUser.setBorderPainted(false);
 		btnUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -85,7 +85,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnUser);
 		
 		btnTable = new JButton("");
-		btnTable.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\table.png"));
+		btnTable.setIcon(new ImageIcon("images/table.png"));
 		btnTable.setBorderPainted(false);
 		btnTable.setFocusPainted(false);
 		btnTable.setBackground(new Color(34,45,50));
@@ -96,7 +96,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnTable);
 		
 		btnFood = new JButton("");
-		btnFood.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\food.png"));
+		btnFood.setIcon(new ImageIcon("images/food.png"));
 		btnFood.setFocusPainted(false);
 		btnFood.setBorderPainted(false);
 		btnFood.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -107,7 +107,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnFood);
 		
 		btnBooking = new JButton("");
-		btnBooking.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\booking.png"));
+		btnBooking.setIcon(new ImageIcon("images/booking.png"));
 		btnBooking.setBorderPainted(false);
 		btnBooking.setFocusPainted(false);
 		btnBooking.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -118,7 +118,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnBooking);
 		
 		btnHistory = new JButton("");
-		btnHistory.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\history.png"));
+		btnHistory.setIcon(new ImageIcon("images/history.png"));
 		btnHistory.setFocusPainted(false);
 		btnHistory.setBorderPainted(false);
 		btnHistory.setBackground(new Color(34,45,50));
@@ -129,7 +129,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnHistory);
 		
 		btnLogout = new JButton("");
-		btnLogout.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\logout.png"));
+		btnLogout.setIcon(new ImageIcon("images/logout.png"));
 		btnLogout.setBorderPainted(false);
 		btnLogout.setFocusPainted(false);
 		btnLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -140,7 +140,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.add(btnLogout);
 		
 		btnClose = new JButton("");
-		btnClose.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\close.png"));
+		btnClose.setIcon(new ImageIcon("images/close.png"));
 		btnClose.setFocusPainted(false);
 		btnClose.setBorderPainted(false);
 		btnClose.setBackground(new Color(34,45,50));
@@ -174,7 +174,7 @@ public class MainPage extends JPanel implements ActionListener{
 		btnBar.setContentAreaFilled(false);
 		btnBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBar.setBorderPainted(false);
-		btnBar.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppFirstProject\\images\\menu.png"));
+		btnBar.setIcon(new ImageIcon("images/menu.png"));
 		panelInner1_1.add(btnBar);
 		
 		JPanel panelInner1_2 = new JPanel();

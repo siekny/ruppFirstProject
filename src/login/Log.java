@@ -71,7 +71,7 @@ public class Log extends JPanel {
 		panel_1.add(panel_2);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\user.png"));
+		label.setIcon(new ImageIcon("images/user.png"));
 		panel_2.add(label);
 		
 		JPanel panel_3 = new JPanel();
