@@ -180,6 +180,7 @@ public class Log extends JPanel {
 		panel_7.add(panelButton);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setFocusPainted(false);
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLogin.setBackground(new Color(0, 102, 204));
 		btnLogin.setForeground(new Color(255, 255, 255));
