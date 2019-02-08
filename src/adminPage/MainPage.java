@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
 
+
 public class MainPage extends JPanel implements ActionListener{
 
 	/**
@@ -303,6 +304,7 @@ public class MainPage extends JPanel implements ActionListener{
 	}
 	public void foodButton() {
 		lblTitle.setText("  FOOD");
+		panelContent.add(food);
 		enableContent(false, true, false, false, false, false, false);
 		buttonClick(btnFood, btnLogout, btnProfile, btnHome, btnUser, btnTable, btnBooking, btnHistory, btnClose);
 	}

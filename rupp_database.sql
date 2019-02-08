@@ -16,6 +16,26 @@
 CREATE DATABASE IF NOT EXISTS `rupp_database` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `rupp_database`;
 
+-- Dumping structure for table rupp_database.food
+CREATE TABLE IF NOT EXISTS `food` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `foodID` varchar(50) DEFAULT '0',
+  `name` varchar(50) DEFAULT '0',
+  `price` double DEFAULT '0',
+  `category` varchar(50) DEFAULT '0',
+  `image` varchar(255) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table rupp_database.food: ~3 rows (approximately)
+DELETE FROM `food`;
+/*!40000 ALTER TABLE `food` DISABLE KEYS */;
+INSERT INTO `food` (`id`, `foodID`, `name`, `price`, `category`, `image`) VALUES
+	(14, '001', 'Yummy Food', 21.34, 'Food', '2019_Feb_08_08_19_581.jpg'),
+	(16, '002', 'Coca cola', 0.8, 'Drink', '2019_Feb_08_10_11_532.jpg'),
+	(17, '003', 'Khmer Food', 12.45, 'Food', '2019_Feb_08_09_42_481.jpg');
+/*!40000 ALTER TABLE `food` ENABLE KEYS */;
+
 -- Dumping structure for table rupp_database.tables
 CREATE TABLE IF NOT EXISTS `tables` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `tables` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Dumping data for table rupp_database.tables: ~4 rows (approximately)
+-- Dumping data for table rupp_database.tables: ~2 rows (approximately)
 DELETE FROM `tables`;
 /*!40000 ALTER TABLE `tables` DISABLE KEYS */;
 INSERT INTO `tables` (`id`, `tableID`, `numSeats`, `status`, `createdBy`, `createdAt`) VALUES
-	(18, '005', 2, 1, 'Siekny', 'Feb 03, 2019'),
+	(18, '0005', 2, 1, 'Siekny', 'Feb 03, 2019'),
 	(21, '0009', 8, 1, 'Siekny', 'Feb 05, 2019');
 /*!40000 ALTER TABLE `tables` ENABLE KEYS */;
 
