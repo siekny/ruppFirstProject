@@ -49,14 +49,14 @@ public class Book extends JPanel {
 		JButton[] btnBook = new JButton[size];
 		for(int i=0; i<size; i++) {
 			panelBook[i] = new JPanel();
-			btnBook[i] = new JButton("Book" +i);
+			btnBook[i] = new JButton("Book" + i + "     " + "( " + i + " )");
 			
 			btnBook[i].setFont(new Font("Tahoma", Font.PLAIN, 15));
 			panelBook[i].add(btnBook[i]);
 			btnBook[i].setFocusPainted(false);
 			btnBook[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnBook[i].setBackground(Color.WHITE);
-			btnBook[i].setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\image_1.png"));
+			btnBook[i].setIcon(new ImageIcon("images/image_1.png"));
 			btnBook[i].setHorizontalTextPosition(JButton.CENTER);
 			btnBook[i].setVerticalTextPosition(JButton.BOTTOM);
 			
