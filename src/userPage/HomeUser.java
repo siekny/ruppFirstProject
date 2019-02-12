@@ -38,7 +38,7 @@ public class HomeUser extends JPanel {
 		panelTop.add(panelBook);
 		panelBook.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnBooksManagement = new JButton("          Books Management          ");
+		JButton btnBooksManagement = new JButton("          Book Management          ");
 		btnBooksManagement.setForeground(Color.WHITE);
 		btnBooksManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnBooksManagement.setFocusPainted(false);
@@ -98,7 +98,7 @@ public class HomeUser extends JPanel {
 		panelTop.add(panelUser);
 		panelUser.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnUsersManagement = new JButton("          Users Management          ");
+		JButton btnUsersManagement = new JButton("          User Management          ");
 		btnUsersManagement.setForeground(Color.WHITE);
 		btnUsersManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnUsersManagement.setFocusPainted(false);

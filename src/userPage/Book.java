@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 public class Book extends JPanel {
 
@@ -39,15 +40,32 @@ public class Book extends JPanel {
 		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panelContent.add(panel, BorderLayout.CENTER);
-
+		
+		JPanel panelTop = new JPanel();
+		panelTop.setBackground(new Color(255, 255, 255));
+		panelContent.add(panelTop, BorderLayout.NORTH);
+		
+		JButton btnList = new JButton("List");
+		panelTop.add(btnList);
+		
+		JButton btnGrid = new JButton("Grid");
+		panelTop.add(btnGrid);
+		
+		
 		
 	}
 
 	public void initObjects () {
-		int size = 5;
+		
+		int size = 20;
+		
+		panel.setLayout(new GridLayout(size/6+1, 6, 0, 0));
+		
 		JPanel[] panelBook = new JPanel[size];
 		JButton[] btnBook = new JButton[size];
+		
 		for(int i=0; i<size; i++) {
+			
 			panelBook[i] = new JPanel();
 			btnBook[i] = new JButton("Book" + i + "     " + "( " + i + " )");
 			
