@@ -83,14 +83,14 @@ public class Log extends JPanel {
 		panel_3.add(panel_4);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("               Restaurant Users Login              ");
+		JLabel lblNewLabel = new JLabel("               Library Users Login              ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Restaurant Users Provide Login Access");
+		JLabel lblNewLabel_1 = new JLabel("Library Users Provide Login Access");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblNewLabel_1);
@@ -191,7 +191,7 @@ public class Log extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Main.enableContent(false, false, true);
+				Main.enableContent(false, false, true, false);
 				content.add(Main.mainPage);
 			}
 		});
@@ -206,7 +206,7 @@ public class Log extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				Main.enableContent(false, true, false);
+				Main.enableContent(false, true, false, false);
 				content.add(Main.createAccount);
 		        
 				

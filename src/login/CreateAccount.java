@@ -149,8 +149,12 @@ public class CreateAccount extends JPanel {
 		lblOrLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				content.add(Main.log);
-				Main.enableContent(true, false, false);
+				try {
+					content.add(Main.log);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				Main.enableContent(true, false, false, false);
 			}
 		});
 		lblOrLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -177,12 +181,15 @@ public class CreateAccount extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content.add(Main.log);
-				Main.enableContent(true, false, false);
+				try {
+					content.add(Main.homePage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Main.enableContent(false, false, false, true);
 			}
 		});
-		
-		//int a = JOptionPane.showOptionDialog(null, contentPane,"Create an Account of user", JOptionPane.CLOSED_OPTION,JOptionPane.CLOSED_OPTION, null, new Object[]{}, null);
 		
 	}
 

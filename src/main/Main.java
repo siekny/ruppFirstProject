@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import adminPage.MainPage;
 import login.*;
+import userPage.HomePage;
 
 public class Main extends JFrame {
 
@@ -14,13 +15,14 @@ public class Main extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	public JPanel contentPane;
 	public static JPanel content;
 	
 	// initialize objects
 	public static Log log;
 	public static CreateAccount createAccount;
 	public static MainPage mainPage;
+	public static HomePage homePage;
 
 	/**
 	 * Launch the application.
@@ -54,17 +56,17 @@ public class Main extends JFrame {
 	public void initialize () {
 		setTitle("Restaurant Management System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 685, 433);
+		setBounds(100, 100, 885, 633);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(236,240,245));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		content = new JPanel();
-		//contentPane.add(content, BorderLayout.CENTER);
+		contentPane.add(content, BorderLayout.CENTER);
 		content.setLayout(new BorderLayout(0, 0));
-		JScrollPane scroll = new JScrollPane(content);
-		contentPane.add(scroll, BorderLayout.CENTER);
+		//JScrollPane scroll = new JScrollPane(content);
+		//contentPane.add(scroll, BorderLayout.CENTER);
 	}
 	
 	public void initObjects () {
@@ -73,16 +75,18 @@ public class Main extends JFrame {
 		log = new Log(content);
 		createAccount = new CreateAccount(content);
 		mainPage = new MainPage (content);
+		homePage = new HomePage(content);
 		
 		content.add(log);
-		enableContent(true, false, false);
+		enableContent(true, false, false, false);
 		
 	}
 	
-	public static void enableContent(boolean selectLogin, boolean selectCreateAcc, boolean selectAdminPage) {
+	public static void enableContent(boolean selectLogin, boolean selectCreateAcc, boolean selectAdminPage, boolean selectHomePage) {
 		log.setVisible(selectLogin);
 		createAccount.setVisible(selectCreateAcc);
 		mainPage.setVisible(selectAdminPage);
+		homePage.setVisible(selectHomePage);
 		
 	}
 	

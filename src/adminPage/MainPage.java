@@ -29,18 +29,17 @@ public class MainPage extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton btnRestaurant, btnHome, btnProfile, btnUser, btnTable, btnFood, btnBooking, btnHistory, btnBar, btnClose, btnLogout;
+	private JButton btnLibrary, btnHome, btnProfile, btnUser, btnBook, btnHistory, btnBar, btnClose, btnLogout;
 	public JPanel content;
 	private JLabel lblTitle;
 	private JPanel panelContent;
 	
 	// initialize objects
-	private Users users;
-	private Booking booking;
-	private Food food;
-	private History history;
+	private Members member;
+	private Borrow booking;
+	private UserLoginHistory history;
 	private Profile profile;
-	private Table table;
+	private Books table;
 	private Home home;
 
 	/**
@@ -67,20 +66,15 @@ public class MainPage extends JPanel implements ActionListener{
 		panelSide1.setLayout(new GridLayout(12, 1, 0, 0));
 		panelSide1.setBackground(new Color(34,45,50));
 		
-		btnRestaurant = new JButton("RMS");
-		btnRestaurant.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRestaurant.setContentAreaFilled(false);
-		btnRestaurant.setFocusPainted(false);
-		btnRestaurant.setBorderPainted(false);
-		btnRestaurant.setForeground(new Color(255, 255, 255));
-		btnRestaurant.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		panelSide1.add(btnRestaurant);
-		
-		btnProfile = new JButton("");
-		btnProfile.setContentAreaFilled(false);
-		btnProfile.setBorderPainted(false);
-		btnProfile.setFocusPainted(false);
-		panelSide1.add(btnProfile);
+		btnLibrary = new JButton("LMS");
+		btnLibrary.setContentAreaFilled(false);
+		btnLibrary.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLibrary.setFocusPainted(false);
+		btnLibrary.setBorderPainted(false);
+		btnLibrary.setForeground(new Color(255, 255, 255));
+		btnLibrary.setBackground(new Color(54, 127, 169));
+		btnLibrary.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		panelSide1.add(btnLibrary);
 		
 		btnHome = new JButton("");
 		btnHome.setBorderPainted(false);
@@ -93,6 +87,29 @@ public class MainPage extends JPanel implements ActionListener{
 		btnHome.setForeground(new Color(255, 255, 255));
 		panelSide1.add(btnHome);
 		
+		btnProfile = new JButton("");
+		btnProfile.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnProfile.setHorizontalAlignment(SwingConstants.LEFT);
+		btnProfile.setForeground(new Color(255, 255, 255));
+		btnProfile.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnProfile.setBackground(new Color(34, 45, 50));
+		btnProfile.setIcon(new ImageIcon("images/profile.png"));
+		btnProfile.setBorderPainted(false);
+		btnProfile.setFocusPainted(false);
+		panelSide1.add(btnProfile);
+		btnProfile.addActionListener(this);
+		
+		btnBook = new JButton("");
+		btnBook.setIcon(new ImageIcon("images/book.png"));
+		btnBook.setBorderPainted(false);
+		btnBook.setFocusPainted(false);
+		btnBook.setBackground(new Color(34,45,50));
+		btnBook.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnBook.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBook.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBook.setForeground(new Color(255, 255, 255));
+		panelSide1.add(btnBook);
+		
 		btnUser = new JButton("");
 		btnUser.setIcon(new ImageIcon("images/users.png"));
 		btnUser.setFocusPainted(false);
@@ -103,39 +120,7 @@ public class MainPage extends JPanel implements ActionListener{
 		btnUser.setForeground(new Color(255, 255, 255));
 		btnUser.setHorizontalAlignment(SwingConstants.LEFT);
 		panelSide1.add(btnUser);
-		
-		btnTable = new JButton("");
-		btnTable.setIcon(new ImageIcon("images/table.png"));
-		btnTable.setBorderPainted(false);
-		btnTable.setFocusPainted(false);
-		btnTable.setBackground(new Color(34,45,50));
-		btnTable.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTable.setHorizontalAlignment(SwingConstants.LEFT);
-		btnTable.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnTable.setForeground(new Color(255, 255, 255));
-		panelSide1.add(btnTable);
-		
-		btnFood = new JButton("");
-		btnFood.setIcon(new ImageIcon("images/food.png"));
-		btnFood.setFocusPainted(false);
-		btnFood.setBorderPainted(false);
-		btnFood.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnFood.setBackground(new Color(34,45,50));
-		btnFood.setHorizontalAlignment(SwingConstants.LEFT);
-		btnFood.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnFood.setForeground(new Color(255, 255, 255));
-		panelSide1.add(btnFood);
-		
-		btnBooking = new JButton("");
-		btnBooking.setIcon(new ImageIcon("images/booking.png"));
-		btnBooking.setBorderPainted(false);
-		btnBooking.setFocusPainted(false);
-		btnBooking.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBooking.setBackground(new Color(34,45,50));
-		btnBooking.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBooking.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnBooking.setForeground(new Color(255, 255, 255));
-		panelSide1.add(btnBooking);
+		btnUser.addActionListener(this);
 		
 		btnHistory = new JButton("");
 		btnHistory.setIcon(new ImageIcon("images/history.png"));
@@ -202,7 +187,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelInn1.add(panelInner1_2, BorderLayout.CENTER);
 		panelInner1_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel = new JLabel("   Restaurant Management System");
+		JLabel lblNewLabel = new JLabel("   Library Management System");
 		lblNewLabel.setFont(new Font("Hobo Std", Font.PLAIN, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -230,25 +215,24 @@ public class MainPage extends JPanel implements ActionListener{
 		
 		btnLogout.addActionListener(this);
 		btnClose.addActionListener(this);
-		btnProfile.addActionListener(this);
 		btnHome.addActionListener(this);
-		btnUser.addActionListener(this);
-		btnTable.addActionListener(this);
-		btnFood.addActionListener(this);
-		btnBooking.addActionListener(this);
+		btnBook.addActionListener(this);
 		btnHistory.addActionListener(this);
 		btnBar.addActionListener(this);
+		
+		
 
 	}
 	
 	public void initObjects () {
-		users = new Users();
-		booking = new Booking();
-		food = new Food();
-		history = new History();
+		member = new Members();
+		booking = new Borrow();
+		history = new UserLoginHistory();
 		profile = new Profile();
-		table = new Table();
+		table = new Books();
 		home = new Home();
+		
+		homeButton();
 	}
 
 	@Override
@@ -259,13 +243,9 @@ public class MainPage extends JPanel implements ActionListener{
 		else if(e.getSource() == btnHome)
 			homeButton();
 		else if(e.getSource() == btnUser)
-			userButton();
-		else if(e.getSource() == btnTable)
-			tableButton();
-		else if(e.getSource() == btnFood)
-			foodButton();
-		else if(e.getSource() == btnBooking)
-			bookingButton();
+			memberButton();
+		else if(e.getSource() == btnBook)
+			bookButton();
 		else if(e.getSource() == btnHistory)
 			historyButton();
 		else if(e.getSource() == btnLogout)
@@ -279,75 +259,62 @@ public class MainPage extends JPanel implements ActionListener{
 
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
+		panelContent.add(profile);
 		enableContent(false, false, false, false, true, false, false);
-		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnTable, btnFood, btnBooking, btnHistory, btnClose);
+		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnBook, btnHistory, btnClose);
 	}
 	
 	public void homeButton() {
-		lblTitle.setText("  HOME");
+		lblTitle.setText("  DASHBAORD");
+		panelContent.add(home);
 		enableContent(false, false, false, true, false, false, false);
-		buttonClick(btnHome, btnLogout, btnProfile, btnUser, btnTable, btnFood, btnBooking, btnHistory, btnClose);
+		buttonClick(btnHome, btnLogout, btnProfile, btnUser, btnBook, btnHistory, btnClose);
 	}
 	
-	public void userButton() {
-		lblTitle.setText("  USERS");
-		panelContent.add(users);
+	public void memberButton() {
+		lblTitle.setText("  MEMBERS");
+		panelContent.add(member);
 		enableContent(false, false, false, false, false, false, true);
-		buttonClick(btnUser, btnHome, btnLogout, btnProfile, btnTable, btnFood, btnBooking, btnHistory, btnClose);
+		buttonClick(btnUser, btnHome, btnLogout, btnProfile, btnBook, btnHistory, btnClose);
 	}
 	
-	public void tableButton() {
-		lblTitle.setText("  TABLES");
+	public void bookButton() {
+		lblTitle.setText("  BOOKS");
 		panelContent.add(table);
 		enableContent(false, false, false, false, false, true, false);
-		buttonClick(btnTable, btnLogout, btnProfile, btnHome, btnUser, btnFood, btnBooking, btnHistory, btnClose);
-	}
-	public void foodButton() {
-		lblTitle.setText("  FOOD");
-		panelContent.add(food);
-		enableContent(false, true, false, false, false, false, false);
-		buttonClick(btnFood, btnLogout, btnProfile, btnHome, btnUser, btnTable, btnBooking, btnHistory, btnClose);
-	}
-	
-	public void bookingButton() {
-		lblTitle.setText("  USER BOOKINGS");
-		enableContent(true, false, false, false, false, false, false);
-		buttonClick(btnBooking, btnLogout, btnProfile, btnHome, btnUser, btnTable, btnFood, btnHistory, btnClose);
+		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnUser, btnHistory, btnClose);
 	}
 	
 	public void historyButton() {
-		lblTitle.setText("  HISTORY OF BOOKING");
+		lblTitle.setText("  HISTORY OF USER LOGIN");
+		panelContent.add(history);
 		enableContent(false, false, true, false, false, false, false);
-		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnTable, btnFood, btnBooking, btnClose);
+		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);
 	}
 	
 	public void logoutButton() {
 		lblTitle.setText("  USER LOGOUT");
 		Main.content.add(Main.log);
-		buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnTable, btnFood, btnBooking, btnHistory, btnClose);
-    	Main.enableContent(true, false, false);
+		buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);
+    	Main.enableContent(true, false, false, false);
 	}
 	
 	public void barButton() {
-		if(btnRestaurant.getText() == "RMS") {
-			btnRestaurant.setText("Restaurant");
+		if(btnLibrary.getText() == "LMS") {
+			btnLibrary.setText("Library MGT");
 			btnProfile.setText("   My Profile");
-			btnHome.setText("   Home");
-			btnUser.setText("   List of Users");
-			btnTable.setText("   List of Tables");
-			btnFood.setText("   List of Food");
-			btnBooking.setText("   User Bookings");
-			btnHistory.setText("   History of Booking         ");
+			btnHome.setText("   Dashboard");
+			btnUser.setText("   List of Members");
+			btnBook.setText("   List of Books");
+			btnHistory.setText("   History of User login         ");
 			btnLogout.setText("   User Logout");
 			btnClose.setText("   Close Program");
 		}else {
-			btnRestaurant.setText("RMS");
+			btnLibrary.setText("LMS");
 			btnProfile.setText("");
 			btnHome.setText("");
 			btnUser.setText("");
-			btnTable.setText("");
-			btnFood.setText("");
-			btnBooking.setText("");
+			btnBook.setText("");
 			btnHistory.setText("");
 			btnLogout.setText("");
 			btnClose.setText("");
@@ -355,7 +322,7 @@ public class MainPage extends JPanel implements ActionListener{
 	}
 	
 	
-	public void buttonClick(JButton btnClick, JButton btnNonClick1, JButton btnNonClick2, JButton btnNonClick3, JButton btnNonClick4, JButton btnNonClick5, JButton btnNonClick6, JButton btnNonClick7, JButton btnNonClick8) {
+	public void buttonClick(JButton btnClick, JButton btnNonClick1, JButton btnNonClick2, JButton btnNonClick3, JButton btnNonClick4, JButton btnNonClick5, JButton btnNonClick6) {
 		btnClick.setBackground(new Color(30, 40, 44));
 		btnNonClick1.setBackground(new Color(34,45,50));
 		btnNonClick2.setBackground(new Color(34,45,50));
@@ -363,18 +330,15 @@ public class MainPage extends JPanel implements ActionListener{
 		btnNonClick4.setBackground(new Color(34,45,50));
 		btnNonClick5.setBackground(new Color(34,45,50));
 		btnNonClick6.setBackground(new Color(34,45,50));
-		btnNonClick7.setBackground(new Color(34,45,50));
-		btnNonClick8.setBackground(new Color(34,45,50));
 	}
 	
 	public void enableContent(boolean isBooking, boolean isFood, boolean isHistory, boolean isHome, boolean isProfile, boolean isTable, boolean isUsers) {
 		booking.setVisible(isBooking);
-		food.setVisible(isFood);
 		history.setVisible(isHistory);
 		home.setVisible(isHome);
 		profile.setVisible(isProfile);
 		table.setVisible(isTable);
-		users.setVisible(isUsers);
+		member.setVisible(isUsers);
 		
 	}
 }
