@@ -91,14 +91,14 @@ public class HomePage extends JPanel implements ActionListener{
 		btnProfile.setForeground(new Color(255, 255, 255));
 		btnProfile.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnProfile.setBackground(new Color(34, 45, 50));
-		btnProfile.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\profile.png"));
+		btnProfile.setIcon(new ImageIcon("images/profile.png"));
 		btnProfile.setBorderPainted(false);
 		btnProfile.setFocusPainted(false);
 		panelSide1.add(btnProfile);
 		btnProfile.addActionListener(this);
 		
 		btnBook = new JButton("");
-		btnBook.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\book.png"));
+		btnBook.setIcon(new ImageIcon("images/book.png"));
 		btnBook.setBorderPainted(false);
 		btnBook.setFocusPainted(false);
 		btnBook.setBackground(new Color(34,45,50));
@@ -109,7 +109,7 @@ public class HomePage extends JPanel implements ActionListener{
 		panelSide1.add(btnBook);
 		
 		btnBorrow = new JButton("");
-		btnBorrow.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\users.png"));
+		btnBorrow.setIcon(new ImageIcon("images/users.png"));
 		btnBorrow.setFocusPainted(false);
 		btnBorrow.setBorderPainted(false);
 		btnBorrow.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -121,7 +121,7 @@ public class HomePage extends JPanel implements ActionListener{
 		btnBorrow.addActionListener(this);
 		
 		btnLogout = new JButton("");
-		btnLogout.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\logout.png"));
+		btnLogout.setIcon(new ImageIcon("images/logout.png"));
 		btnLogout.setBorderPainted(false);
 		btnLogout.setFocusPainted(false);
 		btnLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
