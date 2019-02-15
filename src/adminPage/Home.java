@@ -20,7 +20,7 @@ public class Home extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton btnCountBook;
+	private JButton btnCountBook, btnCountUser;
 
 	/**
 	 * Create the panel.
@@ -94,13 +94,13 @@ public class Home extends JPanel {
 		btnNewButton_2.setBorderPainted(false);
 		panelBorrow.add(btnNewButton_2);
 		
-		JButton btnNewButton_1 = new JButton("500");
-		btnNewButton_1.setContentAreaFilled(false);
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnNewButton_1.setBackground(new Color(255, 255, 255));
-		btnNewButton_1.setBorderPainted(false);
-		btnNewButton_1.setFocusPainted(false);
-		panelBorrow.add(btnNewButton_1);
+		btnCountUser = new JButton("500");
+		btnCountUser.setContentAreaFilled(false);
+		btnCountUser.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnCountUser.setBackground(new Color(255, 255, 255));
+		btnCountUser.setBorderPainted(false);
+		btnCountUser.setFocusPainted(false);
+		panelBorrow.add(btnCountUser);
 		
 		JPanel panelUser = new JPanel();
 		panelUser.setBackground(new Color(255, 255, 255));
@@ -136,8 +136,8 @@ public class Home extends JPanel {
 	}
 	public void initObjects() {
 		UserConnection connect = new UserConnection();
-	
-		btnCountBook.setText(connect.countBooks() + "   Books");
+		btnCountBook.setText(connect.countBooks() + "  Books");
+		btnCountUser.setText(connect.countUsers() + "  Users");
 	}
 
 }

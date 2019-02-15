@@ -12,7 +12,7 @@ public class UserConnection {
 	private Connection conn = DBConnection.connectDB();
 	int numBorrow = 0;
 	
-	// COUNT BOOK
+	// COUNT BOOKS
 	public int countBooks() {
 		int count = 0;
 		try {
@@ -23,17 +23,34 @@ public class UserConnection {
 	        while(rss.next()) {
 				count ++;
 	        }
-
 			rss.close();
 			stmt.close();
-			
-			
 		}catch(Exception e) {
 			e.getStackTrace();
 		}
 		
 		return count;
 	}
+	
+	// COUNT USERs
+		public int countUsers() {
+			int count = 0;
+			try {
+				Statement stmt = conn.createStatement();
+				String sql = "SELECT id FROM users";
+		        ResultSet rss = stmt.executeQuery(sql);
+		        
+		        while(rss.next()) {
+					count ++;
+		        }
+				rss.close();
+				stmt.close();
+			}catch(Exception e) {
+				e.getStackTrace();
+			}
+			
+			return count;
+		}
 	
 	// VIEW BOOK FOR USER
 	public ArrayList<BookClass> bookView() {
