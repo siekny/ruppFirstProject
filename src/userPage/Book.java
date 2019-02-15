@@ -2,24 +2,18 @@ package userPage;
 
 import javax.swing.JPanel;
 
-import classMembers.BookClass;
-import connection.UserConnection;
+import popForm.BookGrid;
+import popForm.BookList;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.FlowLayout;
 
-public class Book extends JPanel {
+public class Book extends JPanel implements ActionListener {
 
 	/**
 	 * 
@@ -27,6 +21,10 @@ public class Book extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelContent, panel;
+	private JButton btnReload, btnList, btnGrid;
+	
+	private BookGrid grid;
+	private BookList list;
 
 
 	/**
@@ -35,7 +33,8 @@ public class Book extends JPanel {
 	public Book() {
 		
 		initialize();
-		initObjects();
+		//initObjects();
+		initClass();
 
 	}
 	
@@ -44,81 +43,80 @@ public class Book extends JPanel {
 		
 		panelContent = new JPanel();
 		add(panelContent);
-		panelContent.setLayout(new BorderLayout(0, 0));
+		panelContent.setLayout(new BorderLayout(10, 20));
+		
+		JPanel panelTop = new JPanel();
+		panelTop.setBackground(new Color(236,240,245));
+		panelContent.add(panelTop, BorderLayout.NORTH);
+		panelTop.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelReload = new JPanel();
+		panelTop.add(panelReload, BorderLayout.WEST);
+		panelReload.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnReload = new JButton("Reload");
+		btnReload.setFocusPainted(false);
+		btnReload.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panelReload.add(btnReload);
+		
+		JPanel panelOptionList = new JPanel();
+		panelTop.add(panelOptionList, BorderLayout.CENTER);
+		
+		btnList = new JButton("List");
+		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panelOptionList.add(btnList);
+		btnList.setFocusPainted(false);
+		
+		btnGrid = new JButton("Grid");
+		btnGrid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panelOptionList.add(btnGrid);
+		btnGrid.setFocusPainted(false);
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(236,240,245));
 		panelContent.add(panel, BorderLayout.CENTER);
 		
-		JPanel panelTop = new JPanel();
-		panelTop.setBackground(new Color(236,240,245));
-		panelContent.add(panelTop, BorderLayout.NORTH);
-		
-		JButton btnList = new JButton("List");
-		panelTop.add(btnList);
-		
-		JButton btnGrid = new JButton("Grid");
-		panelTop.add(btnGrid);
+		btnReload.addActionListener(this);
+		btnList.addActionListener(this);
+		btnGrid.addActionListener(this);
 		
 		
 		
 	}
 
-	public void initObjects () {
+	public void initClass() {
+		grid = new BookGrid();
+		list = new BookList();
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		UserConnection connect = new UserConnection();
-		ArrayList<BookClass> bookList = connect.bookView();
-
-		int size = connect.countBooks();
+		panel.add(grid);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		
-		JPanel[] panelBook = new JPanel[size];
-		JButton[] btnBook = new JButton[size];
+		if(e.getSource() == btnReload)
+			loadBook();
+		else if(e.getSource() == btnList)
+			listBook();
+		else if(e.getSource() == btnGrid)
+			gridBook();
 		
-		for(int i=0; i<size; i++) {
-			BookClass book = bookList.get(i);
-			
-			panelBook[i] = new JPanel();
-			panelBook[i].setBackground(new Color(236,240,245));
-			btnBook[i] = new JButton(book.getTitle() + "  " + "( " + book.getQty() + " )");
-			
-			btnBook[i].setFont(new Font("Tahoma", Font.PLAIN, 15));
-			panelBook[i].add(btnBook[i]);
-			btnBook[i].setFocusPainted(false);
-			btnBook[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnBook[i].setBackground(Color.WHITE);
-			btnBook[i].setIcon(new ImageIcon(new ImageIcon("uploads/" + book.getImg()).getImage().getScaledInstance(150, 90, Image.SCALE_SMOOTH)));
-			btnBook[i].setHorizontalTextPosition(JButton.CENTER);
-			btnBook[i].setVerticalTextPosition(JButton.BOTTOM);
-			
-			
-			panelBook[i].add(btnBook[i]);
-			panel.add(panelBook[i]);
-			
-			
-			btnBook[i].addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(null, book.getID());
-					
-				}
-			});
-		}
-		
-		if(size < 24) {
-			panel.setLayout(new GridLayout(4, 6, 0, 0));
-			JLabel[] label = new JLabel[24-size];
-			for(int j=0; j<24-size; j++) {
-				label[j] = new JLabel();
-				panel.add(label[j]);
-			}
-		}
-		else {
-			if(size%6 == 0)
-				panel.setLayout(new GridLayout(size/6, 6, 0, 0));
-			else
-				panel.setLayout(new GridLayout(size/6+1, 6, 0, 0));
-				
-		}
+	}
+	
+	public void loadBook() {
+		initClass();
+	}
+	
+	public void listBook() {
+		panel.add(list);
+		grid.setVisible(false);
+		list.setVisible(true);
+	}
+	
+	public void gridBook() {
+		panel.add(grid);
+		list.setVisible(false);
+		grid.setVisible(true);
 	}
 }

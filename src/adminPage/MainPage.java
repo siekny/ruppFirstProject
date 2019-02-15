@@ -187,7 +187,7 @@ public class MainPage extends JPanel implements ActionListener{
 		panelInn1.add(panelInner1_2, BorderLayout.CENTER);
 		panelInner1_2.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel = new JLabel("   Library Management System");
+		JLabel lblNewLabel = new JLabel("   Library Management System For Admin");
 		lblNewLabel.setFont(new Font("Hobo Std", Font.PLAIN, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);

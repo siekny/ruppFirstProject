@@ -12,9 +12,10 @@ public class BookClass {
 	private String author;
 	private int edition;
 	private int status;
+	private int numBorrow; // check when books have been borrowed
 	
 	public BookClass(int id, String isbn, String title, String image, int qty, String publisher, int publishedYear, double price,
-			String author, int edition, int status) {
+			String author, int edition, int status, int numBorrow) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
@@ -27,10 +28,22 @@ public class BookClass {
 		this.author = author;
 		this.edition = edition;
 		this.status = status;
+		this.numBorrow = numBorrow;
+	}
+	
+	public int numBookAvailable(int numBorrow) {
+		return qty - numBorrow;
+	}
+	
+	public Object[] getBookList() {
+		return new Object[] {id, isbn, title, author, edition, qty, numBorrow, numBookAvailable(numBorrow)};
 	}
 	
 	public int getID() {
 		return id;
+	}
+	public int getNumBorrow() {
+		return numBorrow;
 	}
 	public String getIsbn() {
 		return isbn;

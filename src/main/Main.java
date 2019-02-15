@@ -19,8 +19,8 @@ public class Main extends JFrame {
 	public static JPanel content;
 	
 	// initialize objects
-	public static Log log;
-	public static CreateAccount createAccount;
+	public static UserLogin log;
+	public static AdminLogin adminLogin;
 	public static MainPage mainPage;
 	public static HomePage homePage;
 
@@ -54,7 +54,7 @@ public class Main extends JFrame {
 	}
 	
 	public void initialize () {
-		setTitle("Restaurant Management System");
+		//setTitle("Library Management System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 885, 633);
 		contentPane = new JPanel();
@@ -72,8 +72,8 @@ public class Main extends JFrame {
 	public void initObjects () {
 		
 		
-		log = new Log(content);
-		createAccount = new CreateAccount(content);
+		log = new UserLogin(content);
+		adminLogin = new AdminLogin(content);
 		mainPage = new MainPage (content);
 		homePage = new HomePage(content);
 		
@@ -84,7 +84,7 @@ public class Main extends JFrame {
 	
 	public static void enableContent(boolean selectLogin, boolean selectCreateAcc, boolean selectAdminPage, boolean selectHomePage) {
 		log.setVisible(selectLogin);
-		createAccount.setVisible(selectCreateAcc);
+		adminLogin.setVisible(selectCreateAcc);
 		mainPage.setVisible(selectAdminPage);
 		homePage.setVisible(selectHomePage);
 		

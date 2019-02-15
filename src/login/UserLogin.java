@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Log extends JPanel {
+public class UserLogin extends JPanel {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class Log extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Log(JPanel content) {
+	public UserLogin(JPanel content) {
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -143,7 +143,7 @@ public class Log extends JPanel {
 		panelRInner.add(panel_5, BorderLayout.NORTH);
 		panel_5.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblLogin = new JLabel("Login");
+		JLabel lblLogin = new JLabel("User Login");
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_5.add(lblLogin, BorderLayout.NORTH);
@@ -191,8 +191,8 @@ public class Log extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Main.enableContent(false, false, true, false);
-				content.add(Main.mainPage);
+				Main.enableContent(false, false, false, true);
+				content.add(Main.homePage);
 			}
 		});
 		
@@ -201,13 +201,13 @@ public class Log extends JPanel {
 		//initObjects(content);
 		
 		
-		labelSignUp = new JLabel("Create new User Account Sign Up");
+		labelSignUp = new JLabel("Or go to Admin Login ?");
 		labelSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				Main.enableContent(false, true, false, false);
-				content.add(Main.createAccount);
+				content.add(Main.adminLogin);
 		        
 				
 				
