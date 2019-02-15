@@ -248,7 +248,7 @@ public class Members extends JPanel {
 					ResultSet rss;
 					//ArrayList<UserClass> Userlist = new ArrayList<UserClass>();
 					try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject","root", "");
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
 					stm = conn.createStatement();
 					String command = "Select * from users";
 					
@@ -313,7 +313,7 @@ public class Members extends JPanel {
 		panelBottom.add(btnDeleteuser);
 		
 		JButton btnEdit = new JButton("Edit Member");
-		btnEdit.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\ruppProject\\images\\edit.png"));
+		btnEdit.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\rupp_project\\images\\edit.png"));
 		btnEdit.setBackground(new Color(255, 140, 0));
 		btnEdit.setForeground(new Color(255, 255, 255));
 		panelBottom.add(btnEdit);
@@ -328,7 +328,7 @@ public class Members extends JPanel {
 				ResultSet rss;
 				ArrayList<UserClass> Userlist = new ArrayList<UserClass>();
 				try {
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject","root", "");
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
 				stm = conn.createStatement();
 				String command = "Select * From USers";
 				rss = stm.executeQuery(command);
@@ -369,7 +369,7 @@ public class Members extends JPanel {
 				Statement stm;
 				ResultSet rss;
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject", "root", "");
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 					stm = conn.createStatement();
 					rss = stm.executeQuery("SELECT * FROM users");
 					
@@ -438,7 +438,7 @@ public class Members extends JPanel {
 				panelcontent.add(panelbtn, BorderLayout.SOUTH);
 				
 				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject", "root", "");
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 					stm = conn.createStatement();
 					//rss = stm.executeQuery("SELECT * FROM users");
 					rss = stm.executeQuery("SELECT * FROM users WHERE id = " + ID);
@@ -470,7 +470,7 @@ public class Members extends JPanel {
 						
 						String newpassword = txtnewpassword.getText();
 						try {
-							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject", "root", "");
+							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 							sta = cnn.createStatement();
 							String sql2 = "UPDATE users SET password = '" + newpassword +"' WHERE id = " + ID;
 							sta.execute(sql2);
@@ -577,7 +577,7 @@ public class Members extends JPanel {
 				ResultSet res;
 				
 				try {
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject", "root", "");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 					stm = con.createStatement();
 					res = stm.executeQuery("SELECT * FROM users");
 					res = stm.executeQuery(sql1);
@@ -615,7 +615,7 @@ public class Members extends JPanel {
 					ResultSet res;
 					
 						try {
-							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject", "root", "");
+							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 							sta = cnn.createStatement();
 							
 							

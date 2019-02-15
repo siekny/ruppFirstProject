@@ -36,7 +36,6 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	// initialize objects
 	private Members member;
-	private Borrow booking;
 	private UserLoginHistory history;
 	private Profile profile;
 	private Books table;
@@ -226,7 +225,6 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void initObjects () {
 		member = new Members();
-		booking = new Borrow();
 		history = new UserLoginHistory();
 		profile = new Profile();
 		table = new Books();
@@ -260,35 +258,35 @@ public class MainPage extends JPanel implements ActionListener{
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
 		panelContent.add(profile);
-		enableContent(false, false, false, false, true, false, false);
+		enableContent(false, false, true, false, false);
 		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnBook, btnHistory, btnClose);
 	}
 	
 	public void homeButton() {
 		lblTitle.setText("  DASHBAORD");
 		panelContent.add(home);
-		enableContent(false, false, false, true, false, false, false);
+		enableContent(false, true, false, false, false);
 		buttonClick(btnHome, btnLogout, btnProfile, btnUser, btnBook, btnHistory, btnClose);
 	}
 	
 	public void memberButton() {
 		lblTitle.setText("  MEMBERS");
 		panelContent.add(member);
-		enableContent(false, false, false, false, false, false, true);
+		enableContent(false, false, false, false, true);
 		buttonClick(btnUser, btnHome, btnLogout, btnProfile, btnBook, btnHistory, btnClose);
 	}
 	
 	public void bookButton() {
 		lblTitle.setText("  BOOKS");
 		panelContent.add(table);
-		enableContent(false, false, false, false, false, true, false);
+		enableContent(false, false, false, true, false);
 		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnUser, btnHistory, btnClose);
 	}
 	
 	public void historyButton() {
 		lblTitle.setText("  HISTORY OF USER LOGIN");
 		panelContent.add(history);
-		enableContent(false, false, true, false, false, false, false);
+		enableContent(true, false, false, false, false);
 		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);
 	}
 	
@@ -332,8 +330,7 @@ public class MainPage extends JPanel implements ActionListener{
 		btnNonClick6.setBackground(new Color(34,45,50));
 	}
 	
-	public void enableContent(boolean isBooking, boolean isFood, boolean isHistory, boolean isHome, boolean isProfile, boolean isTable, boolean isUsers) {
-		booking.setVisible(isBooking);
+	public void enableContent(boolean isHistory, boolean isHome, boolean isProfile, boolean isTable, boolean isUsers) {
 		history.setVisible(isHistory);
 		home.setVisible(isHome);
 		profile.setVisible(isProfile);

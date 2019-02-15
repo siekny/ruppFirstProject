@@ -9,7 +9,7 @@ public class DBConnection {
 	public static Connection connectDB() {
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ruppProject","root", "");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
 			
 		} catch (SQLException e) {
 			

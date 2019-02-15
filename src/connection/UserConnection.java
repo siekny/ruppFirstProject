@@ -12,6 +12,30 @@ public class UserConnection {
 	private Connection conn = DBConnection.connectDB();
 	int numBorrow = 0;
 	
+	// COUNT BOOK
+	public int countBooks() {
+		int count = 0;
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "SELECT id FROM books";
+	        ResultSet rss = stmt.executeQuery(sql);
+	        
+	        while(rss.next()) {
+				count ++;
+	        }
+
+			rss.close();
+			stmt.close();
+			
+			
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		return count;
+	}
+	
+	// VIEW BOOK FOR USER
 	public ArrayList<BookClass> bookView() {
 		ArrayList<BookClass> bookList = new ArrayList<BookClass>();
 		
@@ -39,6 +63,8 @@ public class UserConnection {
 		return bookList;
 	}
 	
+	
+	// VIEW DETAIL BOOK FOR USER
 	public ArrayList<BookClass> detailBook(int id) {
 		
 		ArrayList<BookClass> bookList = new ArrayList<BookClass>();

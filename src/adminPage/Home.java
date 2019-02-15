@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
+
+import connection.UserConnection;
+
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
@@ -16,11 +19,18 @@ public class Home extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private JButton btnCountBook;
 
 	/**
 	 * Create the panel.
 	 */
 	public Home() {
+		initialize();
+		initObjects();
+	}
+	
+	public void initialize() {
 		setLayout(new BorderLayout(20, 20));
 		
 		JPanel panelContent = new JPanel();
@@ -55,13 +65,13 @@ public class Home extends JPanel {
 		button_2.setBackground(Color.WHITE);
 		panelBook.add(button_2);
 		
-		JButton button = new JButton("5000");
-		button.setContentAreaFilled(false);
-		button.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		button.setFocusPainted(false);
-		button.setBorderPainted(false);
-		button.setBackground(Color.WHITE);
-		panelBook.add(button);
+		btnCountBook = new JButton("5000");
+		btnCountBook.setContentAreaFilled(false);
+		btnCountBook.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnCountBook.setFocusPainted(false);
+		btnCountBook.setBorderPainted(false);
+		btnCountBook.setBackground(Color.WHITE);
+		panelBook.add(btnCountBook);
 		
 		JPanel panelBorrow = new JPanel();
 		panelBorrow.setBackground(new Color(255, 255, 255));
@@ -123,7 +133,11 @@ public class Home extends JPanel {
 		
 		JPanel panelBody = new JPanel();
 		panelContent.add(panelBody, BorderLayout.CENTER);
-
+	}
+	public void initObjects() {
+		UserConnection connect = new UserConnection();
+	
+		btnCountBook.setText(connect.countBooks() + "   Books");
 	}
 
 }

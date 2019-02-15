@@ -4,14 +4,14 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="images"/>
 	<classpathentry kind="src" path="uploads"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/mysql-connector-java-8.0.15.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/hsqldb.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/jackcess-2.0.8.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/mysql-connector-java-5.1.8-bin.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/mysql-connector-java-5.1.14.jar"/>
-	<classpathentry kind="lib" path="D:/ALL FILES/University/IT/Year 3/Semester 2/JAVA/library to connect DB/ucanaccess-2.0.9.4.jar"/>
+	<classpathentry kind="src" path="sources"/>
+	<classpathentry kind="lib" path="sources/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="sources/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="sources/hsqldb.jar"/>
+	<classpathentry kind="lib" path="sources/jackcess-2.0.8.jar"/>
+	<classpathentry kind="lib" path="sources/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="sources/mysql-connector-java-5.1.14.jar"/>
+	<classpathentry kind="lib" path="sources/mysql-connector-java-5.1.8-bin.jar"/>
+	<classpathentry kind="lib" path="sources/ucanaccess-2.0.9.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
