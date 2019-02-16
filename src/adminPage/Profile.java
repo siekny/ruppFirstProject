@@ -42,6 +42,8 @@ public class Profile extends JPanel {
 	public Profile() {
 		setLayout(new BorderLayout(0, 0));
 		
+		
+		
 		initObject();
 		initLabel();
 		initTable();
