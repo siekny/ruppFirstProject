@@ -2,10 +2,12 @@ package classMembers;
 
 import java.util.Date;
 
-public class UserClass {
+public class UserClass extends PeopleClass{
+	
+	/*
+	
 	private int id;
 	private String fullname;
-	private String username;
 	private String password;
 	private String sex;
 	private String address;
@@ -14,7 +16,11 @@ public class UserClass {
 	private String dateofbirth;
 	private String typeofmembership;
 	private int status;
+	
+	//*/
+	
 	private String dateofmembership;
+	private String username;
 	
 	public UserClass(
 			int id,
@@ -30,19 +36,35 @@ public class UserClass {
 			String dateofmembership,
 			int status
 			){
+		
+			/*
+		
 			this.id = id;
-			this.fullname = fullname;
-			this.username = username;
+			this.fullname = fullname;		
 			this.password = password;
 			this.sex = sex;
 			this.address = address;
 			this.email = email;
 			this.phone = phone;
 			this.dateofbirth = dateofbirth;
-			this.dateofmembership = dateofmembership;
 			this.status = status;
-			this.typeofmembership = typeofmembership;	
+			this.typeofmembership = typeofmembership;
+		
+			//*/
+		
+			super(id, fullname, password, sex, address, email, phone, dateofbirth, typeofmembership, status);
+			this.username = username;
+			this.dateofmembership = dateofmembership;
 	}
+	
+	public String getUsername() {
+		return this.username;
+	}
+	public String getDateofmembership() {
+		return this.dateofmembership;
+	}
+	
+	/*
 	
 	public int getID() {
 		return this.id;
@@ -50,15 +72,10 @@ public class UserClass {
 	public String getFullname() {
 		return this.fullname;
 	}
-	public String getUsername() {
-		return this.username;
-	}
 	public String getAddress() {
 		return this.address;
 	}
-	public String getDateofmembership() {
-		return this.dateofmembership;
-	}
+	
 	public String getTypeofmembership() {
 		return this.typeofmembership;
 	}
@@ -81,5 +98,5 @@ public class UserClass {
 		return this.dateofbirth;
 	}
 	
-	
+	//*/
 }

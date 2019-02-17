@@ -6,6 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import adminPage.MainPage;
+import classMembers.UserClass;
 import login.*;
 import userPage.HomePage;
 
@@ -47,6 +48,7 @@ public class Main extends JFrame {
 	
 	
 	public Main() throws Exception {
+		
 		
 		initialize();
 		initObjects();
