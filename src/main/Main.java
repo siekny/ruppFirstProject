@@ -49,7 +49,6 @@ public class Main extends JFrame {
 	
 	public Main() throws Exception {
 		
-		
 		initialize();
 		initObjects();
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -2,7 +2,7 @@ package classMembers;
 
 import java.util.Date;
 
-public class UserClass extends PeopleClass{
+public class UserClass extends LibrarianClass{
 	
 	/*
 	
