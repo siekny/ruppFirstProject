@@ -208,7 +208,7 @@ public class UserConnection {
 	ArrayList<BorrowerClass> borrowList = new ArrayList<BorrowerClass>();
 	public MemberRegisterClass getReturnDate(int studentID) 
 	{
-		@SuppressWarnings("unused")
+
 		MemberRegisterClass memberReturn = null;
 		
 		try {
@@ -227,34 +227,45 @@ public class UserConnection {
 	        		
 	        		BorrowerClass borrow = borrowList.get(i);
 
-		        	if(borrow.getReturnDate().equals("0")) {
+		        	if(borrow.actualReturnDate().equals("0")) {
 		        		memberReturn = null;
-		        		check = 1;
+		        		check = 0;
 		        	}
 		        	
 		        	else {
-		        		check = 2;
+		        		check =1;
 		        		memberReturn =  getMemberInfo(studentID);
 		        	}	
 		        }
 	        }
-	        else {
-	        	
-	        	throw new Exception("You're not Membership! Please register!");
-	        }
 	        
-	        if(check == 1)
+	        else if(!getMemberInfo(studentID).equals(null)) {
+	        	memberReturn =  getMemberInfo(studentID);
+	        	
+
+	        	if(memberReturn.getID() == studentID) {
+	        		check = 1;
+	        	}
+	        	
+	        }
+	        else  {
+        		throw new Exception("You're not Membership! Please register!");
+        	}
+	        
+	        if(check == 0)
 	        	throw new Exception("You haven't returned our book yet!");
-	        else if(check == 2) {
+	        else if(check == 1) {
 	        	System.out.println("can borrow");
 	        }
+	        else
+	        	JOptionPane.showMessageDialog(null, "You're not Membership! Please register!");
 			rss.close();
 			stmt.close();
 			
 		}catch(Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
-		return null;
+		return memberReturn;
 		
 	}
 	

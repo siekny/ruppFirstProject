@@ -160,9 +160,9 @@ public class BorrowerClass {
 //		return returnDate;
 //		
 //	}
-//	public void setReturnDate(String returnDate) {
-//		this.returnDate = returnDate;
-//	}
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
+	}
 	public int getStatus() {
 		return status;
 	}

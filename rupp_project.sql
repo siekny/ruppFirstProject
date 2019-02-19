@@ -63,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `borrows` (
 DELETE FROM `borrows`;
 /*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
 INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
-	(3, 1, 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', 'Feb-19-2019', 0, 0, 1);
+	(3, 1, 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', 'Feb-19-2019', 0, 0, 1),
+	(5, 1, 'siekny', '098765432', 2, '2', 2, 'Feb-19-2019', '0', 0, 0, 1);
 /*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.memberregisters
