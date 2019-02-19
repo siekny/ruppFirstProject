@@ -128,5 +128,9 @@ public class UserLoginHistory extends JPanel {
 		panelBottom.add(btnDetail);
 
 	}
+	
+	public void showAllUserInfo() {
+		
+	}
 
 }

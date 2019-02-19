@@ -14,6 +14,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+
+import classMembers.LibrarianClass;
+import classMembers.UserClass;
+
 import java.awt.Dimension;
 
 public class Profile extends JPanel {
@@ -38,14 +42,26 @@ public class Profile extends JPanel {
 	DefaultTableModel table;
 	JTable jTable;
 	JScrollPane scrollPane;
+	
+	// INFORMATION
+	LibrarianClass librarianClass;
+	
+	public Profile(LibrarianClass librarianClass) {
+		setLayout(new BorderLayout(0, 0));
+		
+		this.librarianClass = librarianClass;	
+		initObject();
+		initLabel();
+		initTable();
+		
+	}
 
 	public Profile() {
 		setLayout(new BorderLayout(0, 0));
 
 		initObject();
 		initLabel();
-		initTable();
-		
+		initTable();		
 	}
 	
 	private void initObject() {
@@ -224,7 +240,26 @@ public class Profile extends JPanel {
 		lblDom.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDom.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 
-		boolean isAdmin = false;
+		// SET UP INFORMATION
+		
+		lblId.setText(librarianClass.getID() + "");
+		lblFullname.setText(librarianClass.getFullname());
+		lblSex.setText(librarianClass.getSex());
+		lblAddress.setText(librarianClass.getAddress());
+		lblEmail.setText(librarianClass.getEmail());
+		lblPhone.setText(librarianClass.getPhone());
+		lblDob.setText(librarianClass.getDateofbirth());
+		lblTom.setText(librarianClass.getTypeofmembership());
+		
+		if(librarianClass instanceof UserClass) {
+			UserClass temp = (UserClass) librarianClass;
+			lblUsername.setText(temp.getUsername());
+			lblDom.setText(temp.getDateofmembership());
+		}
+		
+		/////////////////////
+		
+		boolean isAdmin = (librarianClass.getStatus() == 1);
 		
 		panel_11.add(lblNewLabel);
 		panel_11.add(lblId);
@@ -266,14 +301,6 @@ public class Profile extends JPanel {
 		
 		scrollPane = new JScrollPane(jTable);
 		panel_8.add(scrollPane, BorderLayout.CENTER);
-	}
-
-	private void setUserInformation() {
-		
-	}
-	
-	private void setUserHistory() {
-		
 	}
 	
 }
