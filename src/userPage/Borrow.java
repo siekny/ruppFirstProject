@@ -241,7 +241,7 @@ public class Borrow extends JPanel implements ActionListener {
 				BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
 				
 				new ReturnBook(borrowed);
-				model.removeRow(row[0]);
+				table.getModel().setValueAt(borrowed.actualReturnDate(), row[0], 9);
 			}
 				
 			else {

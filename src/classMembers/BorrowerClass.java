@@ -64,7 +64,7 @@ public class BorrowerClass {
 		return returnDate;
 	}
 	public String getReturnDate() {
-		String actualReturnDate = "";
+		String return_date = "";
 		try {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
@@ -75,11 +75,11 @@ public class BorrowerClass {
 			long diff = getborrowedDate.getTime() + amountDaysReturn*24*60*60*1000;
  
 			DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
-			actualReturnDate = df.format(new Date(diff));
+			return_date = df.format(new Date(diff));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return actualReturnDate;
+		return return_date;
 		
 	}
 	public int getSubstractDays() {
@@ -88,7 +88,7 @@ public class BorrowerClass {
 			DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
 			String actualReturnDate = df.format(new Date());
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM-dd-yyyy");
-			Date getreturnDate = sdf.parse(returnDate);
+			Date getreturnDate = sdf.parse(getReturnDate());
 			Date getactualReturnDate = sdf.parse(actualReturnDate);
 			 
 			// getTime() returns the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this Date object

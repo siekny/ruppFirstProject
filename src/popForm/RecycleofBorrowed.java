@@ -122,7 +122,7 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 					model.removeRow( modelRow );
 		            row = recycleBorrowedtable.getSelectedRow();  
 	            }
-
+				
 				JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
 			}
 			

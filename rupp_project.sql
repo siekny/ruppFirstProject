@@ -59,11 +59,11 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.borrows: ~3 rows (approximately)
+-- Dumping data for table rupp_project.borrows: ~1 rows (approximately)
 DELETE FROM `borrows`;
 /*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
 INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
-	(3, 1, 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', '0', 0, 0, 1);
+	(3, 1, 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', 'Feb-19-2019', 0, 0, 1);
 /*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.memberregisters
