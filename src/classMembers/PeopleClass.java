@@ -50,4 +50,11 @@ public class PeopleClass {
 	public String getDateofbirth() {
 		return dateofbirth;
 	}
+	
+	public void setFullName(String fullName) {
+		this.fullname = fullName;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

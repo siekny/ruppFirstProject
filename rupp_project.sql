@@ -42,6 +42,51 @@ INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `publisher`, `publishedYear
 	(2, '002', 'sleeping Beauty', 'sleeping-beauty.jpg', 'Ny', 2010, 23, 0, 0, 8.23, 'Ny', 3, 1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
+-- Dumping structure for table rupp_project.borrows
+CREATE TABLE IF NOT EXISTS `borrows` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL DEFAULT '0',
+  `studentName` varchar(50) NOT NULL DEFAULT '0',
+  `studentCurrentPhone` varchar(255) DEFAULT '0',
+  `book_id` int(11) DEFAULT '0',
+  `bookISBN` varchar(255) NOT NULL DEFAULT '0',
+  `borrowQTY` tinyint(2) NOT NULL DEFAULT '0',
+  `borrowedDate` varchar(50) DEFAULT '0',
+  `returnDate` varchar(50) DEFAULT '0',
+  `overDays` int(3) DEFAULT '0',
+  `fine` int(11) DEFAULT '0',
+  `status_removed` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table rupp_project.borrows: ~3 rows (approximately)
+DELETE FROM `borrows`;
+/*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
+INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
+	(3, 1, 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', '0', 0, 0, 1);
+/*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
+
+-- Dumping structure for table rupp_project.memberregisters
+CREATE TABLE IF NOT EXISTS `memberregisters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `memberID` varchar(50) NOT NULL DEFAULT '0',
+  `fullName` varchar(50) DEFAULT '0',
+  `sex` tinyint(1) DEFAULT '0',
+  `address` varchar(255) DEFAULT '0',
+  `email` varchar(50) DEFAULT '0',
+  `phone` varchar(50) DEFAULT '0',
+  `dateofbirth` varchar(50) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table rupp_project.memberregisters: ~2 rows (approximately)
+DELETE FROM `memberregisters`;
+/*!40000 ALTER TABLE `memberregisters` DISABLE KEYS */;
+INSERT INTO `memberregisters` (`id`, `memberID`, `fullName`, `sex`, `address`, `email`, `phone`, `dateofbirth`) VALUES
+	(1, '001', 'siekny', 1, 'RUPP', 'sieknyhor@gmail.com', '098765432', 'Apr-10-2000'),
+	(2, '002', 'nyny', 1, 'Setec', 'nyny@gmail.com', '089769765', 'Jan-10-2000');
+/*!40000 ALTER TABLE `memberregisters` ENABLE KEYS */;
+
 -- Dumping structure for table rupp_project.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
