@@ -23,6 +23,7 @@ import javax.swing.border.MatteBorder;
 
 import adminPage.Home;
 import adminPage.Profile;
+import classMembers.UserClass;
 
 
 public class HomePage extends JPanel implements ActionListener{
@@ -230,7 +231,7 @@ public class HomePage extends JPanel implements ActionListener{
 	public void initObjects () {
 		book = new Book();
 		borrow = new Borrow();
-		profile = new Profile();
+		profile = new Profile(new UserClass(1,"M Ember","thisismember","123","F","USA","member@gmail.com","0989898","10-10-2010","Member","20-10-2020",2));
 		home = new Home();
 		register = new Register();
 		BorderLayout borderLayout = (BorderLayout) home.getLayout();

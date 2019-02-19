@@ -21,6 +21,8 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
 
+import classMembers.AdminClass;
+
 
 public class MainPage extends JPanel implements ActionListener{
 
@@ -226,7 +228,7 @@ public class MainPage extends JPanel implements ActionListener{
 	public void initObjects () {
 		member = new Members();
 		history = new UserLoginHistory();
-		profile = new Profile();
+		profile = new Profile(new AdminClass(1,"Five Remji","123","M","Phnom Penh","fiveremji5@gmail.com","012121212","01-01-2001","Admin",1));
 		table = new Books();
 		home = new Home();
 		
