@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
 
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
@@ -23,12 +22,12 @@ import java.awt.Cursor;
 
 import classMembers.BookClass;
 import classMembers.BorrowerClass;
-import classMembers.MemberRegisterClass;
 import connection.UserConnection;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.border.TitledBorder;
 
 public class NewBorrower extends JPanel implements ActionListener {
 
@@ -46,7 +45,6 @@ public class NewBorrower extends JPanel implements ActionListener {
 	@SuppressWarnings("rawtypes")
 	private JComboBox cboBorrowQty;
 	private JButton btnAddnew, btnClear;
-	private JTextField txtCurrentContact;
 	private JTextField txtBookISBN;
 	private JTextField txtBookQty;
 	private JLabel lblBook_id;
@@ -70,10 +68,12 @@ public class NewBorrower extends JPanel implements ActionListener {
 
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void initComponent () {
 		panelMain = new JPanel();
+		panelMain.setBackground(Color.WHITE);
 		add(panelMain, BorderLayout.CENTER);
-		panelMain.setLayout(new BorderLayout(0, 0));
+		panelMain.setLayout(new BorderLayout(20, 20));
 		
 		JPanel panelTitle = new JPanel();
 		panelMain.add(panelTitle, BorderLayout.NORTH);
@@ -88,71 +88,29 @@ public class NewBorrower extends JPanel implements ActionListener {
 		JPanel panelContent = new JPanel();
 		panelMain.add(panelContent);
 		panelContent.setBackground(new Color(255, 255, 255));
+		panelContent.setLayout(new BorderLayout(0, 20));
 		
 		JPanel panelInner = new JPanel();
 		panelInner.setBackground(new Color(255, 255, 255));
-		panelContent.add(panelInner);
+		panelContent.add(panelInner, BorderLayout.NORTH);
 		panelInner.setLayout(new GridLayout(0, 2, 20, 0));
 		
 		panelLeft = new JPanel();
+		panelLeft.setBorder(new TitledBorder(null, "Student Information", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		panelLeft.setBackground(new Color(255, 255, 255));
 		panelInner.add(panelLeft);
-		panelLeft.setLayout(new GridLayout(12, 2, 0, 5));
-		
-		JLabel label = new JLabel("Student Information");
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		label.setForeground(new Color(65, 105, 225));
-		label.setFont(new Font("Tahoma", Font.BOLD, 11));
-		label.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelLeft.add(label);
-		
-		JLabel label_1 = new JLabel("");
-		label_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelLeft.add(label_1);
+		panelLeft.setLayout(new GridLayout(4, 2, 0, 5));
 		
 		initStudentInfo();
-		
-		JPanel panelCurrentContact = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panelCurrentContact.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		panelCurrentContact.setBackground(Color.WHITE);
-		panelLeft.add(panelCurrentContact);
-		
-		JLabel lblCurrentContact = new JLabel("Current Contact");
-		panelCurrentContact.add(lblCurrentContact);
-		
-		txtCurrentContact = new JTextField();
-		panelLeft.add(txtCurrentContact);
-		txtCurrentContact.setColumns(10);
-		
-		lblBook_id = new JLabel("");
-		lblBook_id.setVisible(false);
-		panelLeft.add(lblBook_id);
-		
-		JLabel label_10 = new JLabel("");
-		panelLeft.add(label_10);
-		
-		JLabel label_11 = new JLabel("");
-		panelLeft.add(label_11);
 		
 		//initBookInfo();
 		
 		
 		panelRight = new JPanel();
+		panelRight.setBorder(new TitledBorder(null, "Book Information", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		panelRight.setBackground(new Color(255, 255, 255));
 		panelInner.add(panelRight);
-		panelRight.setLayout(new GridLayout(12, 2, 0, 5));
-		
-		JLabel label_5 = new JLabel("Book Information");
-		label_5.setHorizontalAlignment(SwingConstants.LEFT);
-		label_5.setForeground(new Color(65, 105, 225));
-		label_5.setFont(new Font("Tahoma", Font.BOLD, 11));
-		label_5.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelRight.add(label_5);
-		
-		JLabel label_3 = new JLabel("");
-		label_3.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelRight.add(label_3);
+		panelRight.setLayout(new GridLayout(4, 2, 0, 5));
 		
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
@@ -186,16 +144,95 @@ public class NewBorrower extends JPanel implements ActionListener {
 		panelRight.add(txtBookQty);
 		txtBookQty.setColumns(10);
 		
-		JLabel lblBorrowerInformation = new JLabel("Borrower Information");
-		lblBorrowerInformation.setHorizontalAlignment(SwingConstants.LEFT);
-		lblBorrowerInformation.setForeground(new Color(65, 105, 225));
-		lblBorrowerInformation.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblBorrowerInformation.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelRight.add(lblBorrowerInformation);
+		JLabel label = new JLabel("");
+		panelRight.add(label);
 		
-		JLabel label_2 = new JLabel("");
-		label_2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(65, 105, 225)));
-		panelRight.add(label_2);
+		JPanel panelBorrowout = new JPanel();
+		panelBorrowout.setBorder(new TitledBorder(null, "Borrow Information", TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panelBorrowout.setBackground(Color.WHITE);
+		panelContent.add(panelBorrowout, BorderLayout.CENTER);
+		panelBorrowout.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelBorrowIN = new JPanel();
+		panelBorrowIN.setBackground(Color.WHITE);
+		panelBorrowout.add(panelBorrowIN, BorderLayout.CENTER);
+		
+		JPanel panelBorrow = new JPanel();
+		panelBorrowIN.add(panelBorrow);
+		panelBorrow.setBackground(Color.WHITE);
+		panelBorrow.setLayout(new GridLayout(7, 2, 0, 5));
+		JPanel panelBorrowQty = new JPanel();
+		panelBorrow.add(panelBorrowQty);
+		panelBorrowQty.setBackground(new Color(255, 255, 255));
+		FlowLayout flowLayout_6 = (FlowLayout) panelBorrowQty.getLayout();
+		flowLayout_6.setAlignment(FlowLayout.LEFT);
+		JLabel lblQtyOfBorrowing = new JLabel("QTY of Borrowing");
+		panelBorrowQty.add(lblQtyOfBorrowing);
+		
+		JLabel label_7_1 = new JLabel("*");
+		label_7_1.setForeground(Color.RED);
+		panelBorrowQty.add(label_7_1);
+		
+		cboBorrowQty = new JComboBox(new String[] {"1", "2", "3"});
+		panelBorrow.add(cboBorrowQty);
+		cboBorrowQty.setFocusable(false);
+		cboBorrowQty.setBackground(Color.WHITE);
+		
+		JPanel panelBorrowDate = new JPanel();
+		panelBorrow.add(panelBorrowDate);
+		panelBorrowDate.setBackground(new Color(255, 255, 255));
+		FlowLayout flowLayout_7 = (FlowLayout) panelBorrowDate.getLayout();
+		flowLayout_7.setAlignment(FlowLayout.LEFT);
+		
+		JLabel lblNewLabel_8 = new JLabel("Borrowed Date (MMM, d, yyy)");
+		panelBorrowDate.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("*");
+		lblNewLabel_9.setForeground(new Color(255, 0, 0));
+		panelBorrowDate.add(lblNewLabel_9);
+		
+		txtBorrowedDate = new JTextField();
+		panelBorrow.add(txtBorrowedDate);
+		
+		
+		JPanel panel_2 = new JPanel();
+		panelBorrow.add(panel_2);
+		panel_2.setBackground(new Color(255, 255, 255));
+		
+		panelButton = new JPanel();
+		panelBorrow.add(panelButton);
+		panelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		FlowLayout flowLayout_11 = (FlowLayout) panelButton.getLayout();
+		flowLayout_11.setAlignment(FlowLayout.LEFT);
+		panelButton.setBackground(new Color(255, 255, 255));
+		btnAddnew = new JButton("Add New");
+		btnAddnew.setFocusPainted(false);
+		btnAddnew.setBackground(new Color(65, 105, 225));
+		btnAddnew.setForeground(new Color(65, 105, 225));
+		panelButton.add(btnAddnew);
+		
+		btnClear = new JButton("Clear All");
+		btnClear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnClear.setFocusPainted(false);
+		panelButton.add(btnClear);
+		
+		JLabel label_4 = new JLabel("");
+		panelBorrow.add(label_4);
+		
+		JLabel label_9 = new JLabel("");
+		panelBorrow.add(label_9);
+		
+		JLabel label_10 = new JLabel("");
+		panelBorrow.add(label_10);
+		
+		btnAddnew.addActionListener(this);
+		btnClear.addActionListener(this);
+		
+		lblBook_id = new JLabel("");
+		lblBook_id.setVisible(false);
+		panelBorrowout.add(lblBook_id, BorderLayout.SOUTH);
+		
+		borrowInfo();
 	}
 	
 	public void initStudentInfo() {
@@ -229,7 +266,6 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 		txtStudentName = new JTextField();
 		txtStudentName.setBackground(new Color(255, 255, 255));
-		txtStudentName.setEditable(false);
 		panelLeft.add(txtStudentName);
 		txtStudentName.setColumns(10);
 		
@@ -248,7 +284,6 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 		txtContact = new JTextField();
 		txtContact.setBackground(new Color(255, 255, 255));
-		txtContact.setEditable(false);
 		panelLeft.add(txtContact);
 		txtContact.setColumns(10);
 	}
@@ -258,80 +293,17 @@ public class NewBorrower extends JPanel implements ActionListener {
 //		initBookISBN();
 //	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void borrowInfo() {
-		JPanel panelBorrowQty = new JPanel();
-		panelBorrowQty.setBackground(new Color(255, 255, 255));
-		FlowLayout flowLayout_6 = (FlowLayout) panelBorrowQty.getLayout();
-		flowLayout_6.setAlignment(FlowLayout.LEFT);
-		panelRight.add(panelBorrowQty);
-		JLabel lblQtyOfBorrowing = new JLabel("QTY of Borrowing");
-		panelBorrowQty.add(lblQtyOfBorrowing);
-		
-		JLabel label_7 = new JLabel("*");
-		label_7.setForeground(Color.RED);
-		panelBorrowQty.add(label_7);
-		
-		cboBorrowQty = new JComboBox(new String[] {"1", "2", "3"});
-		cboBorrowQty.setFocusable(false);
-		cboBorrowQty.setBackground(Color.WHITE);
-		panelRight.add(cboBorrowQty);
-		
-		JPanel panelBorrowDate = new JPanel();
-		panelBorrowDate.setBackground(new Color(255, 255, 255));
-		FlowLayout flowLayout_7 = (FlowLayout) panelBorrowDate.getLayout();
-		flowLayout_7.setAlignment(FlowLayout.LEFT);
-		panelRight.add(panelBorrowDate);
-		
-		JLabel lblNewLabel_8 = new JLabel("Borrowed Date (MMM, d, yyy)");
-		panelBorrowDate.add(lblNewLabel_8);
-		
-		JLabel lblNewLabel_9 = new JLabel("*");
-		lblNewLabel_9.setForeground(new Color(255, 0, 0));
-		panelBorrowDate.add(lblNewLabel_9);
-		
-		txtBorrowedDate = new JTextField();
-		txtBorrowedDate.setEditable(false);
-		panelRight.add(txtBorrowedDate);
-		txtBorrowedDate.setColumns(10);
 		
 		DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
+		txtBorrowedDate.setEditable(false);
+		txtBorrowedDate.setColumns(20);
 		txtBorrowedDate.setText(df.format(new Date()));
-		
-		JLabel label_6 = new JLabel("");
-		panelRight.add(label_6);
-		
-		JLabel label_9 = new JLabel("");
-		panelRight.add(label_9);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
-		panelRight.add(panel_2);
-		
-		panelButton = new JPanel();
-		panelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		FlowLayout flowLayout_11 = (FlowLayout) panelButton.getLayout();
-		flowLayout_11.setAlignment(FlowLayout.LEFT);
-		panelButton.setBackground(new Color(255, 255, 255));
-		panelRight.add(panelButton);
 		
 		
 	}
 	
 	public void initButton() {
-		btnAddnew = new JButton("Add New");
-		btnAddnew.setFocusPainted(false);
-		btnAddnew.setBackground(new Color(65, 105, 225));
-		btnAddnew.setForeground(new Color(65, 105, 225));
-		panelButton.add(btnAddnew);
-		
-		btnClear = new JButton("Clear All");
-		btnClear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnClear.setFocusPainted(false);
-		panelButton.add(btnClear);
-		
-		btnAddnew.addActionListener(this);
-		btnClear.addActionListener(this);
 	}
 	
 	public void initStudentID() {
@@ -360,21 +332,23 @@ public class NewBorrower extends JPanel implements ActionListener {
 				if(e.getSource() == txtStudentID) {
 					
 					if(txtStudentID.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "StudentID is required");
-						txtStudentName.setText("");
-						txtContact.setText("");
+						txtStudentID.setText("");
+						throw new Exception("Student ID is required!");	
 					}
 					else {
-						MemberRegisterClass borrowList = new UserConnection().getReturnDate(Integer.parseInt(txtStudentID.getText()));
-						txtStudentName.setText(borrowList.getFullname());
-						txtContact.setText(borrowList.getPhone());
+						boolean returnDate = new UserConnection().getReturnDate(txtStudentID.getText());
+						if(returnDate)
+							throw new Exception("You haven't returned our book yet!");
+						else
+							throw new Exception("Available to borrow!");
+						
 					}
 				}
 				else if(e.getSource() == txtBookISBN) {
 					if(txtBookISBN.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Book ISBN is required");
 						txtBookQty.setText("");
-						lblBook_id.setText("");
+						txtBookISBN.setText("");
+						throw new Exception("Book ISBN is required!");
 					}
 					else {
 						BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
@@ -384,7 +358,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 					}
 				}
 			} catch (Exception e1) {
-				//JOptionPane.showMessageDialog(null, e1.getMessage());
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 	        		
 	    }
@@ -401,7 +375,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 				addNewBorrow();
 			} catch (Exception e1) {
 				
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		else if(e.getSource() == btnClear)
 			clearText();
@@ -409,22 +383,28 @@ public class NewBorrower extends JPanel implements ActionListener {
 	}
 	
 	public void addNewBorrow() throws Exception {
-			if(txtBookISBN.getText().isEmpty()) 
-				throw new Exception("Book ISBN is required");
+		if(txtStudentID.getText().isEmpty())
+			throw new Exception("StudentID is required!");
 		
-			
-			if(txtCurrentContact.getText().isEmpty())
-				txtCurrentContact.setText(txtContact.getText());
-			
-			if(Integer.parseInt(txtBookQty.getText()) < 1)
-				throw new Exception("We are sorry! Our Books are out of stock!");
-			
-			int status = 1; // status == 1 means borrow but not yet return
-			
-			BorrowerClass borrow = new BorrowerClass(Integer.parseInt(txtStudentID.getText()), Integer.parseInt(lblBook_id.getText()), txtStudentName.getText(), txtCurrentContact.getText(), 
-					txtBookISBN.getText(), Integer.parseInt(cboBorrowQty.getSelectedItem().toString()) , txtBorrowedDate.getText(), status);
-			
-			new UserConnection().addBorrower(borrow);
+		if(txtStudentName.getText().isEmpty())
+			throw new Exception("Student Name is required!");
+		
+		
+		if(txtBookISBN.getText().isEmpty()) 
+			throw new Exception("Book ISBN is required");
+		
+		if(txtContact.getText().isEmpty())
+			throw new Exception("Contact is required!");
+		
+		if(Integer.parseInt(txtBookQty.getText()) < 1)
+			throw new Exception("We are sorry! Our Books are out of stock!");
+		
+		int status = 1; // status == 1 means borrow but not yet return
+		
+		BorrowerClass borrow = new BorrowerClass(txtStudentID.getText(), Integer.parseInt(lblBook_id.getText()), txtStudentName.getText(), txtContact.getText(), 
+				txtBookISBN.getText(), Integer.parseInt(cboBorrowQty.getSelectedItem().toString()) , txtBorrowedDate.getText(), status);
+		
+		new UserConnection().addBorrower(borrow);
 
 	}
 	
@@ -432,11 +412,10 @@ public class NewBorrower extends JPanel implements ActionListener {
 		txtStudentID.setText("");
 		txtStudentName.setText("");
 		txtContact.setText("");
-		txtCurrentContact.setText("");
 		
 		txtBookISBN.setText("");
 		txtBookQty.setText("");
-		txtBorrowedDate.setText("");
+		
 	}
 	
 }

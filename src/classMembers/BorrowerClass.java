@@ -8,7 +8,7 @@ import java.util.Date;
 public class BorrowerClass {
 	
 	private int id;
-	private int student_id;
+	private String student_id;
 	private int book_id;
 	private String studentName;
 	private String studentCurrentPhone;
@@ -22,7 +22,7 @@ public class BorrowerClass {
 	
 	public BorrowerClass() {}
 	
-	public BorrowerClass(int student_id, int book_id, String studentName, String studentCurrentPhone,
+	public BorrowerClass(String student_id, int book_id, String studentName, String studentCurrentPhone,
 			String bookISBN, int borrowQTY, String borrowedDate, int status) {
 		super();
 		this.student_id = student_id;
@@ -35,7 +35,7 @@ public class BorrowerClass {
 		this.status = status;
 	}
 	
-	public BorrowerClass(int id, int student_id, int book_id, String studentName, String studentCurrentPhone,
+	public BorrowerClass(int id, String student_id, int book_id, String studentName, String studentCurrentPhone,
 			String bookISBN, int borrowQTY, String borrowedDate, String returnDate,
 			int status) {
 		super();
@@ -50,7 +50,7 @@ public class BorrowerClass {
 		this.returnDate = returnDate;
 		this.status = status;
 	}
-	public BorrowerClass(int id, int student_id, String returnDate) {
+	public BorrowerClass(int id, String student_id, String returnDate) {
 		this.id = id;
 		this.student_id = student_id;
 		this.returnDate = returnDate;
@@ -113,10 +113,10 @@ public class BorrowerClass {
 		return id;
 	}
 	
-	public int getstudent_id() {
+	public String getstudent_id() {
 		return student_id;
 	}
-	public void setstudent_id(int student_id) {
+	public void setstudent_id(String student_id) {
 		this.student_id = student_id;
 	}
 	public int getBook_id() {

@@ -155,7 +155,7 @@ public class ReturnBook extends JPanel {
 		txtActualreturndate.setEditable(false);
 		txtActualreturndate.setColumns(10);
 		
-		JLabel lblNewLabel_8 = new JLabel("Over Days ( Day (s))");
+		JLabel lblNewLabel_8 = new JLabel("Over Date ( Day (s))");
 		panelRight.add(lblNewLabel_8);
 		
 		txtOverdays = new JTextField();
