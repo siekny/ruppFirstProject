@@ -238,6 +238,7 @@ public class AdminLogin extends JPanel {
 				}
 				
 				if(isFound) {
+					
 					MainPage.addLibrarianId(adminClass);
 					Main.enableContent(false, false, true, false);
 					content.add(Main.mainPage);
