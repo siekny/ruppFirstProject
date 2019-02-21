@@ -222,10 +222,33 @@ public class Borrow extends JPanel implements ActionListener {
 	}
 	
 	public void editBorrower() {
-		new NewBorrower(0);	// 0 is form for editing borrower
+		if(table.getSelectionModel().isSelectionEmpty())
+			JOptionPane.showConfirmDialog(null, "Please select row to edit !", "", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
+		else {
+			int[] row = table.getSelectedRows();
+			if(row.length == 1) {
+				String getId = table.getModel().getValueAt(row[0], 0).toString();
+				
+				if(table.getModel().getValueAt(row[0], 8).toString().equals("0")) {
+					BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
+					new NewBorrower(borrowed, 0);	// 0 is form for editing borrower
+				}
+				else {
+					JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
+			}
+				
+			else {
+				JOptionPane.showConfirmDialog(null, "Please select Specific row !", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}
+			
 	}
 	public void newBorrower() {
-		new NewBorrower(0);// 0 is form for adding new borrower
+		new NewBorrower(null, 1);	// 1 is form for adding new borrower
+		showBorrower();
+		
 	}
 	public void returnBorrow() {
 	
@@ -242,7 +265,7 @@ public class Borrow extends JPanel implements ActionListener {
 					showBorrower();
 				}
 				else {
-					JOptionPane.showConfirmDialog(null, "This Book's already returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
 				}
 			}
 				

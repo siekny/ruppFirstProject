@@ -193,9 +193,6 @@ public class FormBookUser extends JPanel {
 		lblISBN.setText(book.getIsbn());
 		lblTitle.setText(book.getTitle());
 		lblAuthor.setText(book.getAuthor());
-		lblPublishedYear.setText(book.getPublisher());
-		lblPublisher.setText(book.getPublishedYear() + "");
-		lblPublisher.setText(book.getStatus() + "");
 		
 		lblEdition.setText(book.getEdition() + "");
 		lblPrice.setText(book.getPrice() + "");

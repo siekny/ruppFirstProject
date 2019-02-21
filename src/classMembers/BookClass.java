@@ -6,28 +6,22 @@ public class BookClass {
 	private String title;
 	private String image;
 	private int qty;
-	private String publisher;
-	private int publishedYear;
 	private double price;
 	private String author;
 	private int edition;
-	private int status;
 	private int numBorrow; // check when books have been borrowed
 	
-	public BookClass(int id, String isbn, String title, String image, int qty, String publisher, int publishedYear, double price,
-			String author, int edition, int status, int numBorrow) {
+	public BookClass(int id, String isbn, String title, String image, int qty, double price,
+			String author, int edition, int numBorrow) {
 		super();
 		this.id = id;
 		this.isbn = isbn;
 		this.title = title;
 		this.image = image;
 		this.qty = qty;
-		this.publisher = publisher;
-		this.publishedYear = publishedYear;
 		this.price = price;
 		this.author = author;
 		this.edition = edition;
-		this.status = status;
 		this.numBorrow = numBorrow;
 	}
 	
@@ -77,22 +71,6 @@ public class BookClass {
 		this.qty = qty;
 	}
 
-	public String getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
-
-	public int getPublishedYear() {
-		return publishedYear;
-	}
-
-	public void setPublishedYear(int publishedYear) {
-		this.publishedYear = publishedYear;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -117,13 +95,6 @@ public class BookClass {
 		this.edition = edition;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	
 	
 	

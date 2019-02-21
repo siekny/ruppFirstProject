@@ -46,13 +46,14 @@ public class NewBorrower extends JPanel implements ActionListener {
 	private JTextField txtBookQty;
 	private JLabel lblBook_id;
 	private JButton btnCheckid, btnCheckisbn;
+	private JLabel lblCreateNewBorrower;
 	
 	
 
 	/**
 	 * Create the panel.
 	 */
-	public NewBorrower(int i) {
+	public NewBorrower(BorrowerClass borrow, int isNew) {
 		setLayout(new BorderLayout(0, 0));
 		
 		initComponent();
@@ -60,6 +61,8 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 		borrowInfo();
 		initButton();
+		
+		divideNewOrEditBorrower(borrow, isNew);
 		
 		JOptionPane.showOptionDialog(null	, panelMain, "Create new Borrower", JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION, null, new Object[]{}, null);
 
@@ -77,7 +80,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 		panelTitle.setBackground(new Color(255, 255, 255));
 		panelTitle.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblCreateNewBorrower = new JLabel("Create a new Borrower ");
+		lblCreateNewBorrower = new JLabel("Create a new Borrower ");
 		lblCreateNewBorrower.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCreateNewBorrower.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panelTitle.add(lblCreateNewBorrower, BorderLayout.NORTH);
@@ -138,6 +141,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 		panel_3.add(label_1_1);
 		
 		txtBookQty = new JTextField();
+		txtBookQty.setEditable(false);
 		panelRight.add(txtBookQty);
 		txtBookQty.setColumns(10);
 		
@@ -453,4 +457,28 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 	}
 	
+	public void divideNewOrEditBorrower(BorrowerClass borrow, int isNew) {
+		if(isNew == 1)	return;
+		else if(isNew == 0)	setOldData(borrow);
+	}
+	
+	
+	
+	// INFORMATION FOR EDIT ONLY 
+	public void setOldData(BorrowerClass borrow) {
+		lblCreateNewBorrower.setText("Editing a Borrower");
+		
+		txtStudentID.setText(borrow.getstudent_id());
+		txtStudentName.setText(borrow.getStudentName());
+		txtContact.setText(borrow.getStudentCurrentPhone());
+		txtBookISBN.setText(borrow.getBookISBN());
+		//txtBookQty.setText(borrow.a);
+		cboBorrowQty.setSelectedItem(borrow.getBorrowQTY());
+		
+		// SET EDITABLE = FALSE
+		txtStudentID.setEnabled(false);
+		txtStudentName.setEnabled(false);
+		txtContact.setEnabled(false);
+		btnCheckid.setEnabled(false);
+	}
 }

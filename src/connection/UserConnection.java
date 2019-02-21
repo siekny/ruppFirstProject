@@ -68,8 +68,8 @@ public class UserConnection {
 			String sql = "SELECT * FROM books";
 	        ResultSet rss = stmt.executeQuery(sql);
 	        while(rss.next()) {
-	        	BookClass book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"), rss.getString("publisher"), 
-						rss.getInt("publishedYear"), rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("status"), rss.getInt("numBorrow"));
+	        	BookClass book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"),
+						rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("numBorrow"));
 				
 				
 				bookList.add(book);
@@ -99,8 +99,8 @@ public class UserConnection {
 	        ResultSet rss = stmt.executeQuery(sql);
 	        
 	        while(rss.next()) {
-	        	BookClass book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"), rss.getString("publisher"), 
-						rss.getInt("publishedYear"), rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("status"), rss.getInt("numBorrow"));
+	        	BookClass book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"), 
+						rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("numBorrow"));
 				
 				
 				bookList.add(book);
@@ -149,8 +149,8 @@ public class UserConnection {
 		        ResultSet rss = stmt.executeQuery(sql);
 		        
 		        while(rss.next()) {
-		        	book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"), rss.getString("publisher"), 
-							rss.getInt("publishedYear"), rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("status"), rss.getInt("numBorrow"));
+		        	book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"),
+		        			rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("numBorrow"));
 					bookList.add(book);
 		        }
 		        if(bookList.size() == 0)
