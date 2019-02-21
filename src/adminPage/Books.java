@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
-import com.toedter.calendar.JYearChooser;
 
 public class Books extends JPanel {
 
@@ -21,11 +20,13 @@ public class Books extends JPanel {
 	private JTextField txtSearch;
 	private JTextField txtISBN;
 	private JTextField txtTitle;
-	private JTextField txtPublisher;
+	private JTextField txtAuthor;
 	private JTable table;
 	private DefaultTableModel model;
 	private JButton btnSave, btnClear;
 	private JLabel lblNoUsers;
+	private JTextField txtQty;
+	private JTextField txtPrice;
 	
 
 	/**
@@ -95,7 +96,7 @@ public class Books extends JPanel {
 		
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
-		String[] colsName = new String[] {"id", "ISBN", "Title", "Publisher", "PbulishedYear", "Price", "Author", "Edition", "Status"};
+		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price"};
 		
 		
 		model = new DefaultTableModel(null, colsName) {
@@ -224,42 +225,80 @@ public class Books extends JPanel {
 		panelInner.add(txtTitle);
 		txtTitle.setColumns(15);
 		
-		JPanel panelPublisher = new JPanel();
-		panelPublisher.setBackground(SystemColor.desktop);
-		FlowLayout fl_panelPublisher = (FlowLayout) panelPublisher.getLayout();
-		fl_panelPublisher.setAlignment(FlowLayout.LEFT);
-		panelInner.add(panelPublisher);
+		JPanel panelAuthor = new JPanel();
+		panelAuthor.setBackground(SystemColor.desktop);
+		FlowLayout fl_panelAuthor = (FlowLayout) panelAuthor.getLayout();
+		fl_panelAuthor.setAlignment(FlowLayout.LEFT);
+		panelInner.add(panelAuthor);
 		
-		JLabel lblPublisher = new JLabel("     Publisher : ");
-		panelPublisher.add(lblPublisher);
-		lblPublisher.setHorizontalAlignment(SwingConstants.LEFT);
+		JLabel lblAuthor = new JLabel("     Author: ");
+		panelAuthor.add(lblAuthor);
+		lblAuthor.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblNewLabel_9 = new JLabel("*");
-		panelPublisher.add(lblNewLabel_9);
+		panelAuthor.add(lblNewLabel_9);
 		lblNewLabel_9.setForeground(Color.RED);
 		lblNewLabel_9.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		txtPublisher = new JTextField();
-		txtPublisher.setBackground(new Color(255, 255, 255));
-		panelInner.add(txtPublisher);
-		txtPublisher.setColumns(15);
+		txtAuthor = new JTextField();
+		txtAuthor.setBackground(new Color(255, 255, 255));
+		panelInner.add(txtAuthor);
+		txtAuthor.setColumns(15);
 		
-		JPanel panelPublishedYear = new JPanel();
-		panelPublishedYear.setBackground(SystemColor.desktop);
-		FlowLayout fl_panelPublishedYear = (FlowLayout) panelPublishedYear.getLayout();
-		fl_panelPublishedYear.setAlignment(FlowLayout.LEFT);
-		panelInner.add(panelPublishedYear);
+		JPanel panelEdition = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelEdition.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		panelEdition.setBackground(Color.WHITE);
+		panelInner.add(panelEdition);
 		
-		JLabel lblPublishedYear = new JLabel("     PublishedYear : ");
-		panelPublishedYear.add(lblPublishedYear);
+		JLabel lblEdition = new JLabel("     Edition:");
+		panelEdition.add(lblEdition);
+		
+		JLabel label_7 = new JLabel("*");
+		label_7.setHorizontalAlignment(SwingConstants.LEFT);
+		label_7.setForeground(Color.RED);
+		panelEdition.add(label_7);
+		
+		JComboBox cboEdition = new JComboBox();
+		cboEdition.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
+		cboEdition.setBackground(Color.WHITE);
+		panelInner.add(cboEdition);
+		
+		JPanel panelQTY = new JPanel();
+		panelQTY.setBackground(SystemColor.desktop);
+		FlowLayout fl_panelQTY = (FlowLayout) panelQTY.getLayout();
+		fl_panelQTY.setAlignment(FlowLayout.LEFT);
+		panelInner.add(panelQTY);
+		
+		JLabel lblQty = new JLabel("     Quantity: ");
+		panelQTY.add(lblQty);
 		
 		JLabel label_5 = new JLabel("*");
 		label_5.setHorizontalAlignment(SwingConstants.LEFT);
 		label_5.setForeground(Color.RED);
-		panelPublishedYear.add(label_5);
+		panelQTY.add(label_5);
 		
-		JYearChooser yearChooser = new JYearChooser();
-		panelInner.add(yearChooser);
+		txtQty = new JTextField();
+		panelInner.add(txtQty);
+		txtQty.setColumns(10);
+		
+		JPanel panelPrice = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelPrice.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelPrice.setBackground(Color.WHITE);
+		panelInner.add(panelPrice);
+		
+		JLabel lblPrice = new JLabel("     Price:");
+		panelPrice.add(lblPrice);
+		
+		JLabel label_6 = new JLabel("*");
+		label_6.setHorizontalAlignment(SwingConstants.LEFT);
+		label_6.setForeground(Color.RED);
+		panelPrice.add(label_6);
+		
+		txtPrice = new JTextField();
+		panelInner.add(txtPrice);
+		txtPrice.setColumns(10);
 		
 		JLabel label = new JLabel("");
 		label.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLUE));

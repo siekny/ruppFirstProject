@@ -22,7 +22,7 @@ public class Borrow extends JPanel implements ActionListener {
 	private DefaultTableModel model;
 	
 	private JPanel panelTable, panelButton, panelSearch;
-	private JButton btnAddNew, btnDetail, btnRemove, btnEdit, btnReLoad;
+	private JButton btnAddNew, btnRemove, btnEdit, btnReLoad;
 	private JButton btnReturn;
 	private JButton btnBorrowonly;
 	private JButton btnRecycleBin;
@@ -151,13 +151,6 @@ public class Borrow extends JPanel implements ActionListener {
 		panelButton.add(btnReturn);
 		btnReturn.addActionListener(this);
 		
-		btnDetail = new JButton("Detail");
-		btnDetail.setFocusPainted(false);
-		btnDetail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDetail.setBackground(new Color(255, 140, 0));
-		btnDetail.setForeground(new Color(255, 255, 255));
-		panelButton.add(btnDetail);
-		
 		btnEdit = new JButton("Edit");
 		btnEdit.setFocusPainted(false);
 		btnEdit.setForeground(new Color(255, 255, 255));
@@ -182,7 +175,6 @@ public class Borrow extends JPanel implements ActionListener {
 		
 		btnReLoad.addActionListener(this);
 		btnAddNew.addActionListener(this);
-		btnDetail.addActionListener(this);
 		btnRemove.addActionListener(this);
 		btnBorrowonly.addActionListener(this);
 		btnRecycleBin.addActionListener(this);
@@ -215,6 +207,8 @@ public class Borrow extends JPanel implements ActionListener {
 			showBorrower();
 		else if(e.getSource() == btnRecycleBin)
 			recycleofBorrowed();
+		else if(e.getSource() == btnEdit)
+			editBorrower();
 	}
 	public void borrowedBookOnly() {
 		model.setRowCount(0);
@@ -227,8 +221,34 @@ public class Borrow extends JPanel implements ActionListener {
 		}
 	}
 	
+	public void editBorrower() {
+		if(table.getSelectionModel().isSelectionEmpty())
+			JOptionPane.showConfirmDialog(null, "Please select row to edit !", "", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
+		else {
+			int[] row = table.getSelectedRows();
+			if(row.length == 1) {
+				String getId = table.getModel().getValueAt(row[0], 0).toString();
+				
+				if(table.getModel().getValueAt(row[0], 8).toString().equals("0")) {
+					BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
+					new NewBorrower(borrowed, 0);	// 0 is form for editing borrower
+				}
+				else {
+					JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
+			}
+				
+			else {
+				JOptionPane.showConfirmDialog(null, "Please select Specific row !", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}
+			
+	}
 	public void newBorrower() {
-		new NewBorrower();
+		new NewBorrower(null, 1);	// 1 is form for adding new borrower
+		showBorrower();
+		
 	}
 	public void returnBorrow() {
 	
@@ -238,11 +258,15 @@ public class Borrow extends JPanel implements ActionListener {
 			int[] row = table.getSelectedRows();
 			if(row.length == 1) {
 				String getId = table.getModel().getValueAt(row[0], 0).toString();
-				BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
 				
-				new ReturnBook(borrowed);
-				//table.getModel().setValueAt(borrowed.actualReturnDate(), row[0], 8);
-				showBorrower();
+				if(table.getModel().getValueAt(row[0], 8).toString().equals("0")) {
+					BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
+					new ReturnBook(borrowed);
+					showBorrower();
+				}
+				else {
+					JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
 			}
 				
 			else {
