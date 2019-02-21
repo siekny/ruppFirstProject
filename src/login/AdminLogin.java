@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -15,6 +16,10 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.MatteBorder;
 
+import adminPage.MainPage;
+import classMembers.AdminClass;
+import classMembers.LibrarianClass;
+import connection.DBConnection;
 import main.Main;
 
 import java.awt.Cursor;
@@ -22,6 +27,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class AdminLogin extends JPanel {
 
@@ -32,7 +41,7 @@ public class AdminLogin extends JPanel {
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 	private JLabel labelSignUp;
-	
+	private AdminClass adminClass;
 	/**
 	 * Create the panel.
 	 */
@@ -191,8 +200,51 @@ public class AdminLogin extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Main.enableContent(false, false, true, false);
-				content.add(Main.mainPage);
+				boolean isFound = false;
+				
+				try {
+					Connection connection = DBConnection.connectDB();
+					Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					
+					String sql = "SELECT * FROM users WHERE status = 1";
+					ResultSet resultSet = statement.executeQuery(sql);
+					
+					
+					
+					while(resultSet.next()) {
+						if(
+								txtUsername.getText().equals(resultSet.getString("fullname")) &&
+								txtPassword.getText().equals(resultSet.getString("password"))
+						  ) {
+							adminClass = 
+								new AdminClass(
+													resultSet.getInt("id"),
+													resultSet.getString("fullname"),
+													resultSet.getString("password"),
+													resultSet.getString("sex"),
+													resultSet.getString("address"),
+													resultSet.getString("email"),
+													resultSet.getString("phone"),
+													resultSet.getString("dateofbirth"),
+													resultSet.getInt("status")
+												  );
+							
+							isFound = true;
+						}
+					}
+				}
+				catch(SQLException ex) {
+					ex.printStackTrace();
+				}
+				
+				if(isFound) {
+					MainPage.addLibrarianId(adminClass);
+					Main.enableContent(false, false, true, false);
+					content.add(Main.mainPage);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username or Password is incorrect", "Error", JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		});
 		
@@ -208,9 +260,7 @@ public class AdminLogin extends JPanel {
 				
 				Main.enableContent(true, false, false, false);
 				content.add(Main.log);
-		        
-				
-				
+
 			}
 		});
 		labelSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
