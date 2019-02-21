@@ -23,9 +23,6 @@ import java.awt.Cursor;
 import classMembers.BookClass;
 import classMembers.BorrowerClass;
 import connection.UserConnection;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
@@ -48,14 +45,14 @@ public class NewBorrower extends JPanel implements ActionListener {
 	private JTextField txtBookISBN;
 	private JTextField txtBookQty;
 	private JLabel lblBook_id;
-	
+	private JButton btnCheckid, btnCheckisbn;
 	
 	
 
 	/**
 	 * Create the panel.
 	 */
-	public NewBorrower() {
+	public NewBorrower(int i) {
 		setLayout(new BorderLayout(0, 0));
 		
 		initComponent();
@@ -68,7 +65,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void initComponent () {
 		panelMain = new JPanel();
 		panelMain.setBackground(Color.WHITE);
@@ -93,7 +90,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 		JPanel panelInner = new JPanel();
 		panelInner.setBackground(new Color(255, 255, 255));
 		panelContent.add(panelInner, BorderLayout.NORTH);
-		panelInner.setLayout(new GridLayout(0, 2, 20, 0));
+		panelInner.setLayout(new GridLayout(0, 2, 10, 0));
 		
 		panelLeft = new JPanel();
 		panelLeft.setBorder(new TitledBorder(null, "Student Information", TitledBorder.LEFT, TitledBorder.TOP, null, null));
@@ -251,6 +248,25 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 		initStudentID();
 		
+		JPanel panelID = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelID.getLayout();
+		flowLayout.setHgap(0);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(0);
+		panelID.setBackground(new Color(255, 255, 255));
+		panelLeft.add(panelID);
+		txtStudentID = new JTextField();
+		txtStudentID.setHorizontalAlignment(SwingConstants.LEFT);
+		panelID.add(txtStudentID);
+		txtStudentID.setColumns(10);
+		
+		btnCheckid = new JButton("Check");
+		btnCheckid.setBackground(Color.WHITE);
+		btnCheckid.setForeground(Color.BLACK);
+		btnCheckid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCheckid.setFocusPainted(false);
+		panelID.add(btnCheckid);
+
 		JPanel panelStudentName = new JPanel();
 		panelStudentName.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_3 = (FlowLayout) panelStudentName.getLayout();
@@ -303,73 +319,45 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 	}
 	
-	public void initButton() {
-	}
+	
 	
 	public void initStudentID() {
-		txtStudentID = new JTextField();
-		panelLeft.add(txtStudentID);
-		txtStudentID.setColumns(10);
-		
-		txtStudentID.addActionListener(action);
 		
 	}
 	
 	public void initBookISBN() {
+		
+		JPanel panelISBN = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panelISBN.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(0);
+		flowLayout.setHgap(0);
+		panelISBN.setBackground(Color.WHITE);
+		panelRight.add(panelISBN);
 		txtBookISBN = new JTextField();
-		txtBookISBN.setColumns(20);
-		panelRight.add(txtBookISBN);
-		txtBookISBN.addActionListener(action);
+		panelISBN.add(txtBookISBN);
+		txtBookISBN.setColumns(10);
+		
+		btnCheckisbn = new JButton("Check");
+		btnCheckisbn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCheckisbn.setFocusPainted(false);
+		panelISBN.add(btnCheckisbn);
+		
 	}
 
-	Action action = new AbstractAction()
-	{
-		private static final long serialVersionUID = 1L;
+	public void initButton() {
+		btnCheckid.addActionListener(this);
+		btnCheckisbn.addActionListener(this);
+	}
 
-		public void actionPerformed(ActionEvent e)
-	    {
-			try {
-				if(e.getSource() == txtStudentID) {
-					
-					if(txtStudentID.getText().isEmpty()) {
-						txtStudentID.setText("");
-						throw new Exception("Student ID is required!");	
-					}
-					else {
-						boolean returnDate = new UserConnection().getReturnDate(txtStudentID.getText());
-						if(returnDate)
-							throw new Exception("You haven't returned our book yet!");
-						else
-							throw new Exception("Available to borrow!");
-						
-					}
-				}
-				else if(e.getSource() == txtBookISBN) {
-					if(txtBookISBN.getText().isEmpty()) {
-						txtBookQty.setText("");
-						txtBookISBN.setText("");
-						throw new Exception("Book ISBN is required!");
-					}
-					else {
-						BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
-						System.out.println(book.getTitle());
-						txtBookQty.setText(book.numBookAvailable(book.getNumBorrow()) + "");
-						lblBook_id.setText(book.getID() + "");
-					}
-				}
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-	        		
-	    }
-
-	};
-	
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		if(e.getSource() == btnCheckid)
+			checkID();
+		else if(e.getSource() == btnCheckisbn)
+			checkISBN();
 		if(e.getSource() == btnAddnew)
 			try {
 				addNewBorrow();
@@ -382,11 +370,58 @@ public class NewBorrower extends JPanel implements ActionListener {
 		
 	}
 	
+	public void checkID() {
+		try {
+			if(txtStudentID.getText().isEmpty()) {
+				txtStudentID.setText("");
+				btnCheckid.setText("Check");
+				throw new Exception("Student ID is required!");	
+			}
+			else {
+				boolean returnDate = new UserConnection().getReturnDate(txtStudentID.getText());
+				if(returnDate) {
+					btnCheckid.setText("Check");
+					txtStudentID.setText("");
+					txtStudentName.setText("");
+					txtContact.setText("");
+					throw new Exception("You haven't returned our book yet!");
+				}
+				else {
+					btnCheckid.setText("Done");
+					throw new Exception("Available to borrow!");
+				}
+				
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+	
+	public void checkISBN() {
+		try {
+			if(txtBookISBN.getText().isEmpty()) {
+				txtBookQty.setText("");
+				txtBookISBN.setText("");
+				btnCheckisbn.setText("Check");
+				JOptionPane.showMessageDialog(null, "Book ISBN is required!");
+			}
+			else {
+				BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
+				System.out.println(book.getTitle());
+				txtBookQty.setText(book.numBookAvailable(book.getNumBorrow()) + "");
+				lblBook_id.setText(book.getID() + "");
+				btnCheckisbn.setText("Done");
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+	
 	public void addNewBorrow() throws Exception {
-		if(txtStudentID.getText().isEmpty())
+		if(btnCheckid.getText().equals("Check"))
 			throw new Exception("StudentID is required!");
 		
-		if(txtStudentName.getText().isEmpty())
+		if(btnCheckisbn.getText().equals("Check"))
 			throw new Exception("Student Name is required!");
 		
 		

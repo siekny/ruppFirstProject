@@ -22,6 +22,7 @@ import connection.UserConnection;
 
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import java.awt.Cursor;
 
 public class ReturnBook extends JPanel {
 
@@ -78,17 +79,17 @@ public class ReturnBook extends JPanel {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(255, 255, 255));
 		paneText.add(panelLeft);
-		panelLeft.setLayout(new GridLayout(5, 2, 0, 5));
+		panelLeft.setLayout(new GridLayout(6, 2, 0, 5));
 		
 		JLabel lblNewLabel_1 = new JLabel("Student ID");
 		panelLeft.add(lblNewLabel_1);
 		
 		txtTxtstudentid = new JTextField();
+		panelLeft.add(txtTxtstudentid);
 		txtTxtstudentid.setBackground(new Color(255, 255, 255));
 		txtTxtstudentid.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
-		panelLeft.add(txtTxtstudentid);
 		txtTxtstudentid.setEditable(false);
-		txtTxtstudentid.setColumns(20);
+		txtTxtstudentid.setColumns(5);
 		
 		JLabel lblNewLabel_2 = new JLabel("Student Name");
 		panelLeft.add(lblNewLabel_2);
@@ -98,7 +99,7 @@ public class ReturnBook extends JPanel {
 		txtStudentname.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
 		panelLeft.add(txtStudentname);
 		txtStudentname.setEditable(false);
-		txtStudentname.setColumns(10);
+		txtStudentname.setColumns(5);
 		
 		JLabel lblNewLabel_3 = new JLabel("Book ISBN");
 		panelLeft.add(lblNewLabel_3);
@@ -108,7 +109,7 @@ public class ReturnBook extends JPanel {
 		txtBookisbn.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
 		panelLeft.add(txtBookisbn);
 		txtBookisbn.setEditable(false);
-		txtBookisbn.setColumns(10);
+		txtBookisbn.setColumns(5);
 		
 		JLabel lblNewLabel_4 = new JLabel("QTY of Book Borrowed");
 		panelLeft.add(lblNewLabel_4);
@@ -118,7 +119,7 @@ public class ReturnBook extends JPanel {
 		txtQty.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
 		panelLeft.add(txtQty);
 		txtQty.setEditable(false);
-		txtQty.setColumns(10);
+		txtQty.setColumns(5);
 		
 		JLabel lblNewLabel_5 = new JLabel("Date of Issue");
 		panelLeft.add(lblNewLabel_5);
@@ -139,6 +140,7 @@ public class ReturnBook extends JPanel {
 		panelRight.add(lblReturndate);
 		
 		txtReturndate = new JTextField();
+		txtReturndate.setForeground(Color.RED);
 		txtReturndate.setBackground(new Color(255, 255, 255));
 		txtReturndate.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
 		panelRight.add(txtReturndate);
@@ -149,6 +151,7 @@ public class ReturnBook extends JPanel {
 		panelRight.add(lblNewLabel_6);
 		
 		txtActualreturndate = new JTextField();
+		txtActualreturndate.setForeground(Color.BLUE);
 		txtActualreturndate.setBackground(new Color(255, 255, 255));
 		txtActualreturndate.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
 		panelRight.add(txtActualreturndate);
@@ -179,9 +182,11 @@ public class ReturnBook extends JPanel {
 		panelRight.add(label);
 		
 		btnReturn = new JButton("Return");
+		btnReturn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelRight.add(btnReturn);
 		
 		JPanel panelBottom = new JPanel();
+		panelBottom.setVisible(false);
 		panelBottom.setBackground(new Color(255, 255, 255));
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
@@ -217,8 +222,14 @@ public class ReturnBook extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				new UserConnection().returnBook(borrowed, Integer.parseInt(lblBorrowedid.getText()));
-				JOptionPane.showMessageDialog(null, "Book has been returned successfully!");
+				int confirm = JOptionPane.showConfirmDialog(null, "Wanna Return this Book?", "Returning...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+				if(confirm == JOptionPane.OK_OPTION) {
+					new UserConnection().returnBook(borrowed, Integer.parseInt(lblBorrowedid.getText()));
+					JOptionPane.showMessageDialog(null, "Book has been returned successfully!");
+				}
+				else
+					return;
+				
 			}
 		});
 	}
