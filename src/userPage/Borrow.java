@@ -178,6 +178,8 @@ public class Borrow extends JPanel implements ActionListener {
 		btnRemove.addActionListener(this);
 		btnBorrowonly.addActionListener(this);
 		btnRecycleBin.addActionListener(this);
+		
+		txtSearch.addActionListener(this);
 	}
 	
 	public void showBorrower() {
@@ -209,6 +211,8 @@ public class Borrow extends JPanel implements ActionListener {
 			recycleofBorrowed();
 		else if(e.getSource() == btnEdit)
 			editBorrower();
+		else if(e.getSource() == txtSearch)
+			searchBorrower();
 	}
 	public void borrowedBookOnly() {
 		model.setRowCount(0);
@@ -305,6 +309,20 @@ public class Borrow extends JPanel implements ActionListener {
 	public void recycleofBorrowed() {
 		new RecycleofBorrowed();
 		showBorrower();
+	}
+	
+	public void searchBorrower() {
+		model.setRowCount(0);
+		if(txtSearch.getText().isEmpty())
+			showBorrower();
+		else {
+			ArrayList<BorrowerClass> borrowListSearch = new UserConnection().searchBorrowers(txtSearch.getText());
+			for(int i=0; i<borrowListSearch.size(); i++) {
+				BorrowerClass borrowSearch = borrowListSearch.get(i);
+				model.addRow(borrowSearch.getBorrowColumns());
+			}
+		}
+		
 	}
 
 
