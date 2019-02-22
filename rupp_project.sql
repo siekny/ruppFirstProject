@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `books` (
 DELETE FROM `books`;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
 INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `qty`, `numBorrow`, `bookInStock`, `price`, `author`, `edition`) VALUES
-	(1, '001', 'Hary Portter', 'harry-porter.jpg', 10, -3, 13, 12.23, 'Ny', 2),
-	(2, '002', 'sleeping Beauty', 'sleeping-beauty.jpg', 23, 4, 19, 8.23, 'Ny', 3);
+	(1, '001', 'Hary Portter', 'harry-porter.jpg', 10, 0, 10, 12.23, 'Ny', 2),
+	(2, '002', 'sleeping Beauty', 'sleeping-beauty.jpg', 23, 0, 23, 8.23, 'Ny', 3);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.borrows
@@ -54,14 +54,15 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   `fine` int(11) DEFAULT '0',
   `status_removed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.borrows: ~1 rows (approximately)
+-- Dumping data for table rupp_project.borrows: ~3 rows (approximately)
 DELETE FROM `borrows`;
 /*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
 INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
 	(3, '1', 'siekny', '087654321', 1, '001', 3, 'Feb-19-2019\r\n', 'Feb-21-2019', 0, 0, 1),
-	(20, '001', 'meny', '09876543', 2, '2', 1, 'Feb-21-2019', '0', 0, 0, 1);
+	(20, '001', 'meny', '09876543', 2, '2', 1, 'Feb-21-2019', '0', 0, 0, 1),
+	(22, '003', 'vatey', '09876532', 2, '2', 2, 'Feb-21-2019', '0', 0, 0, 1);
 /*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.users
