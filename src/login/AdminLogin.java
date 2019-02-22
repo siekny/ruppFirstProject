@@ -18,6 +18,7 @@ import javax.swing.border.MatteBorder;
 
 import adminPage.MainPage;
 import classMembers.AdminClass;
+import classMembers.InformationClass;
 import classMembers.LibrarianClass;
 import connection.DBConnection;
 import main.Main;
@@ -31,6 +32,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AdminLogin extends JPanel {
 
@@ -199,45 +202,13 @@ public class AdminLogin extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				adminClass = AdminClass.getAdmin(txtUsername.getText(), txtPassword.getText());
 				
-				boolean isFound = false;
-				
-				try {
-					Connection connection = DBConnection.connectDB();
-					Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-					
-					String sql = "SELECT * FROM users WHERE status = 1";
-					ResultSet resultSet = statement.executeQuery(sql);
-					
-					
-					
-					while(resultSet.next()) {
-						if(
-								txtUsername.getText().equals(resultSet.getString("fullname")) &&
-								txtPassword.getText().equals(resultSet.getString("password"))
-						  ) {
-							adminClass = 
-								new AdminClass(
-													resultSet.getInt("id"),
-													resultSet.getString("fullname"),
-													resultSet.getString("password"),
-													resultSet.getString("sex"),
-													resultSet.getString("address"),
-													resultSet.getString("email"),
-													resultSet.getString("phone"),
-													resultSet.getString("dateofbirth"),
-													resultSet.getInt("status")
-												  );
-							
-							isFound = true;
-						}
-					}
-				}
-				catch(SQLException ex) {
-					ex.printStackTrace();
-				}
-				
-				if(isFound) {
+				if(adminClass != null) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+					Date date = new Date();
+					adminClass.addAction(new InformationClass(sdf.format(date), "Log-In"));
 					
 					MainPage.addLibrarianId(adminClass);
 					Main.enableContent(false, false, true, false);

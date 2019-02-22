@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -22,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
 
 import classMembers.AdminClass;
+import classMembers.InformationClass;
 import classMembers.LibrarianClass;
 
 
@@ -296,6 +299,10 @@ public class MainPage extends JPanel implements ActionListener{
 	}
 	
 	public void logoutButton() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+		Date date = new Date();
+		adminClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+		
 		lblTitle.setText("  USER LOGOUT");
 		Main.content.add(Main.log);
 		buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
+import classMembers.InformationClass;
 import classMembers.LibrarianClass;
 import classMembers.UserClass;
 
@@ -296,6 +298,9 @@ public class Profile extends JPanel {
 	
 	private void initTable() {
 		table = new DefaultTableModel(null, new Object[] {"Date/Time", "Action"});
+		List<InformationClass> infos = LibrarianClass.getListOfAction(librarianClass.getID());
+		for(InformationClass temp : infos)
+			table.addRow(new Object[] {temp.getDate(), temp.getAction()});
 		
 		jTable = new JTable(table);
 		jTable.setRowHeight(23);

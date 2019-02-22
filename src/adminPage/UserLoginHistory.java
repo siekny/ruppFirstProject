@@ -5,7 +5,16 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
@@ -17,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import connection.DBConnection;
 
 import java.awt.Color;
 import javax.swing.JTable;
@@ -70,7 +81,12 @@ public class UserLoginHistory extends JPanel {
 		btnRefresh.setForeground(new Color(255, 255, 255));
 		btnRefresh.setBackground(new Color(0,166,90));
 		btnRefresh.setFocusPainted(false);
-		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				showAllUserInfo();
+			}
+		});		
 		panelSearch.add(btnRefresh);
 		
 		JLabel lblNewLabel_1 = new JLabel("          Search : ");
@@ -91,13 +107,9 @@ public class UserLoginHistory extends JPanel {
 		panelInner.add(panelTable, BorderLayout.CENTER);
 		panelTable.setLayout(new BorderLayout(0, 0));
 		
-		
-		String[] colsName = new String[] {"id", "Full Name", "Username", "Address", "Date of Membership", "Type of Membership", "Status"};
+		String[] colsName = new String[] {"", "ID", "Fullname", "Username", "Sex", "Phone", "Date of Membership", "Type of Membership"};
 		model = new DefaultTableModel(null, colsName) {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -105,7 +117,7 @@ public class UserLoginHistory extends JPanel {
 		        return column == 0;
 		    }
 		};
-		
+				
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
@@ -125,12 +137,38 @@ public class UserLoginHistory extends JPanel {
 		btnDetail.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\eye.png"));
 		btnDetail.setBackground(new Color(255, 140, 0));
 		btnDetail.setForeground(new Color(255, 255, 255));
+		btnDetail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				
+			}
+		});
 		panelBottom.add(btnDetail);
 
+		showAllUserInfo();
+		
 	}
 	
 	public void showAllUserInfo() {
-		
+		try {
+			Connection connection = DBConnection.connectDB();
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			String sql = "SELECT * FROM users WHERE status != 1";
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			while(resultSet.next()) {
+				model.addRow(
+						new Object[] {
+								"", resultSet.getString("id"), resultSet.getString("fullname"), resultSet.getString("username"),
+								resultSet.getString("sex"), resultSet.getString("phone"), resultSet.getString("dateofmembership"),
+								"Member"
+								}
+						);
+			}
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

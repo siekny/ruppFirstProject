@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -15,13 +16,18 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.MatteBorder;
 
+import classMembers.InformationClass;
+import classMembers.UserClass;
 import main.Main;
+import userPage.HomePage;
 
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserLogin extends JPanel {
 
@@ -32,6 +38,7 @@ public class UserLogin extends JPanel {
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 	private JLabel labelSignUp;
+	private UserClass userClass;
 	
 	/**
 	 * Create the panel.
@@ -191,8 +198,20 @@ public class UserLogin extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Main.enableContent(false, false, false, true);
-				content.add(Main.homePage);
+				userClass = UserClass.getUser(txtUsername.getText(), txtPassword.getText());
+
+				if(userClass != null) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+					Date date = new Date();
+					userClass.addAction(new InformationClass(sdf.format(date), "Log-In"));
+					
+					HomePage.addUser(userClass);
+					Main.enableContent(false, false, false, true);
+					content.add(Main.homePage);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username or Password is incorrect", "Error", JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		});
 		
@@ -208,9 +227,7 @@ public class UserLogin extends JPanel {
 				
 				Main.enableContent(false, true, false, false);
 				content.add(Main.adminLogin);
-		        
-				
-				
+
 			}
 		});
 		labelSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
