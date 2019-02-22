@@ -46,6 +46,7 @@ public class UserLoginHistory extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	public UserLoginHistory() {
 		setLayout(new BorderLayout(0, 0));
 		
