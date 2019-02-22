@@ -6,20 +6,26 @@ import java.util.List;
 public class LibrarianClass extends PeopleClass{
 
 	protected String password;
-	protected String typeofmembership;
 	protected int status;
 	protected List<String> action;
 	
+	public LibrarianClass() {
+		super();
+	}
 	
 	public LibrarianClass(int id, String fullname, String password, String sex, String address, String email,
-			String phone, String dateofbirth, String typeofmembership, int status) {
+			String phone, String dateofbirth, int status) {
 		
 		super(id, fullname, sex, address, email, phone, dateofbirth);
 		this.password = password;
-		this.typeofmembership = typeofmembership;
 		this.status = status;
 		
 		action = new ArrayList<String>();
+	}
+	
+	public LibrarianClass getLibrarian() {
+		
+		return new LibrarianClass();
 	}
 	
 	public void addListofAction(List<String> action) {
@@ -30,12 +36,12 @@ public class LibrarianClass extends PeopleClass{
 		this.action.add(action);
 	}
 	
+	public ArrayList<String> getListOfAction(){
+		return (ArrayList<String>) action;
+	}
+	
 	public String getPassword() {
 		return password;
-	}
-
-	public String getTypeofmembership() {
-		return typeofmembership;
 	}
 
 	public int getStatus() {

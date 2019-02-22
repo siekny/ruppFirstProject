@@ -10,6 +10,10 @@ public class PeopleClass {
 	protected String phone;
 	protected String dateofbirth;
 	
+	public PeopleClass() {
+		
+	}
+	
 	public PeopleClass(int id, String fullname, String sex, String address, String email, String phone,
 			String dateofbirth) {
 		this.id = id;

@@ -32,7 +32,6 @@ public class UserClass extends LibrarianClass{
 			String email,
 			String phone,
 			String dateofbirth,
-			String typeofmembership,
 			String dateofmembership,
 			int status
 			){
@@ -52,7 +51,7 @@ public class UserClass extends LibrarianClass{
 		
 			//*/
 		
-			super(id, fullname, password, sex, address, email, phone, dateofbirth, typeofmembership, status);
+			super(id, fullname, password, sex, address, email, phone, dateofbirth, status);
 			this.username = username;
 			this.dateofmembership = dateofmembership;
 	}

@@ -239,7 +239,6 @@ public class Members extends JPanel {
 							txtPhone.getText(),
 							txtDOB.getText(),
 							txtDateofMem.getText(),
-							txtType.getText(),
 							Integer.parseInt(txtStatus.getText())
 							);
 					
@@ -336,7 +335,7 @@ public class Members extends JPanel {
 				while(rss.next()) {
 					UserClass temp = new UserClass(rss.getInt("id"), rss.getString("fullname"), rss.getString("username"),
 							rss.getString("password"), rss.getString("sex"), rss.getString("address"),rss.getString("email"),
-							rss.getString("phone"), rss.getString("dateofbirth"), rss.getString("typeofmembership"), 
+							rss.getString("phone"), rss.getString("dateofbirth"),
 							rss.getString("dateofmembership"), rss.getInt("status")
 							);
 					Userlist.add(temp);
@@ -348,7 +347,7 @@ public class Members extends JPanel {
 				for (int i=0;i<Userlist.size();i++) {
 					UserClass user = Userlist.get(i);
 					Object obj[]= { user.getID(), user.getFullname(), user.getUsername(),user.getAddress(),user.getDateofmembership(),
-							user.getTypeofmembership(),user.getStatus()
+							user.getStatus()
 					};
 					model.addRow(obj);
 				}

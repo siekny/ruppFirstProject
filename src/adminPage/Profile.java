@@ -249,7 +249,11 @@ public class Profile extends JPanel {
 		lblEmail.setText(librarianClass.getEmail());
 		lblPhone.setText(librarianClass.getPhone());
 		lblDob.setText(librarianClass.getDateofbirth());
-		lblTom.setText(librarianClass.getTypeofmembership());
+		
+		String typeOfMemberShip;
+		if(librarianClass.getStatus() == 1)	typeOfMemberShip = "Admin";
+		else	typeOfMemberShip = "Member";		
+		lblTom.setText(typeOfMemberShip);
 		
 		if(librarianClass instanceof UserClass) {
 			UserClass temp = (UserClass) librarianClass;
