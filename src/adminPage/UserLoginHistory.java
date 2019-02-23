@@ -141,6 +141,8 @@ public class UserLoginHistory extends JPanel {
 		btnDetail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				
+				
+				
 			}
 		});
 		panelBottom.add(btnDetail);
