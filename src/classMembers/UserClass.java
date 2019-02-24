@@ -10,9 +10,6 @@ import connection.DBConnection;
 
 public class UserClass extends LibrarianClass{
 	
-	private String dateofmembership;
-	private String username;
-	
 	public UserClass(
 			int id,
 			String fullname,
@@ -27,24 +24,8 @@ public class UserClass extends LibrarianClass{
 			int status
 			){
 		
-			/*
-		
-			this.id = id;
-			this.fullname = fullname;		
-			this.password = password;
-			this.sex = sex;
-			this.address = address;
-			this.email = email;
-			this.phone = phone;
-			this.dateofbirth = dateofbirth;
-			this.status = status;
-			this.typeofmembership = typeofmembership;
-		
-			//*/
-		
-			super(id, fullname, password, sex, address, email, phone, dateofbirth, status);
-			this.username = username;
-			this.dateofmembership = dateofmembership;
+			super(id, fullname, username, password, sex, address, email, phone, dateofbirth, dateofmembership, status);
+
 	}
 	
 	public UserClass() {
@@ -62,7 +43,7 @@ public class UserClass extends LibrarianClass{
 			
 			while(resultSet.next()) {
 				if(
-						username.equals(resultSet.getString("fullname")) &&
+						username.equals(resultSet.getString("username")) &&
 						password.equals(resultSet.getString("password"))
 				  ) { 
 					return new UserClass(
@@ -90,14 +71,40 @@ public class UserClass extends LibrarianClass{
 		return null;
 	}
 	
-	public String getUsername() {
-		return this.username;
+	public static UserClass getUser(int id) {
+		
+		UserClass userClass;
+		
+		try {
+			Connection connection = DBConnection.connectDB();
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			String sql = "SELECT * FROM users WHERE id = " + id;
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			resultSet.next();
+			
+			userClass = new UserClass(
+									resultSet.getInt("id"),
+									resultSet.getString("fullname"),
+									resultSet.getString("username"),
+									resultSet.getString("password"),
+									resultSet.getString("sex"),
+									resultSet.getString("address"),
+									resultSet.getString("email"),
+									resultSet.getString("phone"),
+									resultSet.getString("dateofbirth"),
+									resultSet.getString("dateofmembership"),
+									resultSet.getInt("status")
+								  );
+			
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		
+		return userClass;
 	}
 	
-	public String getDateofmembership() {
-		return this.dateofmembership;
-	}
-	
-	
-
 }

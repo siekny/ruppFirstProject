@@ -30,6 +30,8 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -51,6 +53,7 @@ public class Members extends JPanel {
 	private JTextField txtSearch;
 	private JTable table;
 	private DefaultTableModel model;
+	private StringBuilder sb = new StringBuilder(); 
 
 	/**
 	 * Create the panel.
@@ -99,6 +102,64 @@ public class Members extends JPanel {
 		
 		txtSearch = new JTextField();
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		
+		txtSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent ke) {
+				if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE && sb.length() > 0)
+					sb.deleteCharAt(sb.length()-1);
+				else if(ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+					sb.append(ke.getKeyChar());
+				else {}
+					
+				if(sb.toString().equals("")) {
+					btnRefresh.doClick();
+					return;
+				}
+				
+				try {
+					Connection connection = DBConnection.connectDB();
+					Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					String sql = "";
+					
+					try {
+						Integer.parseInt(sb.toString());
+						sql = "SELECT * FROM users WHERE status != 1 AND (id = " + sb.toString() + " OR fullname LIKE '" + sb.toString() + "%' OR " +
+								"username LIKE '" + sb.toString() + "%')";
+					}
+					catch(NumberFormatException e) {
+						sql = "SELECT * FROM users WHERE status != 1 AND (fullname LIKE '" + sb.toString() + "%' OR " +
+								 "username LIKE '" + sb.toString() + "%')";
+					}
+
+					ResultSet resultSet = statement.executeQuery(sql);
+					
+					if(!resultSet.next()) {
+						model.setRowCount(0);
+						return;
+					}
+					else
+						resultSet.previous();
+					
+					model.getDataVector().removeAllElements();			
+					while(resultSet.next()) {
+						model.addRow(
+								new Object[] {
+										resultSet.getString("id"), resultSet.getString("fullname"), resultSet.getString("username"),
+										resultSet.getString("sex"), resultSet.getString("phone"), resultSet.getString("dateofmembership"),
+										"Member"
+										}
+								);
+					}
+				}
+				catch(Exception ex) {
+					ex.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
 		panelSearch.add(txtSearch);
 		txtSearch.setColumns(30);
 		
@@ -113,7 +174,7 @@ public class Members extends JPanel {
 		panelTable.setLayout(new BorderLayout(0, 0));
 		
 		
-		String[] colsName = new String[] {"ID", "Full Name", "Username", "Address", "Date of Membership", "Type of Membership", "Status"};
+		String[] colsName = new String[] {"ID", "Fullname", "Username", "Sex", "Phone", "Date of Membership", "Type of Membership"};
 		model = new DefaultTableModel(null, colsName) {
 
 			/**
@@ -322,6 +383,8 @@ public class Members extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				txtSearch.setText("");
+				sb.setLength(0);
 				Connection conn;
 				Statement stm;
 				ResultSet rss;
@@ -329,7 +392,7 @@ public class Members extends JPanel {
 				try {
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
 				stm = conn.createStatement();
-				String command = "Select * From USers";
+				String command = "Select * From Users WHERE status != 1";
 				rss = stm.executeQuery(command);
 				
 				while(rss.next()) {
@@ -346,8 +409,8 @@ public class Members extends JPanel {
 				
 				for (int i=0;i<Userlist.size();i++) {
 					UserClass user = Userlist.get(i);
-					Object obj[]= { user.getID(), user.getFullname(), user.getUsername(),user.getAddress(),user.getDateofmembership(),
-							user.getStatus()
+					Object obj[]= { user.getID(), user.getFullname(), user.getUsername(),user.getSex(), user.getPhone(), user.getDateofmembership(),
+							"Member"
 					};
 					model.addRow(obj);
 				}
@@ -650,6 +713,10 @@ public class Members extends JPanel {
 		}
 		});	
 
+		/////////////////
+		btnRefresh.doClick();
+		/////////////////
+		
 	}
 	
 	

@@ -57,14 +57,6 @@ public class Profile extends JPanel {
 		initTable();
 		
 	}
-
-	public Profile() {
-		setLayout(new BorderLayout(0, 0));
-
-		initObject();
-		initLabel();
-		initTable();		
-	}
 	
 	private void initObject() {
 		JPanel panel = new JPanel();
@@ -251,32 +243,16 @@ public class Profile extends JPanel {
 		lblEmail.setText(librarianClass.getEmail());
 		lblPhone.setText(librarianClass.getPhone());
 		lblDob.setText(librarianClass.getDateofbirth());
-		
-		String typeOfMemberShip;
-		if(librarianClass.getStatus() == 1)	typeOfMemberShip = "Admin";
-		else	typeOfMemberShip = "Member";		
-		lblTom.setText(typeOfMemberShip);
-		
-		if(librarianClass instanceof UserClass) {
-			UserClass temp = (UserClass) librarianClass;
-			lblUsername.setText(temp.getUsername());
-			lblDom.setText(temp.getDateofmembership());
-		}
-		
-		/////////////////////
-		
-		boolean isAdmin = (librarianClass.getStatus() == 1);
+		lblUsername.setText(librarianClass.getUsername());
+		lblDom.setText(librarianClass.getDateofmembership());
+		lblTom.setText((librarianClass.getStatus() == 1 ? "Admin" : "Member"));
 		
 		panel_11.add(lblNewLabel);
 		panel_11.add(lblId);
 		panel_11.add(lblNewLabel_1);
 		panel_11.add(lblFullname);	
-		
-		if(!isAdmin) {
-			panel_11.add(lblNewLabel_2);
-			panel_11.add(lblUsername);
-		}
-		
+		panel_11.add(lblNewLabel_2);
+		panel_11.add(lblUsername);
 		panel_11.add(lblNewLabel_3);
 		panel_11.add(lblSex);
 		panel_11.add(lblNewLabel_4);
@@ -289,11 +265,9 @@ public class Profile extends JPanel {
 		panel_11.add(lblDob);
 		panel_11.add(lblNewLabel_8);
 		panel_11.add(lblTom);
+		panel_11.add(lblNewLabel_9);
+		panel_11.add(lblDom);
 		
-		if(!isAdmin) {
-			panel_11.add(lblNewLabel_9);
-			panel_11.add(lblDom);
-		}
 	}
 	
 	private void initTable() {

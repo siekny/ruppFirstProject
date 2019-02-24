@@ -10,6 +10,8 @@ import connection.DBConnection;
 
 public class LibrarianClass extends PeopleClass{
 
+	protected String dateofmembership;
+	protected String username;
 	protected String password;
 	protected int status;
 	
@@ -17,13 +19,14 @@ public class LibrarianClass extends PeopleClass{
 
 	}
 	
-	public LibrarianClass(int id, String fullname, String password, String sex, String address, String email,
-			String phone, String dateofbirth, int status) {
+	public LibrarianClass(int id, String fullname, String username, String password, String sex, String address, String email,
+			String phone, String dateofbirth, String dateofmembership, int status) {
 		
 		super(id, fullname, sex, address, email, phone, dateofbirth);
 		this.password = password;
-		this.status = status;
-	
+		this.status = status;	
+		this.dateofmembership = dateofmembership;
+		this.username = username;
 	}
 	
 	public static ArrayList<InformationClass> getListOfAction(int id){
@@ -66,6 +69,14 @@ public class LibrarianClass extends PeopleClass{
 
 	public int getStatus() {
 		return status;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getDateofmembership() {
+		return dateofmembership;
 	}
 
 }

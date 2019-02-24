@@ -8,11 +8,17 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+
+import classMembers.InformationClass;
+import classMembers.LibrarianClass;
+import classMembers.UserClass;
 
 import java.awt.Color;
 import javax.swing.JScrollPane;
@@ -25,14 +31,27 @@ public class UserInfoDetail extends JDialog {
 	private JTable table;
 	private JScrollPane scrollPane;
 	
+	private JLabel lblId;
+	private JLabel lblUsername;
+	private JLabel lblAddress;
+	private JLabel lblPhone;
+	private JLabel lblDom;
+	private JLabel lblFullname;
+	private JLabel lblSex;
+	private JLabel lblEmail;
+	private JLabel lblDob;
+	private JLabel lblTom;
+	
+	private UserClass userClass;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			UserInfoDetail dialog = new UserInfoDetail();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+//			UserInfoDetail dialog = new UserInfoDetail();
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,12 +60,13 @@ public class UserInfoDetail extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public UserInfoDetail() {
+	public UserInfoDetail(UserClass userClass) {
 		setBounds(250, 100, 850, 600);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		this.userClass = userClass;
 		{
 			JPanel panel = new JPanel();
 			contentPanel.add(panel, BorderLayout.NORTH);
@@ -89,10 +109,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel);
 						}
 						{
-							JLabel lblNewLabel_1 = new JLabel("");
-							lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_1.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_1);
+							lblId = new JLabel("");
+							lblId.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblId.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblId);
 						}
 						{
 							JLabel lblNewLabel_2 = new JLabel("Username");
@@ -100,9 +120,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_2);
 						}
 						{
-							JLabel lblNewLabel_4 = new JLabel("");
-							lblNewLabel_4.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_4);
+							lblUsername = new JLabel("");
+							lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblUsername.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblUsername);
 						}
 						{
 							JLabel lblNewLabel_3 = new JLabel("Address");
@@ -110,10 +131,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_3);
 						}
 						{
-							JLabel lblNewLabel_5 = new JLabel("");
-							lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_5.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_5);
+							lblAddress = new JLabel("");
+							lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblAddress.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblAddress);
 						}
 						{
 							JLabel lblNewLabel_6 = new JLabel("Phone");
@@ -121,10 +142,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_6);
 						}
 						{
-							JLabel lblNewLabel_7 = new JLabel("");
-							lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_7.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_7);
+							lblPhone = new JLabel("");
+							lblPhone.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblPhone.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblPhone);
 						}
 						{
 							JLabel lblNewLabel_8 = new JLabel("Date of Membership");
@@ -132,10 +153,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_8);
 						}
 						{
-							JLabel lblNewLabel_9 = new JLabel("");
-							lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_9.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_9);
+							lblDom = new JLabel("");
+							lblDom.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblDom.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblDom);
 						}
 					}
 					{
@@ -148,10 +169,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_11);
 						}
 						{
-							JLabel lblNewLabel_12 = new JLabel("");
-							lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_12.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_12);
+							lblFullname = new JLabel("");
+							lblFullname.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblFullname.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblFullname);
 						}
 						{
 							JLabel lblNewLabel_13 = new JLabel("Sex");
@@ -159,10 +180,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_13);
 						}
 						{
-							JLabel lblNewLabel_15 = new JLabel("");
-							lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_15.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_15);
+							lblSex = new JLabel("");
+							lblSex.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblSex.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblSex);
 						}
 						{
 							JLabel lblNewLabel_14 = new JLabel("Email");
@@ -170,10 +191,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_14);
 						}
 						{
-							JLabel lblNewLabel_16 = new JLabel("");
-							lblNewLabel_16.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_16.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_16);
+							lblEmail = new JLabel("");
+							lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblEmail.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblEmail);
 						}
 						{
 							JLabel lblNewLabel_18 = new JLabel("Date of Birth");
@@ -181,10 +202,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_18);
 						}
 						{
-							JLabel lblNewLabel_17 = new JLabel("");
-							lblNewLabel_17.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_17.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_17);
+							lblDob = new JLabel("");
+							lblDob.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblDob.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblDob);
 						}
 						{
 							JLabel lblNewLabel_19 = new JLabel("Type of Membership");
@@ -192,10 +213,10 @@ public class UserInfoDetail extends JDialog {
 							panel_3.add(lblNewLabel_19);
 						}
 						{
-							JLabel lblNewLabel_10 = new JLabel("");
-							lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 20));
-							lblNewLabel_10.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-							panel_3.add(lblNewLabel_10);
+							lblTom = new JLabel("");
+							lblTom.setFont(new Font("Tahoma", Font.PLAIN, 20));
+							lblTom.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+							panel_3.add(lblTom);
 						}
 					}
 				}
@@ -218,7 +239,7 @@ public class UserInfoDetail extends JDialog {
 				}
 				{
 					JLabel label = new JLabel(" ");
-					label.setFont(new Font("Tahoma", Font.PLAIN, 20));
+					label.setFont(new Font("Tahoma", Font.PLAIN, 30));
 					panel_1.add(label, BorderLayout.NORTH);
 				}
 			}
@@ -240,6 +261,26 @@ public class UserInfoDetail extends JDialog {
 			JLabel label = new JLabel("     ");
 			contentPanel.add(label, BorderLayout.EAST);
 		}
+		
+		showUserInfo();
+		
+	}
+
+	public void showUserInfo() {
+		lblId.setText(userClass.getID() + "");
+		lblUsername.setText(userClass.getUsername());
+		lblAddress.setText(userClass.getAddress());
+		lblPhone.setText(userClass.getPhone());
+		lblDom.setText(userClass.getDateofmembership());
+		lblFullname.setText(userClass.getFullname());
+		lblSex.setText(userClass.getSex());
+		lblEmail.setText(userClass.getEmail());
+		lblDob.setText(userClass.getDateofbirth());
+		lblTom.setText("Member");
+		
+		List<InformationClass> infos = LibrarianClass.getListOfAction(userClass.getID());
+		for(InformationClass temp : infos)
+			dtm.addRow(new Object[] {temp.getDate(), temp.getAction()});
 	}
 
 }

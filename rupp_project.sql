@@ -55,10 +55,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table rupp_project.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `sex`, `address`, `email`, `phone`, `dateofbirth`, `dateofmembership`, `status`) VALUES
-	(1, 'five remji', NULL, '123', 'M', 'Phnom Penh', 'fiveremji@gmail.com', '012121212', '01-01-2000', NULL, 1),
-	(2, 'leng', NULL, '123', 'M', 'Phnom Penh', 'leng@gmail.com', '012121212', '01-01-2000', NULL, 1),
+	(1, 'five remji', 'Sword', '123', 'M', 'Phnom Penh', 'fiveremji@gmail.com', '012121212', '01-01-2000', '20-12-2000', 1),
+	(2, 'leng', 'Akame', '123', 'M', 'Phnom Penh', 'leng@gmail.com', '012121212', '01-01-2000', '12-12-1999', 1),
 	(3, 'lenge', 'BoyBoy', '123', 'M', 'Phnom Penh', 'leng@gmail.com', '012121212', '01-01-2000', '10-10-2010', 2),
-	(4, 'abc', 'Ms. Abc', '123', 'F', 'Phnom Penh', 'abc@yahoo.com', '012345678', '11-11-1991', '11-11-2011', 2);
+	(4, 'abc', 'Abcman', '123', 'F', 'Phnom Penh', 'abc@yahoo.com', '012345678', '11-11-1991', '11-11-2011', 2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.users_info
@@ -68,13 +68,22 @@ CREATE TABLE IF NOT EXISTS `users_info` (
   `date` varchar(50) DEFAULT '0',
   `action` varchar(50) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.users_info: 2 rows
+-- Dumping data for table rupp_project.users_info: 0 rows
 /*!40000 ALTER TABLE `users_info` DISABLE KEYS */;
 INSERT INTO `users_info` (`id`, `userid`, `date`, `action`) VALUES
-	(1, 4, '23-02-2019 / 00:08', 'Log-In'),
-	(2, 4, '23-02-2019 / 00:08', 'Log-Out');
+	(1, 1, '24-02-2019 / 22:21', 'Log-In'),
+	(2, 1, '24-02-2019 / 22:21', 'Log-Out'),
+	(3, 1, '24-02-2019 / 22:27', 'Log-In'),
+	(4, 1, '24-02-2019 / 22:27', 'Log-Out'),
+	(5, 2, '24-02-2019 / 22:28', 'Log-In'),
+	(6, 2, '24-02-2019 / 22:32', 'Log-In'),
+	(7, 2, '24-02-2019 / 22:33', 'Log-Out'),
+	(8, 1, '24-02-2019 / 22:38', 'Log-In'),
+	(9, 1, '24-02-2019 / 22:38', 'Log-Out'),
+	(10, 2, '24-02-2019 / 22:39', 'Log-In'),
+	(11, 2, '24-02-2019 / 22:40', 'Log-Out');
 /*!40000 ALTER TABLE `users_info` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

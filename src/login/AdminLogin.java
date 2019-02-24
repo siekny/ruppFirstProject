@@ -34,20 +34,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JPasswordField;
 
 public class AdminLogin extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
 	private JLabel labelSignUp;
 	private AdminClass adminClass;
-	/**
-	 * Create the panel.
-	 */
+	private JPasswordField passwordField;
+
 	public AdminLogin(JPanel content) {
 		
 		setLayout(new BorderLayout(0, 0));
@@ -180,9 +176,8 @@ public class AdminLogin extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("Login Password");
 		panel_7.add(lblNewLabel_4);
 		
-		txtPassword = new JTextField();
-		panel_7.add(txtPassword);
-		txtPassword.setColumns(20);
+		passwordField = new JPasswordField();
+		panel_7.add(passwordField);
 		
 		JLabel label_2 = new JLabel("");
 		panel_7.add(label_2);
@@ -203,7 +198,7 @@ public class AdminLogin extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				adminClass = AdminClass.getAdmin(txtUsername.getText(), txtPassword.getText());
+				adminClass = AdminClass.getAdmin(txtUsername.getText(), String.valueOf(passwordField.getPassword()));
 				
 				if(adminClass != null) {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");

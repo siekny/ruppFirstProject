@@ -293,6 +293,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void historyButton() {
 		lblTitle.setText("  HISTORY OF USER LOGIN");
+		//history = new UserLoginHistory();
 		panelContent.add(history);
 		enableContent(true, false, false, false, false);
 		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);

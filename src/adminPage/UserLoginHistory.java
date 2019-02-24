@@ -7,6 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +22,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 
@@ -27,25 +32,21 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import classMembers.UserClass;
 import connection.DBConnection;
+import popForm.UserInfoDetail;
 
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 
 public class UserLoginHistory extends JPanel {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField txtSearch;
 	private JTable table;
 	private DefaultTableModel model;
-
-	/**
-	 * Create the panel.
-	 */
+	private StringBuilder sb = new StringBuilder();
 	
 	public UserLoginHistory() {
 		setLayout(new BorderLayout(0, 0));
@@ -85,6 +86,8 @@ public class UserLoginHistory extends JPanel {
 		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				txtSearch.setText("");
+				sb.setLength(0);
 				showAllUserInfo();
 			}
 		});		
@@ -93,8 +96,67 @@ public class UserLoginHistory extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("          Search : ");
 		panelSearch.add(lblNewLabel_1);
 		
-		txtSearch = new JTextField();
+		txtSearch = new JTextField("");
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		
+		txtSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent ke) {
+				if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE && sb.length() > 0)
+					sb.deleteCharAt(sb.length()-1);
+				else if(ke.getKeyCode() != KeyEvent.VK_BACK_SPACE)
+					sb.append(ke.getKeyChar());
+				else {}
+					
+				if(sb.toString().equals("")) {
+					showAllUserInfo();
+					return;
+				}
+				
+				try {
+					Connection connection = DBConnection.connectDB();
+					Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					String sql = "";
+					
+					try {
+						Integer.parseInt(sb.toString());
+						sql = "SELECT * FROM users WHERE status != 1 AND (id = " + sb.toString() + " OR fullname LIKE '" + sb.toString() + "%' OR " +
+								"username LIKE '" + sb.toString() + "%')";
+					}
+					catch(NumberFormatException e) {
+						sql = "SELECT * FROM users WHERE status != 1 AND (fullname LIKE '" + sb.toString() + "%' OR " +
+								 "username LIKE '" + sb.toString() + "%')";
+					}
+
+					ResultSet resultSet = statement.executeQuery(sql);
+					
+					
+					if(!resultSet.next()) {
+						model.setRowCount(0);
+						return;
+					}
+					else
+						resultSet.previous();
+					
+					model.getDataVector().removeAllElements();			
+					while(resultSet.next()) {
+						model.addRow(
+								new Object[] {
+										"", resultSet.getString("id"), resultSet.getString("fullname"), resultSet.getString("username"),
+										resultSet.getString("sex"), resultSet.getString("phone"), resultSet.getString("dateofmembership"),
+										"Member"
+										}
+								);
+					}
+				}
+				catch(Exception ex) {
+					ex.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
 		panelSearch.add(txtSearch);
 		txtSearch.setColumns(30);
 		
@@ -141,8 +203,15 @@ public class UserLoginHistory extends JPanel {
 		btnDetail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				
-				
-				
+				try {
+					UserClass userClass = UserClass.getUser(Integer.parseInt("" + model.getValueAt(table.getSelectedRow(), 1)));
+					UserInfoDetail uid = new UserInfoDetail(userClass);
+					uid.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					uid.setVisible(true);
+				}
+				catch(Exception e) {
+					
+				}
 			}
 		});
 		panelBottom.add(btnDetail);
@@ -152,6 +221,7 @@ public class UserLoginHistory extends JPanel {
 	}
 	
 	public void showAllUserInfo() {
+		model.getDataVector().removeAllElements();
 		try {
 			Connection connection = DBConnection.connectDB();
 			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

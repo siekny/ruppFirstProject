@@ -28,6 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JPasswordField;
 
 public class UserLogin extends JPanel {
 
@@ -36,9 +37,9 @@ public class UserLogin extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
 	private JLabel labelSignUp;
 	private UserClass userClass;
+	private JPasswordField passwordField;
 	
 	/**
 	 * Create the panel.
@@ -175,9 +176,8 @@ public class UserLogin extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("Login Password");
 		panel_7.add(lblNewLabel_4);
 		
-		txtPassword = new JTextField();
-		panel_7.add(txtPassword);
-		txtPassword.setColumns(20);
+		passwordField = new JPasswordField();
+		panel_7.add(passwordField);
 		
 		JLabel label_2 = new JLabel("");
 		panel_7.add(label_2);
@@ -198,7 +198,7 @@ public class UserLogin extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				userClass = UserClass.getUser(txtUsername.getText(), txtPassword.getText());
+				userClass = UserClass.getUser(txtUsername.getText(), String.valueOf(passwordField.getPassword()));
 
 				if(userClass != null) {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
