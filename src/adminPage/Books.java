@@ -1,10 +1,27 @@
-package adminPage;
+//package adminPage;
 
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
+
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import classMembers.BookClass;
 
 public class Books extends JPanel {
 
@@ -27,16 +44,19 @@ public class Books extends JPanel {
 	private JLabel lblNoUsers;
 	private JTextField txtQty;
 	private JTextField txtPrice;
+	private JComboBox cboEdition;
+	String s;
 	
-
 	/**
 	 * Create the panel.
 	 */
+	
 	public Books() {
 		
 		initialize();
 		initObjects();
 	}
+	
 	
 	public void initialize () {
 		setBackground(new Color(236,240,245));
@@ -73,8 +93,7 @@ public class Books extends JPanel {
 		txtSearch = new JTextField();
 		panelSearch.add(txtSearch);
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) SystemColor.textInactiveText));
-		txtSearch.setColumns(33);
-		
+		txtSearch.setColumns(33);		
 		JLabel lblNewLabel_3 = new JLabel("#Book(s) : ");
 		panelSearch.add(lblNewLabel_3);
 		
@@ -89,7 +108,6 @@ public class Books extends JPanel {
 		FlowLayout fl_panelNumUsers = (FlowLayout) panelNumUsers.getLayout();
 		fl_panelNumUsers.setAlignment(FlowLayout.RIGHT);
 		
-		
 		JPanel panelTable = new JPanel();
 		panelTable.setBackground(new Color(255, 255, 255));
 		panel.add(panelTable, BorderLayout.CENTER);
@@ -99,18 +117,14 @@ public class Books extends JPanel {
 		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price"};
 		
 		
-		model = new DefaultTableModel(null, colsName) {
-
-			/**
-			 * 
-			 */
+		model = new DefaultTableModel(null, colsName) {	
 			private static final long serialVersionUID = 1L;
-
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		        return column == 0;
-		    }
+		    }				 
 		};
+		
 		panelTable.setLayout(new BorderLayout(0, 0));
 		table.setModel(model);
 		JScrollPane scroll = new JScrollPane(table);
@@ -130,7 +144,48 @@ public class Books extends JPanel {
 		btnDetail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDetail.setForeground(new Color(255, 255, 255));
 		panelButtonLeft.add(btnDetail);
+		//Show Data From DB
+		btnDetail.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Connection conn;
+				Statement stm;
+				ResultSet rss;
+				ArrayList<BookClass> list = new ArrayList<BookClass>();
+				try {
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
+				stm = conn.createStatement();
+				String command = "Select * From books";
+				rss = stm.executeQuery(command);
+				
+					 while(rss.next()) {
+				        	BookClass book = new BookClass( rss.getInt("id"),rss.getString("isbn"), rss.getString("title"), rss.getInt("qty"), 
+									 rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"));
+							
+				list.add(book);
+				}
+				
+				model.setRowCount(0);
+				
+				for (int i=0;i<list.size();i++) {
+					BookClass b = list.get(i);
+					Object obj[]= {b.getID(), b.getIsbn(),b.getTitle(),b.getAuthor(),b.getEdition(),b.getQty(),b.getPrice()
+					};
+					model.addRow(obj);
+				}
+				
+				rss.close();
+				stm.close();
+				conn.close();
+				}catch(SQLException ex) {
+					ex.printStackTrace();
+				}
+					
+			}
+		});
 		
+		//Remove record
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnRemove.setForeground(Color.WHITE);
@@ -138,10 +193,57 @@ public class Books extends JPanel {
 		btnRemove.setBackground(new Color(221, 75, 57));
 		panelButtonLeft.add(btnRemove);
 		
+		btnRemove.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Connection conn ;
+				Statement stm;
+				ResultSet rss;
+				try {
+					
+					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
+					stm = conn.createStatement();
+					rss = stm.executeQuery("SELECT * FROM books");
+					int index = table.getSelectedRow();
+					String i =model.getValueAt(index,0).toString();
+					String sql = "DELETE FROM books where id = "+i; 
+					stm.executeUpdate(sql);
+					rss.close();
+					stm.close();
+					conn.close();
+					btnDetail.doClick();
+					
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				} 
+				
+			}
+		});
+		
+		//Update Data
 		JButton btnEdit = new JButton("Update");
 		btnEdit.setForeground(Color.WHITE);
 		btnEdit.setBackground(new Color(0, 166, 90));
 		panelButtonLeft.add(btnEdit);
+		btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int j = table.getSelectedRow();
+				model = (DefaultTableModel) table.getModel();
+				txtISBN.setText(model.getValueAt(j,1).toString());
+				txtTitle.setText(model.getValueAt(j,2).toString());
+				txtAuthor.setText(model.getValueAt(j,3).toString());
+				txtQty.setText(model.getValueAt(j,5).toString());
+				txtPrice.setText(model.getValueAt(j,6).toString());	
+				
+				btnSave.setEnabled(false);
+				
+				
+			}
+		});
 		
 		JPanel panelContent = new JPanel();
 		panelContent.setBackground(SystemColor.desktop);
@@ -185,6 +287,27 @@ public class Books extends JPanel {
 		btnImage.setFocusPainted(false);
 		btnImage.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelInner.add(btnImage);
+		btnImage.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				 final String basePath =
+					      "C:\\Desktop";
+				JFileChooser fileChooser = new JFileChooser(basePath);				
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+				fileChooser.addChoosableFileFilter(filter);
+				int result = fileChooser.showSaveDialog(null);
+		         if(result == JFileChooser.APPROVE_OPTION){
+		             File selectedFile = fileChooser.getSelectedFile();
+		             String path = selectedFile.getAbsolutePath();
+		             s= path;
+		              }
+		         else if(result == JFileChooser.CANCEL_OPTION){
+	
+		        	 JOptionPane.showMessageDialog(null, "Image Needed!!");
+		         }	
+			}
+		});
 		
 		JPanel panelISBN = new JPanel();
 		panelISBN.setBackground(SystemColor.desktop);
@@ -320,12 +443,78 @@ public class Books extends JPanel {
 		flowLayout_6.setAlignment(FlowLayout.RIGHT);
 		panelInner.add(panelSave);
 		
+		//Save Changed
+		JButton btnEdit2 = new JButton("Edit");
+		btnEdit2.setForeground(Color.BLACK);
+		btnEdit2.setFocusPainted(false);
+		btnEdit2.setBackground(new Color(60, 141, 188));
+		panelSave.add(btnEdit2);
+		btnEdit2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Connection conn ;
+				Statement stm;
+				ResultSet rss;
+				btnEdit2.setEnabled(true);
+				try {
+					
+					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
+					stm = conn.createStatement();
+					rss = stm.executeQuery("SELECT * FROM books");
+					int index = table.getSelectedRow();
+					
+					String i =model.getValueAt(index,0).toString();
+					
+					String sql = "UPDATE books SET isbn = '" + txtISBN.getText() + "', title = '" + txtTitle.getText() + "', author = '" + txtAuthor.getText() + "', edition= '" + cboEdition.getSelectedItem() + "', qty = '" + Integer.parseInt(txtQty.getText()) + "' ,price = '" + Double.parseDouble(txtPrice.getText()) + "' where id = "+i; 
+					stm.executeUpdate(sql);
+
+					rss.close();
+					stm.close();
+					conn.close();
+					JOptionPane.showMessageDialog(null, "Updated Successfully!!");
+					btnDetail.doClick();
+					
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}	btnSave.setEnabled(true);
+			}
+		});
+		
 		btnSave = new JButton("Save");
 		btnSave.setIcon(new ImageIcon("images/add.png"));
 		panelSave.add(btnSave);
 		btnSave.setFocusPainted(false);
 		btnSave.setBackground(new Color(60,141,188));
 		btnSave.setForeground(SystemColor.desktop);
+		btnSave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnEdit2.setEnabled(false);
+				
+				 try{
+		               Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
+		               PreparedStatement ps = (PreparedStatement) con.prepareStatement("insert into books(isbn,title,image,qty,price,author,edition) values (?,?,?,?,?,?,?)");
+		               InputStream is = new FileInputStream(new File(s));
+		               ps.setString(1, txtISBN.getText());
+		               ps.setString(2, txtTitle.getText());
+		               ps.setBlob(3, is, 16 );
+		               ps.setInt(4, Integer.parseInt(txtQty.getText()));
+		               ps.setDouble(5, Double.parseDouble(txtPrice.getText()));
+		               ps.setString(6, txtAuthor.getText());
+		               ps.setObject(7, cboEdition.getSelectedItem());
+		              
+		               ps.executeUpdate();
+		               JOptionPane.showMessageDialog(null, "Saved Successfully");
+		               
+		           }catch(Exception ex){
+		               ex.printStackTrace();
+		           } btnDetail.doClick();
+			
+			}	
+		});
 		
 		JPanel panelClear = new JPanel();
 		panelClear.setBackground(new Color(255, 255, 255));
@@ -337,10 +526,21 @@ public class Books extends JPanel {
 		panelClear.add(btnClear);
 		btnClear.setFocusPainted(false);
 		btnClear.setBackground(SystemColor.menu);
-		
-		
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtISBN.setText("");
+				txtTitle.setText("");
+				txtAuthor.setText("");
+				txtQty.setText("");
+				cboEdition.setSelectedIndex(0);
+				txtPrice.setText("");
+				
+			}
+		});
+			
 	}
-
 	
 	public void initObjects () {
 		

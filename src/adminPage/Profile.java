@@ -28,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 
 import classMembers.InformationClass;
 import classMembers.LibrarianClass;
-import classMembers.UserClass;
 
 import java.awt.Dimension;
 import javax.swing.JButton;

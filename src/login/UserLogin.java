@@ -198,6 +198,7 @@ public class UserLogin extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				
 				userClass = UserClass.getUser(txtUsername.getText(), String.valueOf(passwordField.getPassword()));
 
 				if(userClass != null) {
@@ -226,7 +227,9 @@ public class UserLogin extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				
 				Main.enableContent(false, true, false, false);
+
 				content.add(Main.adminLogin);
+		        
 
 			}
 		});

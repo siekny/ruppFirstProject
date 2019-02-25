@@ -59,7 +59,8 @@ public class Borrow extends JPanel implements ActionListener {
 		panelInner.add(panelTop, BorderLayout.NORTH);
 		panelTop.setLayout(new GridLayout(2, 1, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("Library Book Checkin/Checkout Sheet");
+		
+		JLabel lblNewLabel = new JLabel("Book Transaction");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		panelTop.add(lblNewLabel);
@@ -197,22 +198,27 @@ public class Borrow extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == btnAddNew)
-			newBorrower();
-		else if(e.getSource() == btnReturn)
-			returnBorrow();
-		else if(e.getSource() == btnRemove)
-			removeBorrowers();
-		else if(e.getSource() == btnBorrowonly)
-			borrowedBookOnly();
-		else if(e.getSource() == btnReLoad)
-			showBorrower();
-		else if(e.getSource() == btnRecycleBin)
-			recycleofBorrowed();
-		else if(e.getSource() == btnEdit)
-			editBorrower();
-		else if(e.getSource() == txtSearch)
-			searchBorrower();
+		try {
+			if(e.getSource() == btnAddNew)
+				newBorrower();
+			else if(e.getSource() == btnReturn)
+				returnBorrow();
+			else if(e.getSource() == btnRemove)
+				removeBorrowers();
+			else if(e.getSource() == btnBorrowonly)
+				borrowedBookOnly();
+			else if(e.getSource() == btnReLoad)
+				showBorrower();
+			else if(e.getSource() == btnRecycleBin)
+				recycleofBorrowed();
+			else if(e.getSource() == btnEdit)
+				editBorrower();
+			else if(e.getSource() == txtSearch)
+				searchBorrower();
+		}catch(Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+		
 	}
 	public void borrowedBookOnly() {
 		model.setRowCount(0);
@@ -281,7 +287,8 @@ public class Borrow extends JPanel implements ActionListener {
 		
 	}
 
-	public void removeBorrowers() {
+	
+	public void removeBorrowers() throws Exception {
 		if(table.getSelectionModel().isSelectionEmpty())
 			JOptionPane.showConfirmDialog(null, "Please select at least one row to Remove", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
 		else {
@@ -294,10 +301,16 @@ public class Borrow extends JPanel implements ActionListener {
 	                int modelRow = table.convertRowIndexToModel( row );
 	                String id = table.getModel().getValueAt(modelRow, 0).toString();
 	                
-	                new UserConnection().removeBorrowed(Integer.parseInt(id));
 	               
-					model.removeRow( modelRow );
-		            row = table.getSelectedRow();  
+	                if(table.getModel().getValueAt(modelRow, 8).toString().equals("0")) {
+	                	new UserConnection().removeBorrowed(Integer.parseInt(id));
+	               
+					
+						model.removeRow( modelRow );
+			            row = table.getSelectedRow();  
+	                }
+	                else
+	                	throw new Exception("Already returned! cannot remove");
 	            }
 
 				JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);

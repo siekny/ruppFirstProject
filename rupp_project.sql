@@ -1,5 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
+
 -- Server version:               5.7.21 - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL Version:             9.5.0.5288
@@ -27,14 +28,34 @@ CREATE TABLE IF NOT EXISTS `books` (
   `edition` int(5) DEFAULT '0',
   `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table rupp_project.books: ~2 rows (approximately)
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `publisher`, `publishedYear`, `qty`, `numBorrow`, `bookInStock`, `price`, `author`, `edition`, `status`) VALUES
-	(1, '001', 'Hary Portter', 'harry-porter.jpg', 'Ny', 2017, 10, 0, 0, 12.23, 'Ny', 2, 1),
-	(2, '002', 'sleeping Beauty', 'sleeping-beauty.jpg', 'Ny', 2010, 23, 0, 0, 8.23, 'Ny', 3, 1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
+
+-- Dumping structure for table rupp_project.borrows
+CREATE TABLE IF NOT EXISTS `borrows` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` varchar(50) NOT NULL DEFAULT '0',
+  `studentName` varchar(50) NOT NULL DEFAULT '0',
+  `studentCurrentPhone` varchar(255) DEFAULT '0',
+  `book_id` int(11) DEFAULT '0',
+  `bookISBN` varchar(255) NOT NULL DEFAULT '0',
+  `borrowQTY` tinyint(2) NOT NULL DEFAULT '0',
+  `borrowedDate` varchar(50) DEFAULT '0',
+  `returnDate` varchar(50) DEFAULT '0',
+  `overDays` int(3) DEFAULT '0',
+  `fine` int(11) DEFAULT '0',
+  `status_removed` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table rupp_project.borrows: ~0 rows (approximately)
+DELETE FROM `borrows`;
+/*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
+/*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -42,15 +63,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fullname` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
+ 
   `sex` varchar(10) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+
   `phone` varchar(15) DEFAULT NULL,
   `dateofbirth` varchar(15) DEFAULT NULL,
   `dateofmembership` varchar(50) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
 
 -- Dumping data for table rupp_project.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;

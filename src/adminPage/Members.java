@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -24,7 +23,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import classMembers.BookClass;
+
 import classMembers.UserClass;
 import connection.DBConnection;
 
@@ -45,8 +44,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 public class Members extends JPanel {
 
@@ -201,7 +198,7 @@ public class Members extends JPanel {
 		panelTable.add(scroll);
 		
 		TableColumnModel tm = table.getColumnModel();
-		//table.removeColumn(tm.getColumn(0));
+		table.removeColumn(tm.getColumn(0));
 		
 		JPanel panelBottom = new JPanel();
 		panelBottom.setBackground(new Color(255, 255, 255));

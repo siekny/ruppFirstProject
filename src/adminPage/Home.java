@@ -50,7 +50,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBook);
 		panelBook.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnBooksManagement = new JButton("          Book Management          ");
+		JButton btnBooksManagement = new JButton("          Amount of Book(s)         ");
 		btnBooksManagement.setForeground(Color.WHITE);
 		btnBooksManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnBooksManagement.setFocusPainted(false);
@@ -81,7 +81,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBorrow);
 		panelBorrow.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnNewButton = new JButton("          Borrow Management          ");
+		JButton btnNewButton = new JButton("          Book Transaction          ");
 		btnNewButton.setFocusPainted(false);
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBackground(new Color(255,152,3));
@@ -110,7 +110,7 @@ public class Home extends JPanel {
 		panelTop.add(panelUser);
 		panelUser.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnUsersManagement = new JButton("          User Management          ");
+		JButton btnUsersManagement = new JButton("          Amount of User(s)         ");
 		btnUsersManagement.setForeground(Color.WHITE);
 		btnUsersManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnUsersManagement.setFocusPainted(false);

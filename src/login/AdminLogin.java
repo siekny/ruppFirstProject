@@ -19,8 +19,6 @@ import javax.swing.border.MatteBorder;
 import adminPage.MainPage;
 import classMembers.AdminClass;
 import classMembers.InformationClass;
-import classMembers.LibrarianClass;
-import connection.DBConnection;
 import main.Main;
 
 import java.awt.Cursor;
@@ -28,19 +26,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JPasswordField;
 
 public class AdminLogin extends JPanel {
 
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUsername;
+	
 	private JLabel labelSignUp;
+	
 	private AdminClass adminClass;
 	private JPasswordField passwordField;
 
@@ -176,6 +173,7 @@ public class AdminLogin extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("Login Password");
 		panel_7.add(lblNewLabel_4);
 		
+		
 		passwordField = new JPasswordField();
 		panel_7.add(passwordField);
 		
@@ -199,6 +197,7 @@ public class AdminLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				adminClass = AdminClass.getAdmin(txtUsername.getText(), String.valueOf(passwordField.getPassword()));
+				
 				
 				if(adminClass != null) {
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
@@ -227,6 +226,7 @@ public class AdminLogin extends JPanel {
 				
 				Main.enableContent(true, false, false, false);
 				content.add(Main.log);
+		     
 
 			}
 		});
