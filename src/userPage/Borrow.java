@@ -218,8 +218,7 @@ public class Borrow extends JPanel implements ActionListener {
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
-		else if(e.getSource() == txtSearch)
-			searchBorrower();
+		
 	}
 	public void borrowedBookOnly() {
 		model.setRowCount(0);
