@@ -285,7 +285,7 @@ public class HomePage extends JPanel implements ActionListener{
 	}
 	
 	public void borrowButton() {
-		lblTitle.setText("  LIST OF BORROW");
+		lblTitle.setText("  LIST OF BOOK TRANSACTION");
 		panelContent.add(borrow);
 		enableContent(true, false, false, false, false);
 		buttonClick(btnBorrow, btnHome, btnLogout, btnProfile, btnBook, btnRegister);
@@ -311,7 +311,7 @@ public class HomePage extends JPanel implements ActionListener{
 			btnProfile.setText("   My Profile");
 			btnHome.setText("   Dashboard");
 			btnRegister.setText("   Register");
-			btnBorrow.setText("   Borrow Management      ");
+			btnBorrow.setText("   Book Transaction      ");
 			btnBook.setText("   List of Books");
 			btnLogout.setText("   User Logout");
 			btnClose.setText("   Close Program");

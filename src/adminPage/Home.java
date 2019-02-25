@@ -12,6 +12,7 @@ import connection.UserConnection;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Home extends JPanel {
 
@@ -20,7 +21,7 @@ public class Home extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton btnCountBook, btnCountUser;
+	private JButton btnCountBooks, btnCountBorrows, btnCountUsers;
 
 	/**
 	 * Create the panel.
@@ -34,6 +35,7 @@ public class Home extends JPanel {
 		setLayout(new BorderLayout(20, 20));
 		
 		JPanel panelContent = new JPanel();
+		panelContent.setBackground(new Color(244, 244, 244));
 		add(panelContent, BorderLayout.CENTER);
 		panelContent.setLayout(new BorderLayout(20, 20));
 		
@@ -48,7 +50,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBook);
 		panelBook.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnBooksManagement = new JButton("          Book Management          ");
+		JButton btnBooksManagement = new JButton("          Amount of Book(s)         ");
 		btnBooksManagement.setForeground(Color.WHITE);
 		btnBooksManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnBooksManagement.setFocusPainted(false);
@@ -65,13 +67,13 @@ public class Home extends JPanel {
 		button_2.setBackground(Color.WHITE);
 		panelBook.add(button_2);
 		
-		btnCountBook = new JButton("5000");
-		btnCountBook.setContentAreaFilled(false);
-		btnCountBook.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnCountBook.setFocusPainted(false);
-		btnCountBook.setBorderPainted(false);
-		btnCountBook.setBackground(Color.WHITE);
-		panelBook.add(btnCountBook);
+		btnCountBooks = new JButton("5000");
+		btnCountBooks.setContentAreaFilled(false);
+		btnCountBooks.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnCountBooks.setFocusPainted(false);
+		btnCountBooks.setBorderPainted(false);
+		btnCountBooks.setBackground(Color.WHITE);
+		panelBook.add(btnCountBooks);
 		
 		JPanel panelBorrow = new JPanel();
 		panelBorrow.setBackground(new Color(255, 255, 255));
@@ -79,7 +81,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBorrow);
 		panelBorrow.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnNewButton = new JButton("          Borrow Management          ");
+		JButton btnNewButton = new JButton("          Book Transaction          ");
 		btnNewButton.setFocusPainted(false);
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setBackground(new Color(255,152,3));
@@ -94,13 +96,13 @@ public class Home extends JPanel {
 		btnNewButton_2.setBorderPainted(false);
 		panelBorrow.add(btnNewButton_2);
 		
-		btnCountUser = new JButton("500");
-		btnCountUser.setContentAreaFilled(false);
-		btnCountUser.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		btnCountUser.setBackground(new Color(255, 255, 255));
-		btnCountUser.setBorderPainted(false);
-		btnCountUser.setFocusPainted(false);
-		panelBorrow.add(btnCountUser);
+		btnCountBorrows = new JButton("500");
+		btnCountBorrows.setContentAreaFilled(false);
+		btnCountBorrows.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnCountBorrows.setBackground(new Color(255, 255, 255));
+		btnCountBorrows.setBorderPainted(false);
+		btnCountBorrows.setFocusPainted(false);
+		panelBorrow.add(btnCountBorrows);
 		
 		JPanel panelUser = new JPanel();
 		panelUser.setBackground(new Color(255, 255, 255));
@@ -108,7 +110,7 @@ public class Home extends JPanel {
 		panelTop.add(panelUser);
 		panelUser.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnUsersManagement = new JButton("          User Management          ");
+		JButton btnUsersManagement = new JButton("          Amount of User(s)         ");
 		btnUsersManagement.setForeground(Color.WHITE);
 		btnUsersManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnUsersManagement.setFocusPainted(false);
@@ -123,21 +125,27 @@ public class Home extends JPanel {
 		btnNewButton_3.setBorderPainted(false);
 		panelUser.add(btnNewButton_3);
 		
-		JButton button_1 = new JButton("5");
-		button_1.setContentAreaFilled(false);
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		button_1.setFocusPainted(false);
-		button_1.setBorderPainted(false);
-		button_1.setBackground(Color.WHITE);
-		panelUser.add(button_1);
+		btnCountUsers = new JButton("5");
+		btnCountUsers.setContentAreaFilled(false);
+		btnCountUsers.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnCountUsers.setFocusPainted(false);
+		btnCountUsers.setBorderPainted(false);
+		btnCountUsers.setBackground(Color.WHITE);
+		panelUser.add(btnCountUsers);
 		
 		JPanel panelBody = new JPanel();
+		panelBody.setBackground(new Color(244, 244, 244));
 		panelContent.add(panelBody, BorderLayout.CENTER);
+		
+		JLabel lblImage = new JLabel("");
+		lblImage.setIcon(new ImageIcon("images/welcome_1_400x350.png"));
+		panelBody.add(lblImage);
 	}
 	public void initObjects() {
 		UserConnection connect = new UserConnection();
-		btnCountBook.setText(connect.countBooks() + "  Books");
-		btnCountUser.setText(connect.countUsers() + "  Users");
+		btnCountBooks.setText(connect.countTable("books") + "  Book(s)");
+		btnCountUsers.setText(connect.countTable("users") + "  User(s)");
+		btnCountBorrows.setText(connect.countTable("borrows") + "  Borrow(s)");
 	}
 
 }

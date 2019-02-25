@@ -9,7 +9,10 @@ public class BorrowerClass {
 	
 	private int id;
 	private String student_id;
-	private int book_id;
+//	private int book_id;
+	private BookClass book;
+	
+	
 	private String studentName;
 	private String studentCurrentPhone;
 	private String bookISBN;
@@ -25,8 +28,9 @@ public class BorrowerClass {
 	public BorrowerClass(String student_id, int book_id, String studentName, String studentCurrentPhone,
 			String bookISBN, int borrowQTY, String borrowedDate, int status) {
 		super();
+		 book = new BookClass();
 		this.student_id = student_id;
-		this.book_id = book_id;
+		this.book.setID(book_id);
 		this.studentName = studentName;
 		this.studentCurrentPhone = studentCurrentPhone;
 		this.bookISBN = bookISBN;
@@ -39,9 +43,10 @@ public class BorrowerClass {
 			String bookISBN, int borrowQTY, String borrowedDate, String returnDate,
 			int status) {
 		super();
+		 book = new BookClass();
 		this.id = id;
 		this.student_id = student_id;
-		this.book_id = book_id;
+		this.book.setID(book_id);
 		this.studentName = studentName;
 		this.studentCurrentPhone = studentCurrentPhone;
 		this.bookISBN = bookISBN;
@@ -49,6 +54,7 @@ public class BorrowerClass {
 		this.borrowedDate = borrowedDate;
 		this.returnDate = returnDate;
 		this.status = status;
+		
 	}
 	public BorrowerClass(int id, String student_id, String returnDate) {
 		this.id = id;
@@ -57,7 +63,16 @@ public class BorrowerClass {
 	}
 	
 	public Object[] getBorrowColumns() {
-		return new Object[] {id, student_id, book_id, studentName, studentCurrentPhone, bookISBN, borrowQTY, borrowedDate, actualReturnDate()};
+		
+		return new Object[] {id, student_id, book.getID(), studentName, studentCurrentPhone, bookISBN, borrowQTY, borrowedDate, actualReturnDate()};
+	}
+	
+	public BookClass getBook() {
+		return book;
+	}
+	
+	public void setBook(BookClass book) {
+		this.book = book;
 	}
 	
 	public String actualReturnDate() {
@@ -120,10 +135,10 @@ public class BorrowerClass {
 		this.student_id = student_id;
 	}
 	public int getBook_id() {
-		return book_id;
+		return book.getID();
 	}
 	public void setBook_id(int book_id) {
-		this.book_id = book_id;
+		this.book.setID(book_id);
 	}
 	public String getStudentName() {
 		return studentName;

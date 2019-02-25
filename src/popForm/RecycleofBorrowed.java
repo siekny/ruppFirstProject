@@ -116,9 +116,10 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	            {
 	                int modelRow = recycleBorrowedtable.convertRowIndexToModel( row );
 	                String id = recycleBorrowedtable.getModel().getValueAt(modelRow, 0).toString();
+	                String bookID = recycleBorrowedtable.getModel().getValueAt(modelRow, 2).toString();
+	                String numBorrow = recycleBorrowedtable.getModel().getValueAt(modelRow, 6).toString();
 	                
-	                new UserConnection().removeRecycleBinofBorrowing(Integer.parseInt(id));
-	               
+	                new UserConnection().removeRecycleBinofBorrowing(Integer.parseInt(id),  Integer.parseInt(bookID), Integer.parseInt(numBorrow));
 					model.removeRow( modelRow );
 		            row = recycleBorrowedtable.getSelectedRow();  
 	            }
@@ -130,7 +131,26 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	}
 	
 	public void restoreRecycleBin() {
-		
+		if(recycleBorrowedtable.getSelectionModel().isSelectionEmpty())
+			JOptionPane.showConfirmDialog(null, "Please select at least one row to Restore", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
+		else {
+			int row = recycleBorrowedtable.getSelectedRow();
+			
+			int confirm = JOptionPane.showConfirmDialog(null, "Wanna Restore", "Restoring...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+			if(confirm == JOptionPane.OK_OPTION) {
+				while (row != -1)
+	            {
+	                int modelRow = recycleBorrowedtable.convertRowIndexToModel( row );
+	                String id = recycleBorrowedtable.getModel().getValueAt(modelRow, 0).toString();
+	                new UserConnection().restoreRecycleBinofBorrowing(Integer.parseInt(id));
+					model.removeRow( modelRow );
+		            row = recycleBorrowedtable.getSelectedRow();  
+	            }
+				
+				JOptionPane.showConfirmDialog(null, "Data has been restored successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}
 	}
 
 }

@@ -192,6 +192,7 @@ public class UserLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				Main.enableContent(false, false, false, true);
+//				content.removeAll();
 				content.add(Main.homePage);
 			}
 		});
@@ -207,6 +208,7 @@ public class UserLogin extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				
 				Main.enableContent(false, true, false, false);
+//				content.removeAll();
 				content.add(Main.adminLogin);
 		        
 				

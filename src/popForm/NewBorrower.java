@@ -48,6 +48,8 @@ public class NewBorrower extends JPanel implements ActionListener {
 	private JButton btnCheckid, btnCheckisbn;
 	private JLabel lblCreateNewBorrower;
 	
+	private BorrowerClass oldBorrow;
+	
 	
 
 	/**
@@ -362,9 +364,16 @@ public class NewBorrower extends JPanel implements ActionListener {
 			checkID();
 		else if(e.getSource() == btnCheckisbn)
 			checkISBN();
-		if(e.getSource() == btnAddnew)
+		if(e.getActionCommand() == "Add New")
 			try {
 				addNewBorrow();
+			} catch (Exception e1) {
+				
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		else if(e.getActionCommand() == "Update")
+			try {
+				updateBorrower();
 			} catch (Exception e1) {
 				
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -411,7 +420,6 @@ public class NewBorrower extends JPanel implements ActionListener {
 			}
 			else {
 				BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
-				System.out.println(book.getTitle());
 				txtBookQty.setText(book.numBookAvailable(book.getNumBorrow()) + "");
 				lblBook_id.setText(book.getID() + "");
 				btnCheckisbn.setText("Done");
@@ -425,16 +433,16 @@ public class NewBorrower extends JPanel implements ActionListener {
 		if(btnCheckid.getText().equals("Check"))
 			throw new Exception("StudentID is required!");
 		
+		if(txtContact.getText().isEmpty())
+			throw new Exception("Contact is required!");
+		
 		if(btnCheckisbn.getText().equals("Check"))
 			throw new Exception("Student Name is required!");
 		
 		
 		if(txtBookISBN.getText().isEmpty()) 
 			throw new Exception("Book ISBN is required");
-		
-		if(txtContact.getText().isEmpty())
-			throw new Exception("Contact is required!");
-		
+
 		if(Integer.parseInt(txtBookQty.getText()) < 1)
 			throw new Exception("We are sorry! Our Books are out of stock!");
 		
@@ -472,13 +480,42 @@ public class NewBorrower extends JPanel implements ActionListener {
 		txtStudentName.setText(borrow.getStudentName());
 		txtContact.setText(borrow.getStudentCurrentPhone());
 		txtBookISBN.setText(borrow.getBookISBN());
-		//txtBookQty.setText(borrow.a);
-		cboBorrowQty.setSelectedItem(borrow.getBorrowQTY());
+		oldBorrow = borrow;
+		
+		BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
+		txtBookQty.setText(book.numBookAvailable(book.getNumBorrow()) + "");
+		
+		cboBorrowQty.setSelectedItem(borrow.getBorrowQTY() + "");
+		
+		btnAddnew.setText("Update");
 		
 		// SET EDITABLE = FALSE
 		txtStudentID.setEnabled(false);
 		txtStudentName.setEnabled(false);
 		txtContact.setEnabled(false);
 		btnCheckid.setEnabled(false);
+	}
+	public void getOldBorrow() {
+		
+	}
+	
+	public void updateBorrower() throws Exception {
+		if(txtStudentID.getText().isEmpty())
+			throw new Exception("Student Name is required!");
+		
+		
+		if(txtBookISBN.getText().isEmpty()) 
+			throw new Exception("Book ISBN is required");
+
+		if(Integer.parseInt(txtBookQty.getText()) < 1)
+			throw new Exception("We are sorry! Our Books are out of stock!");
+		if(Integer.parseInt(txtBookQty.getText()) < Integer.parseInt(cboBorrowQty.getSelectedItem().toString()))
+			throw new Exception("We don't have enough book(s) for you");
+		int status = 1; // status == 1 means borrow but not yet return
+		
+		BorrowerClass newBrrow = new BorrowerClass(txtStudentID.getText(), Integer.parseInt(lblBook_id.getText()), txtStudentName.getText(), txtContact.getText(), 
+				txtBookISBN.getText(), Integer.parseInt(cboBorrowQty.getSelectedItem().toString()) , txtBorrowedDate.getText(), status);
+		
+		new UserConnection().updateBorrower(oldBorrow, newBrrow);
 	}
 }

@@ -19,12 +19,21 @@ public class UserConnection {
 	private Connection conn = DBConnection.connectDB();
 	int numBorrow = 0;
 	
-	// COUNT BOOKS
-	public int countBooks() {
+	// COUNT TABLES
+	public int countTable(String name) {
 		int count = 0;
+		String sql = null;
 		try {
 			Statement stmt = conn.createStatement();
-			String sql = "SELECT id FROM books";
+			if(name.equals("books"))
+				sql = "SELECT id FROM books";
+			
+			else if(name.equals("borrows"))
+				sql = "SELECT id FROM borrows";
+			
+			else if(name.equals("users"))
+				sql = "SELECT id FROM users";
+			
 	        ResultSet rss = stmt.executeQuery(sql);
 	        
 	        while(rss.next()) {
@@ -39,25 +48,6 @@ public class UserConnection {
 		return count;
 	}
 	
-	// COUNT USERs
-		public int countUsers() {
-			int count = 0;
-			try {
-				Statement stmt = conn.createStatement();
-				String sql = "SELECT id FROM users";
-		        ResultSet rss = stmt.executeQuery(sql);
-		        
-		        while(rss.next()) {
-					count ++;
-		        }
-				rss.close();
-				stmt.close();
-			}catch(Exception e) {
-				e.getStackTrace();
-			}
-			
-			return count;
-		}
 	
 	// VIEW BOOKS FOR USER
 	public ArrayList<BookClass> bookView() {
@@ -167,7 +157,7 @@ public class UserConnection {
 		}
 	
 	// SHOW ALL BOOKS TRANSACTION
-	public ArrayList<BorrowerClass> borrowView(int isShow) { // isShow = 0 means not show return date, isShow = 1 shows, isShow = 2 it's in recycle bin
+	public ArrayList<BorrowerClass> borrowView(int isShow) { // isShow = 0 means not show return date, isShow = 1 shows return date, isShow = 2 it's in recycle bin
 		ArrayList<BorrowerClass> borrowList = new ArrayList<BorrowerClass>();
 		
 		try {
@@ -272,8 +262,64 @@ public class UserConnection {
 	      e.printStackTrace();
 	   }
 	}
+	
+	// UPDATE BORROWER
+		public void updateBorrower(BorrowerClass oldBorrow, BorrowerClass borrow) throws Exception {
+			Statement stmt = null;
+			Statement stmt1 = null;
+			Statement stmt2 = null;
+			Statement stmt3 = null;
+					
+			// UPDATE OLD DATA
+			try {
+				 stmt = conn.createStatement();
+			    String sql = "SELECT book_id, bookInStock, numBorrow FROM borrows AS borrow INNER JOIN books AS book ON borrow.book_id = book.id WHERE borrow.id = '" + oldBorrow.getId()+ "'";
+			    ResultSet rss = stmt.executeQuery(sql);
+			    
+			    while(rss.next()) {
+		        	
+		        	stmt2 = conn.createStatement();
+		        	int bookInStock =  rss.getInt("bookInStock") +  oldBorrow.getBorrowQTY();
+		        	int numBorrow = rss.getInt("numBorrow") - oldBorrow.getBorrowQTY();
+		        	String sql2 = "UPDATE books SET numBorrow = '" + numBorrow + "'" + ", bookInStock = '" +bookInStock+ "' WHERE id = '" + oldBorrow.getBook_id()+ "'";
+		        	stmt2.executeUpdate(sql2);
+		        }
 
-	// GET ID OF BORROWED BOOK
+			    // UPDATE NEW DATA
+			    stmt3 = conn.createStatement();
+			    String sql3 = "UPDATE borrows SET book_id = '" +borrow.getBook_id()+ "'"+ ", bookISBN = '" +borrow.getBookISBN()+"'"+ ", borrowQTY = '" +borrow.getBorrowQTY() + "' WHERE id = '" + oldBorrow.getId()+ "'";
+			    System.out.println(sql3);
+			    stmt3.executeUpdate(sql3);
+			    
+			    stmt1 = conn.createStatement();
+			    String sql1 = "SELECT bookInStock, numBorrow FROM books WHERE id = '" + borrow.getBook_id() + "'";
+			    ResultSet rss1 = stmt1.executeQuery(sql1);
+
+		        while(rss1.next()) {
+		        	
+		        	stmt2 = conn.createStatement();
+		        	int bookInStock =  rss1.getInt("bookInStock") -  borrow.getBorrowQTY();
+		        	int numBorrow = rss1.getInt("numBorrow") + borrow.getBorrowQTY();
+		        	String sql2 = "UPDATE books SET numBorrow = '" + numBorrow + "'" + ", bookInStock = '" +bookInStock+ "' WHERE id = '" + borrow.getBook_id()+ "'";
+		        	stmt2.executeUpdate(sql2);
+		        }
+		        stmt3.close();
+		        stmt2.close();
+		        stmt1.close();
+
+				rss.close();
+				stmt.close();
+	  
+				JOptionPane.showMessageDialog(null, "Data has been updated successfully !");
+				   
+			    stmt.close();
+			    
+			}catch(Exception e){
+		      e.printStackTrace();
+		   }
+		}
+
+	// GET ID OF BORROWING BOOK
 	public BorrowerClass borrowedBook(int id) {
 		BorrowerClass borrowed = null;
 		try {
@@ -349,12 +395,21 @@ public class UserConnection {
 	}
 	
 	// DELETE RECYCLEBIN OF BORROWING BOOKS
-	public void removeRecycleBinofBorrowing(int id) {
+	public void removeRecycleBinofBorrowing(int id, int bookID, int numBorrow) {
 		try {
 			
 			Statement stmt = conn.createStatement();
 			String sql = "DELETE FROM borrows WHERE id = '" + id + "'";
 			stmt.executeUpdate(sql);
+			
+			String sqlSelectBook = "SELECT numBorrow, bookInStock FROM books WHERE id = '" + bookID + "'" ;
+			ResultSet rss = stmt.executeQuery(sqlSelectBook);
+			while(rss.next()) {
+				int updateNumBorrow = rss.getInt("numBorrow") - numBorrow;
+				int updateBookInStock = rss.getInt("bookInStock") + numBorrow;
+				String sqlUpdateBook = "UPDATE books SET numBorrow = '" + updateNumBorrow + "'" + ", bookInStock = '" + updateBookInStock + "'" + "WHERE id = '" + bookID+ "'";
+				stmt.executeUpdate(sqlUpdateBook);
+			}
 
 			stmt.close();
 			
@@ -362,5 +417,47 @@ public class UserConnection {
 			e.getStackTrace();
 		}
 	}
+	
+	// RESTORE RECYCLE BIN OF BORROWING BOOKS
+	public void restoreRecycleBinofBorrowing(int id) {
+		try {
+			Statement stmt = conn.createStatement();
+			int status = 1;
+			String sql = "UPDATE borrows SET status_removed = '" + status + "' WHERE id = '" + id + "'";
+			stmt.executeUpdate(sql);
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+	}
 
+	
+	// SEARCH BORROWERS 
+	public ArrayList<BorrowerClass>  searchBorrowers(String search) {
+		ArrayList<BorrowerClass> resultsearchBorrowerList = new ArrayList<BorrowerClass>();
+		try {
+			Statement stmt = conn.createStatement();
+			int status = 1;
+			
+			String sql = "SELECT * FROM borrows bo WHERE bo.student_id LIKE '%" + search + "%' OR " +
+					  "bo.studentName LIKE '%" + search + "%' AND bo.status_removed = '" + status + "'OR " + 
+					  "bo.studentCurrentPhone LIKE '%" + search + "%' AND bo.status_removed = '" + status + "'OR " + 
+					  "bo.bookISBN LIKE '%" + search + "%' AND bo.status_removed = '" + status + "'OR " + 
+					  "bo.borrowQTY LIKE '%" + search + "%'  AND bo.status_removed = '" + status + "'OR " + 
+					  "bo.overDays LIKE '%" + search + "%' AND bo.status_removed = '" + status + "'";
+
+			ResultSet rss = stmt.executeQuery(sql);
+			
+			while(rss.next()) {
+				BorrowerClass resultofBorrowers =  new BorrowerClass(rss.getInt("id"), rss.getString("student_id"), rss.getInt("book_id"), rss.getString("studentName"), 
+	        			rss.getString("studentCurrentPhone"), rss.getString("bookISBN"), rss.getInt("borrowQTY"), rss.getString("borrowedDate"), 
+	        			rss.getString("returnDate"), rss.getInt("status_removed"));
+				resultsearchBorrowerList.add(resultofBorrowers);
+			}
+			stmt.close();
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+		return resultsearchBorrowerList;
+		
+	}
 }

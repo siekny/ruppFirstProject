@@ -26,7 +26,7 @@ public class FormBookUser extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
-	private JLabel lblISBN, lblTitle, lblAuthor, lblPublishedYear, lblPublisher, lblStatus, 
+	private JLabel lblISBN, lblTitle, lblAuthor, 
 			lblEdition, lblPrice, lblTotalQty, lblNumBorrow, lblNumInStock;
 	
 	private JLabel lblAmountInStock, lblImage;
@@ -97,7 +97,7 @@ public class FormBookUser extends JPanel {
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(255, 255, 255));
 		panelInfoLeft.add(panelLeft, BorderLayout.CENTER);
-		panelLeft.setLayout(new GridLayout(7, 2, 0, 15));
+		panelLeft.setLayout(new GridLayout(4, 2, 0, 15));
 		
 		JLabel lblNewLabel_3 = new JLabel("ISBN : ");
 		panelLeft.add(lblNewLabel_3);
@@ -119,27 +119,12 @@ public class FormBookUser extends JPanel {
 		lblAuthor = new JLabel("");
 		lblAuthor.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
 		panelLeft.add(lblAuthor);
+		JLabel lblNewLabel_10 = new JLabel("Edition : ");
+		panelLeft.add(lblNewLabel_10);
 		
-		JLabel lblNewLabel_6 = new JLabel("Phublished Year : ");
-		panelLeft.add(lblNewLabel_6);
-		
-		lblPublishedYear = new JLabel("");
-		lblPublishedYear.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
-		panelLeft.add(lblPublishedYear);
-		
-		JLabel lblNewLabel_71 = new JLabel("Publisher : ");
-		panelLeft.add(lblNewLabel_71);
-		
-		lblPublisher = new JLabel("");
-		lblPublisher.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
-		panelLeft.add(lblPublisher);
-		
-		JLabel lblNewLabel_7 = new JLabel("Status : ");
-		panelLeft.add(lblNewLabel_7);
-		
-		lblStatus = new JLabel("");
-		lblStatus.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
-		panelLeft.add(lblStatus);
+		lblEdition = new JLabel("");
+		lblEdition.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
+		panelLeft.add(lblEdition);
 		
 		JPanel panelInfoRight = new JPanel();
 		panelInfoRight.setBackground(new Color(255, 255, 255));
@@ -149,15 +134,8 @@ public class FormBookUser extends JPanel {
 		JPanel panelRight = new JPanel();
 		panelRight.setBackground(new Color(255, 255, 255));
 		panelInfoRight.add(panelRight, BorderLayout.CENTER);
-		panelRight.setLayout(new GridLayout(7, 2, 0, 15));
-		
-		JLabel lblNewLabel_10 = new JLabel("Edition : ");
-		panelRight.add(lblNewLabel_10);
-		
-		lblEdition = new JLabel("");
-		lblEdition.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
-		panelRight.add(lblEdition);
-		
+		panelRight.setLayout(new GridLayout(4, 2, 0, 15));
+
 		JLabel lblNewLabel_11 = new JLabel("Price : ");
 		panelRight.add(lblNewLabel_11);
 		
@@ -200,12 +178,5 @@ public class FormBookUser extends JPanel {
 		lblNumBorrow.setText(book.getNumBorrow() + "");
 		lblNumInStock.setText(book.numBookAvailable(book.getNumBorrow()) + "");
 		
-		
-		if(book.numBookAvailable(book.getNumBorrow()) > 0)
-			lblStatus.setText("Available");
-		else
-			lblStatus.setText("Unavailable");
-		
-
 	}
 }

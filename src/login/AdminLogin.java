@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.MatteBorder;
-
 import main.Main;
 
 import java.awt.Cursor;
