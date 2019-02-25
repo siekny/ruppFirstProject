@@ -48,6 +48,7 @@ public class Profile extends JPanel {
 	LibrarianClass librarianClass;
 	
 	public Profile(LibrarianClass librarianClass) {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		this.librarianClass = librarianClass;	

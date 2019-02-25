@@ -31,6 +31,7 @@ public class Borrow extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public Borrow() {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		initComponent();

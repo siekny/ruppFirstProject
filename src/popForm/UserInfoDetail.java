@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
@@ -50,7 +51,9 @@ public class UserInfoDetail extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		try {
+			
 //			UserInfoDetail dialog = new UserInfoDetail();
 //			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 //			dialog.setVisible(true);

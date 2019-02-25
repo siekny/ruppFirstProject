@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 
 import classMembers.BookClass;
 import classMembers.BorrowerClass;
-import classMembers.MemberRegisterClass;
 
 public class UserConnection {
 	
@@ -107,35 +106,13 @@ public class UserConnection {
 	}
 	
 	
-	// GET STUDENT INFO
-	public MemberRegisterClass getMemberInfo(int id) {
-		MemberRegisterClass member = null;
-		try {
-			Statement stmt = conn.createStatement();
-			String sql = "SELECT * FROM memberregisters WHERE id = '" + id + "'";
-	        ResultSet rss = stmt.executeQuery(sql);
-
-	        while(rss.next()) {
-	        	member = new MemberRegisterClass(rss.getInt("id"), rss.getString("fullName"), rss.getString("sex"),rss.getString("address"), rss.getString("email"), rss.getString("phone"), rss.getString("dateofbirth"));
-	        }
-
-			rss.close();
-			stmt.close();
-			
-		}catch(Exception e) {
-			e.getStackTrace();
-		}
-		return member;
-		
-	}
-	
 	// GET BOOK INFO
 	public BookClass getBookInfo(String isbn) {
 			ArrayList<BookClass> bookList = new ArrayList<BookClass>();
 			BookClass book = null;
 			try {
 				Statement stmt = conn.createStatement();
-				String sql = "SELECT * FROM books WHERE id = '" + isbn + "' AND bookInStock > '" + 0 + "'";
+				String sql = "SELECT * FROM books WHERE isbn = '" + isbn + "' AND bookInStock > '" + 0 + "'";
 		        ResultSet rss = stmt.executeQuery(sql);
 		        
 		        while(rss.next()) {
@@ -194,8 +171,6 @@ public class UserConnection {
 	}
 	
 	// GET RETURN DATE
-	
-	ArrayList<MemberRegisterClass> memberList = new ArrayList<MemberRegisterClass>();
 	public boolean getReturnDate(String studentID) 
 	{
 

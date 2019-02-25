@@ -496,50 +496,86 @@ public class Books extends JPanel implements ActionListener {
 		lblShowimage.setIcon(new ImageIcon("images/image.png"));
 	}
 	
-	public void removeBook() throws Exception {
-		if(table.getSelectionModel().isSelectionEmpty())
-			JOptionPane.showConfirmDialog(null, "Please select at least one row to Remove", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
-		else {
-			int row = table.getSelectedRow();
+	public void removeBook() {
+		try {
 			
-			int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-			if(confirm == JOptionPane.OK_OPTION) {
-				while (row != -1)
-	            {
-	                int modelRow = table.convertRowIndexToModel( row );
-	                String id = table.getModel().getValueAt(modelRow, 0).toString();
-	                if(table.getModel().getValueAt(modelRow, 7).toString().equals(table.getModel().getValueAt(modelRow, 5).toString())) {
-		                new BookConnection().removeBook(Integer.parseInt(id));
-		               
-						model.removeRow( modelRow );
-			            row = table.getSelectedRow();  
-	                }
-	                else
-	                	throw new Exception("Cannot delete becuase this book is borrowed!");
-	            }
-
-				JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
+			if(table.getSelectionModel().isSelectionEmpty())
+				JOptionPane.showConfirmDialog(null, "Please select at least one row to Remove", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
+			else {
+				int row = table.getSelectedRow();
+				
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?", "Deleting...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+				if(confirm == JOptionPane.OK_OPTION) {
+					while (row != -1)
+		            {
+		                int modelRow = table.convertRowIndexToModel( row );
+		                String id = table.getModel().getValueAt(modelRow, 0).toString();
+		                if(table.getModel().getValueAt(modelRow, 7).toString().equals(table.getModel().getValueAt(modelRow, 5).toString())) {
+			                new BookConnection().removeBook(Integer.parseInt(id));
+			               
+							model.removeRow( modelRow );
+				            row = table.getSelectedRow();
+				           
+		                }
+		                else
+		                	throw new Exception("Cannot delete becuase this book is borrowed!");
+		            }
+	
+					JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
+				}
+				
 			}
-			
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 	
 	
 	public void editBook() {
-		if(table.getSelectionModel().isSelectionEmpty())
-			JOptionPane.showConfirmDialog(null, "Please select row to edit !", "", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE);
-		else {
-			int[] row = table.getSelectedRows();
-			if(row.length == 1) {
-				String getId = table.getModel().getValueAt(row[0], 0).toString();
-				new BookConnection().updateBook(Integer.parseInt(getId));
-				initObjects();
-			}
-				
-			else {
-				JOptionPane.showConfirmDialog(null, "Please select Specific row !", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
-			}
+		try {
 			
+			if(table.getSelectionModel().isSelectionEmpty())
+				JOptionPane.showConfirmDialog(null, "Please select row to Edit", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
+			else {
+				
+				int[] row = table.getSelectedRows();
+				if(row.length == 1) {
+					int confirm = JOptionPane.showConfirmDialog(null, "Are you sure?", "Editing...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+					if(confirm == JOptionPane.OK_OPTION) {
+						String getId = table.getModel().getValueAt(row[0], 0).toString();
+						
+						if(table.getModel().getValueAt(row[0], 7).toString().equals(table.getModel().getValueAt(row[0], 5).toString())) {
+							
+							Date date = new Date();
+							BufferedImage img = ImageIO.read(selectedPath);
+						    String strDateFormat = "yyyy_MMM_dd_hh_mm_ss";
+						    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+						    String formattedDate= dateFormat.format(date);
+						    
+							String location = "uploads/" +formattedDate + imageName;
+							String format = "PNG";
+							ImageIO.write(img, format, new File(location));
+							
+							BookClass book = new BookClass(txtISBN.getText(), txtTitle.getText(), formattedDate + imageName, Integer.parseInt(txtQty.getText()), 
+									Double.parseDouble(txtPrice.getText()), txtAuthor.getText(), Integer.parseInt(cboEdition.getSelectedItem().toString()), 0);
+							new BookConnection().updateBook(Integer.parseInt(getId), book);
+							initObjects();
+							JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
+						}
+						else {
+							JOptionPane.showConfirmDialog(null, "Cannot delete becuase this book is borrowed!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+						}
+					}
+				}
+					
+				else {
+					JOptionPane.showConfirmDialog(null, "Please select Specific row !", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
+				
+				
+			}
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 	

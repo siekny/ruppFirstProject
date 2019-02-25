@@ -227,8 +227,8 @@ public class UserLogin extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				
 				Main.enableContent(false, true, false, false);
-
-				content.add(Main.adminLogin);
+				Main.adminLogin = new AdminLogin(Main.content);
+				Main.content.add(Main.adminLogin);
 		        
 
 			}
