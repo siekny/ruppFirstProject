@@ -4,13 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -21,6 +31,12 @@ import classMembers.LibrarianClass;
 import classMembers.UserClass;
 
 import java.awt.Dimension;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+
+import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
 
 public class Profile extends JPanel {
 	
@@ -110,7 +126,7 @@ public class Profile extends JPanel {
 		
 		panel_11 = new JPanel();
 		panel_9.add(panel_11, BorderLayout.CENTER);
-		panel_11.setLayout(new GridLayout(10, 2, 0, 0));		
+		panel_11.setLayout(new GridLayout(11, 2, 0, 0));		
 		
 		JLabel label_13 = new JLabel("          ");
 		panel_9.add(label_13, BorderLayout.WEST);
@@ -268,6 +284,221 @@ public class Profile extends JPanel {
 		panel_11.add(lblNewLabel_9);
 		panel_11.add(lblDom);
 		
+		JPanel panel = new JPanel();
+		panel_11.add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_1 = new JPanel();
+		panel_11.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		JButton btnUpdateInfomation = new JButton("Update Infomation");
+		JButton btnUpdatePassword = new JButton("Update Password");	
+		
+		btnUpdatePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				JFrame frameChangePassword = new JFrame("Reset Password");
+				JPanel panelcontent = new JPanel(new BorderLayout());
+				
+				JLabel lblLogo = new JLabel("Library Management System");
+				lblLogo.setForeground(new Color(255, 255, 255));
+				lblLogo.setAlignmentX(CENTER_ALIGNMENT);
+				panelcontent.add(lblLogo, BorderLayout.NORTH);
+				
+				JPanel panelcenter = new JPanel(new GridLayout(4, 2)); 
+				
+				JLabel lblUsername = new JLabel("Username");
+				panelcenter.add(lblUsername);
+				
+				JTextField txtUsername = new JTextField();
+				txtUsername.setText(librarianClass.getUsername());
+				txtUsername.setEditable(false);
+				panelcenter.add(txtUsername);
+				
+				JLabel lbloldpassword = new JLabel("New Password");
+				panelcenter.add(lbloldpassword);
+				
+				JPasswordField password1 = new JPasswordField();
+				panelcenter.add(password1);
+				
+				JLabel lblnewpassword = new JLabel("Confirm New Password");
+				panelcenter.add(lblnewpassword);
+				
+				JPasswordField password2 = new JPasswordField();
+				panelcenter.add(password2);
+				
+				JButton btnChange = new JButton("Change Password");
+				JPanel panelbtn = new JPanel(new BorderLayout());
+				panelbtn.add(btnChange, BorderLayout.CENTER);
+				panelcontent.add(panelcenter, BorderLayout.CENTER);
+				panelcontent.add(panelbtn, BorderLayout.SOUTH);
+				
+				frameChangePassword.getContentPane().add(panelcontent);
+				frameChangePassword.setSize(400, 300);
+				frameChangePassword.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frameChangePassword.setVisible(true);
+				
+				btnChange.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+						if(!String.valueOf(password1.getPassword()).equals(String.valueOf(password2.getPassword()))) {
+							JOptionPane.showMessageDialog(null, "Password is not match.", "Error", JOptionPane.PLAIN_MESSAGE);
+							return;
+						}
+						
+						Connection cnn;
+						Statement sta;
+						
+						try {
+							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
+							sta = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+							String sql2 = "UPDATE users SET password = '" + String.valueOf(password1.getPassword()) +"' WHERE id = " + librarianClass.getID();
+							sta.execute(sql2);
+							sta.close();
+							cnn.close();
+							frameChangePassword.dispose();
+						} catch (SQLException ex) {
+							// TODO Auto-generated catch block
+							ex.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+				
+		btnUpdateInfomation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				JFrame frameEditinfo = new JFrame("Registering New User");
+				JPanel panelOverallEditing = new JPanel(new BorderLayout());
+				
+				JLabel lblLogo = new JLabel("Library Management System");
+				lblLogo.setForeground(new Color(255, 255, 255));
+				lblLogo.setAlignmentX(CENTER_ALIGNMENT);
+				
+				JPanel panelNorth = new JPanel();
+				panelNorth.setBackground(new Color(54, 127, 169));
+				panelNorth.add(lblLogo, CENTER_ALIGNMENT);
+				
+				JPanel panelCenter = new JPanel(new GridLayout(12, 2));
+				JLabel lblId = new JLabel("ID");
+				panelCenter.add(lblId);
+				JTextField txtId = new JTextField();
+				panelCenter.add(txtId);
+				JLabel lblName = new JLabel("Fullname");
+				panelCenter.add(lblName);
+				JTextField txtName = new JTextField();
+				panelCenter.add(txtName);
+				JLabel lblUsername = new JLabel("Username");
+				panelCenter.add(lblUsername);
+				JTextField txtUsername = new JTextField();
+				panelCenter.add(txtUsername);
+				JLabel lblSex = new JLabel("Sex");
+				panelCenter.add(lblSex);
+				JComboBox<String> cboSex = new JComboBox<String>();
+				cboSex.addItem("Male");
+				cboSex.addItem("Female");
+				cboSex.setSelectedIndex(0);
+				panelCenter.add(cboSex);
+				JLabel lblAddress = new JLabel("Address");
+				panelCenter.add(lblAddress);
+				JTextField txtAddress = new JTextField();
+				panelCenter.add(txtAddress);
+				JLabel lblemail = new JLabel("Email");
+				panelCenter.add(lblemail);
+				JTextField txtEmail = new JTextField();
+				panelCenter.add(txtEmail);
+				JLabel lblPhone = new JLabel("Phone Number");
+				panelCenter.add(lblPhone);
+				JTextField txtPhone = new JTextField();
+				panelCenter.add(txtPhone);
+				JLabel lblDOB = new JLabel("Date of Birth");
+				panelCenter.add(lblDOB);
+				JTextField txtDOB = new JTextField();
+				panelCenter.add(txtDOB);
+				JLabel lblType = new JLabel("Type of Membership");
+				panelCenter.add(lblType);
+				JComboBox<String> cboType = new JComboBox<String>();
+				cboType.addItem("Admin");
+				cboType.addItem("Member");
+				cboType.setSelectedIndex(0);
+				panelCenter.add(cboType);
+
+				JPanel panelbutton = new JPanel(new BorderLayout());
+				JButton btnUpdate = new JButton("Update");
+				panelbutton.add(btnUpdate, BorderLayout.CENTER);			
+				
+				panelOverallEditing.add(panelNorth, BorderLayout.NORTH);
+				panelOverallEditing.add(panelCenter,BorderLayout.CENTER);
+				panelOverallEditing.add(panelbutton, BorderLayout.SOUTH);
+				
+				frameEditinfo.getContentPane().add(panelOverallEditing);
+				frameEditinfo.setResizable(false);
+				frameEditinfo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frameEditinfo.setSize(400, 400);
+				frameEditinfo.setLocationRelativeTo(null);
+				frameEditinfo.setVisible(true);
+				
+				txtId.setText(librarianClass.getID()+""); 
+				txtId.setEditable(false);
+				txtName.setText(librarianClass.getFullname());
+				txtUsername.setText(librarianClass.getUsername());
+				cboSex.setSelectedIndex((librarianClass.getSex().equals("M") ? 0 : 1));
+				txtAddress.setText(librarianClass.getAddress());
+				txtEmail.setText(librarianClass.getEmail());
+				txtPhone.setText(librarianClass.getPhone());
+				txtDOB.setText(librarianClass.getDateofbirth());
+				cboType.setSelectedIndex(librarianClass.getStatus() - 1);
+
+				btnUpdate.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+					
+					Connection cnn;
+					Statement sta;
+					
+						try {
+							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
+							sta = cnn.createStatement();
+							
+							
+							String sql2 = "UPDATE users SET " 
+									+ "fullname = '" + txtName.getText() + "', "
+									+ "username = '" + txtUsername.getText() + "', "
+									+ "sex = '" + (cboSex.getSelectedIndex() == 0 ? 'M' : 'F') + "', "
+									+ "address = '" + txtAddress.getText() + "', "
+									+ "email = '" + txtEmail.getText() + "', " 
+									+ "phone = '" + txtPhone.getText() + "', "
+									+ "dateofbirth = '" + txtDOB.getText() + "', "
+									+ "status = " + (cboType.getSelectedIndex() == 0 ? 1 : 2) + " "
+									+ "WHERE id = " + librarianClass.getID();
+							
+							sta.execute(sql2);
+							sta.close();
+							cnn.close();
+
+							frameEditinfo.dispose();
+						} catch (SQLException ex) {
+						// TODO Auto-generated catch block
+						ex.printStackTrace();
+						}
+					
+				
+			}
+		});
+		
+		}
+		});	
+		
+		if(librarianClass.getStatus() == 1) {
+			panel_1.add(btnUpdatePassword, BorderLayout.SOUTH);
+			panel.add(btnUpdateInfomation, BorderLayout.SOUTH);
+		}
 	}
 	
 	private void initTable() {
