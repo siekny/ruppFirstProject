@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +57,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public NewBorrower(BorrowerClass borrow, int isNew) {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		initComponent();

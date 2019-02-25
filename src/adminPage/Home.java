@@ -1,6 +1,7 @@
 package adminPage;
 
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Font;
@@ -27,6 +28,7 @@ public class Home extends JPanel {
 	 * Create the panel.
 	 */
 	public Home() {
+		
 		initialize();
 		initObjects();
 	}
@@ -50,7 +52,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBook);
 		panelBook.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnBooksManagement = new JButton("          Amount of Book(s)         ");
+		JButton btnBooksManagement = new JButton("          Books         ");
 		btnBooksManagement.setForeground(Color.WHITE);
 		btnBooksManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnBooksManagement.setFocusPainted(false);
@@ -110,7 +112,7 @@ public class Home extends JPanel {
 		panelTop.add(panelUser);
 		panelUser.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnUsersManagement = new JButton("          Amount of User(s)         ");
+		JButton btnUsersManagement = new JButton("          Users         ");
 		btnUsersManagement.setForeground(Color.WHITE);
 		btnUsersManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnUsersManagement.setFocusPainted(false);
@@ -138,14 +140,14 @@ public class Home extends JPanel {
 		panelContent.add(panelBody, BorderLayout.CENTER);
 		
 		JLabel lblImage = new JLabel("");
-		lblImage.setIcon(new ImageIcon("images/welcome_1_400x350.png"));
+		lblImage.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\book.gif"));
 		panelBody.add(lblImage);
 	}
 	public void initObjects() {
 		UserConnection connect = new UserConnection();
-		btnCountBooks.setText(connect.countTable("books") + "  Book(s)");
-		btnCountUsers.setText(connect.countTable("users") + "  User(s)");
-		btnCountBorrows.setText(connect.countTable("borrows") + "  Borrow(s)");
+		btnCountBooks.setText(connect.countTable("books") + "");
+		btnCountUsers.setText(connect.countTable("users") + "");
+		btnCountBorrows.setText(connect.countTable("borrows") + "");
 	}
 
 }

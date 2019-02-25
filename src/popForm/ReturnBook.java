@@ -50,6 +50,7 @@ public class ReturnBook extends JPanel {
 	 * Create the panel.
 	 */
 	public ReturnBook(BorrowerClass borrowed) {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		panelContent = new JPanel();

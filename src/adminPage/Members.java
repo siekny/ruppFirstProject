@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,6 +57,7 @@ public class Members extends JPanel {
 	 * Create the panel.
 	 */
 	public Members() {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelMain = new JPanel();

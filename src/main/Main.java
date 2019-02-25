@@ -34,6 +34,7 @@ public class Main extends JFrame {
 				try {
 					Main frame = new Main();
 					frame.setVisible(true);
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,7 +51,7 @@ public class Main extends JFrame {
 		
 		initialize();
 		initObjects();
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		
 	}
 	
 	public void initialize () {

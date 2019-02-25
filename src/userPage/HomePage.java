@@ -21,12 +21,14 @@ import java.awt.Cursor;
 import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
 import adminPage.Home;
 import adminPage.Profile;
 import classMembers.InformationClass;
 import classMembers.UserClass;
+import login.UserLogin;
 
 
 public class HomePage extends JPanel implements ActionListener{
@@ -36,7 +38,7 @@ public class HomePage extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JButton btnLibrary, btnHome, btnProfile, btnBorrow, btnBook, btnBar, btnClose, btnLogout, btnRegister;
+	private JButton btnLibrary, btnHome, btnProfile, btnBorrow, btnBook, btnBar, btnClose, btnLogout;
 	public JPanel content;
 	private JLabel lblTitle;
 	private JPanel panelContent;
@@ -47,7 +49,6 @@ public class HomePage extends JPanel implements ActionListener{
 	private Profile profile;
 	//private HomeUser home;
 	private Home home;
-	private Register register;
 	
 	private static UserClass userClass;
 
@@ -55,6 +56,7 @@ public class HomePage extends JPanel implements ActionListener{
 	 * Create the panel.
 	 */
 	public HomePage(JPanel content) {
+		
 		initialize();
 		initObjects();
 	}
@@ -107,17 +109,6 @@ public class HomePage extends JPanel implements ActionListener{
 		btnProfile.setFocusPainted(false);
 		panelSide1.add(btnProfile);
 		btnProfile.addActionListener(this);
-		
-		btnRegister = new JButton("");
-		btnRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRegister.setIcon(new ImageIcon("images/users.png"));
-		btnRegister.setHorizontalAlignment(SwingConstants.LEFT);
-		btnRegister.setForeground(Color.WHITE);
-		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnRegister.setFocusPainted(false);
-		btnRegister.setBorderPainted(false);
-		btnRegister.setBackground(new Color(34, 45, 50));
-		panelSide1.add(btnRegister);
 		
 		btnBook = new JButton("");
 		btnBook.setIcon(new ImageIcon("images/book.png"));
@@ -227,7 +218,6 @@ public class HomePage extends JPanel implements ActionListener{
 		btnHome.addActionListener(this);
 		btnBook.addActionListener(this);
 		btnBar.addActionListener(this);
-		btnRegister.addActionListener(this);
 		
 		
 
@@ -238,7 +228,6 @@ public class HomePage extends JPanel implements ActionListener{
 		borrow = new Borrow();
 		profile = new Profile(new UserClass());
 		home = new Home();
-		register = new Register();
 		BorderLayout borderLayout = (BorderLayout) home.getLayout();
 		borderLayout.setVgap(20);
 		borderLayout.setHgap(20);
@@ -257,12 +246,14 @@ public class HomePage extends JPanel implements ActionListener{
 			borrowButton();
 		else if(e.getSource() == btnBook)
 			bookButton();
-		else if(e.getSource() == btnRegister)
-			registerButton();
 		else if(e.getSource() == btnLogout)
 			logoutButton();
-		else if(e.getSource() == btnClose) 
-			System.exit(0);
+		else if(e.getSource() == btnClose) {
+			int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Exit?", "Exit...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+			
+			if(confirm == JOptionPane.OK_OPTION)	System.exit(0);
+			else		return;
+		}
 		else if(e.getSource() == btnBar)
 			barButton();
 		
@@ -272,47 +263,51 @@ public class HomePage extends JPanel implements ActionListener{
 		lblTitle.setText("  MY PROFILE");
 		profile = new Profile(userClass);
 		panelContent.add(profile);
-		enableContent(false, false, true, false, false);
-		buttonClick(btnProfile, btnLogout, btnHome, btnBorrow, btnBook, btnRegister);
+		enableContent(false, false, true, false);
+		buttonClick(btnProfile, btnLogout, btnHome, btnBorrow, btnBook);
 	}
 	
 	public void homeButton() {
 		lblTitle.setText("  DASHBOARD");
+		home = new Home();
 		panelContent.add(home);
-		enableContent(false, true, false, false, false);
-		buttonClick(btnHome, btnProfile, btnLogout, btnBorrow, btnBook, btnRegister);
-	}
-	
-	public void registerButton() {
-		lblTitle.setText("  LIST OF REGISTERS");
-		panelContent.add(register);
-		enableContent(false, false, false, false, true);
-		buttonClick(btnRegister, btnHome, btnProfile, btnLogout, btnBorrow, btnBook);
+		enableContent(false, true, false, false);
+		buttonClick(btnHome, btnProfile, btnLogout, btnBorrow, btnBook);
 	}
 	
 	public void borrowButton() {
 		lblTitle.setText("  LIST OF BOOK TRANSACTION");
+		borrow = new Borrow();
 		panelContent.add(borrow);
-		enableContent(true, false, false, false, false);
-		buttonClick(btnBorrow, btnHome, btnLogout, btnProfile, btnBook, btnRegister);
+		enableContent(true, false, false, false);
+		buttonClick(btnBorrow, btnHome, btnLogout, btnProfile, btnBook);
 	}
 	
 	public void bookButton() {
 		lblTitle.setText("  LIST OF BOOKS");
+		book = new Book();
 		panelContent.add(book);
-		enableContent(false, false, false, true, false);
-		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnBorrow, btnRegister);
+		enableContent(false, false, false, true);
+		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnBorrow);
 	}
 
-	public void logoutButton() {	
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
-		Date date = new Date();
-		userClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+	public void logoutButton() {
+		int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Log-Out?", "Log-Out...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
 		
-		lblTitle.setText("  USER LOGOUT");
-		Main.content.add(Main.log);
-		buttonClick(btnLogout, btnProfile, btnHome, btnBorrow, btnBook, btnRegister);
-    	Main.enableContent(true, false, false, false);
+		if(confirm == JOptionPane.OK_OPTION) {
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+			Date date = new Date();
+			userClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+			
+			lblTitle.setText("  USER LOGOUT");
+			Main.log = new UserLogin(Main.content);
+			Main.content.add(Main.log);
+			//buttonClick(btnLogout, btnProfile, btnHome, btnBorrow, btnBook, btnRegister);
+	    	Main.enableContent(true, false, false, false);
+		}
+		else 
+			return;
 	}
 	
 	public void barButton() {
@@ -320,7 +315,6 @@ public class HomePage extends JPanel implements ActionListener{
 			btnLibrary.setText("Library MGT");
 			btnProfile.setText("   My Profile");
 			btnHome.setText("   Dashboard");
-			btnRegister.setText("   Register");
 			btnBorrow.setText("   Book Transaction      ");
 			btnBook.setText("   List of Books");
 			btnLogout.setText("   User Logout");
@@ -333,26 +327,23 @@ public class HomePage extends JPanel implements ActionListener{
 			btnBook.setText("");
 			btnLogout.setText("");
 			btnClose.setText("");
-			btnRegister.setText("");
 		}
 	}
 	
 	
-	public void buttonClick(JButton btnClick, JButton btnNonClick1, JButton btnNonClick2, JButton btnNonClick3, JButton btnNonClick4, JButton btnNonClick5) {
+	public void buttonClick(JButton btnClick, JButton btnNonClick1, JButton btnNonClick2, JButton btnNonClick3, JButton btnNonClick4) {
 		btnClick.setBackground(new Color(30, 40, 44));
 		btnNonClick1.setBackground(new Color(34,45,50));
 		btnNonClick2.setBackground(new Color(34,45,50));
 		btnNonClick3.setBackground(new Color(34,45,50));
 		btnNonClick4.setBackground(new Color(34,45,50));
-		btnNonClick5.setBackground(new Color(34,45,50));
 	}
 	
-	public void enableContent(boolean isBorrow, boolean isHome, boolean isProfile, boolean isBook, boolean isRegister) {
+	public void enableContent(boolean isBorrow, boolean isHome, boolean isProfile, boolean isBook) {
 		borrow.setVisible(isBorrow);
 		home.setVisible(isHome);
 		profile.setVisible(isProfile);
 		book.setVisible(isBook);
-		register.setVisible(isRegister);
 		
 	}
 

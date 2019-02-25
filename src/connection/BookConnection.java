@@ -1,6 +1,8 @@
 package connection;
 
+import java.io.File;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 
@@ -52,10 +54,16 @@ public class BookConnection {
 	public void removeBook(int id) {
 		try {
 			Statement stmt = conn.createStatement();
-			
+			String sqlSelect = "SELECT image FROM books WHERE id = '" + id + "'";
+			ResultSet rss = stmt.executeQuery(sqlSelect);
+			while(rss.next()) {
+				File file = new File("uploads/" + rss.getString("image"));
+				file.delete();
+			}
 			String sql = "DELETE FROM books WHERE id = '" + id + "'";
 			stmt.executeUpdate(sql);
-
+			  
+	         
 			stmt.close();
 			
 		}catch(Exception e) {
@@ -63,7 +71,27 @@ public class BookConnection {
 		}
 	}
 	
-	public void updateBook(int id) {
-		
+	public void updateBook(int id, BookClass book) {
+		try {
+			Statement stmt = conn.createStatement();
+			
+			String sqlSelect = "SELECT image FROM books WHERE id = '" + id + "'";
+			ResultSet rss = stmt.executeQuery(sqlSelect);
+			while(rss.next()) {
+				File file = new File("uploads/" + rss.getString("image"));
+				file.delete();
+			}
+			
+			String sql = "UPDATE books SET image = '" + book.getImg() + "', isbn = '" + book.getIsbn() + "', title = '" + 
+					book.getTitle() +"', qty = '" + book.getQty() + "', price = '" + book.getPrice() + "', author = '" + 
+					book.getAuthor() +"', edition = '" + book.getEdition() + "' WHERE id = '" + id + "'";
+			stmt.executeUpdate(sql);
+			  
+	         
+			stmt.close();
+			
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
 	}
 }

@@ -36,6 +36,7 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public RecycleofBorrowed() {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		initComponent();

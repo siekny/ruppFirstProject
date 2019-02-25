@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
 
 public class Book extends JPanel implements ActionListener {
 
@@ -21,7 +20,7 @@ public class Book extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel panelContent, panel;
-	private JButton btnReload, btnList, btnGrid;
+	private JButton btnList, btnGrid;
 	
 	private BookGrid grid;
 	private BookList list;
@@ -50,15 +49,6 @@ public class Book extends JPanel implements ActionListener {
 		panelContent.add(panelTop, BorderLayout.NORTH);
 		panelTop.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelReload = new JPanel();
-		panelTop.add(panelReload, BorderLayout.WEST);
-		panelReload.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		btnReload = new JButton("Reload");
-		btnReload.setFocusPainted(false);
-		btnReload.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelReload.add(btnReload);
-		
 		JPanel panelOptionList = new JPanel();
 		panelTop.add(panelOptionList, BorderLayout.CENTER);
 		
@@ -75,8 +65,6 @@ public class Book extends JPanel implements ActionListener {
 		panel = new JPanel();
 		panel.setBackground(new Color(236,240,245));
 		panelContent.add(panel, BorderLayout.CENTER);
-		
-		btnReload.addActionListener(this);
 		btnList.addActionListener(this);
 		btnGrid.addActionListener(this);
 		
@@ -94,27 +82,21 @@ public class Book extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == btnReload)
-			loadBook();
+		if(e.getSource() == btnGrid)
+			gridBook();
 		else if(e.getSource() == btnList)
 			listBook();
-		else if(e.getSource() == btnGrid)
-			gridBook();
-		
-	}
-	
-	public void loadBook() {
-		initClass();
 	}
 	
 	public void listBook() {
+		list = new BookList();
 		panel.add(list);
 		grid.setVisible(false);
 		list.setVisible(true);
 	}
 	
 	public void gridBook() {
+		grid = new BookGrid();
 		panel.add(grid);
 		list.setVisible(false);
 		grid.setVisible(true);

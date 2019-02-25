@@ -21,6 +21,7 @@ import java.awt.Cursor;
 import javax.swing.ImageIcon;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
 
 import classMembers.AdminClass;
@@ -52,6 +53,7 @@ public class MainPage extends JPanel implements ActionListener{
 	 * Create the panel.
 	 */
 	public MainPage(JPanel content) {
+		
 		initialize();
 		initObjects();
 	}
@@ -255,8 +257,12 @@ public class MainPage extends JPanel implements ActionListener{
 			historyButton();
 		else if(e.getSource() == btnLogout)
 			logoutButton();
-		else if(e.getSource() == btnClose) 
-			System.exit(0);
+		else if(e.getSource() == btnClose) {
+			int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Exit?", "Exit...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+			
+			if(confirm == JOptionPane.OK_OPTION)	System.exit(0);
+			else		return;
+		}
 		else if(e.getSource() == btnBar)
 			barButton();
 		
@@ -264,7 +270,6 @@ public class MainPage extends JPanel implements ActionListener{
 
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
-		profile = new Profile(adminClass);
 		panelContent.add(profile);
 		enableContent(false, false, true, false, false);
 		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnBook, btnHistory, btnClose);
@@ -272,13 +277,16 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void homeButton() {
 		lblTitle.setText("  DASHBAORD");
+		home = new Home();
 		panelContent.add(home);
 		enableContent(false, true, false, false, false);
 		buttonClick(btnHome, btnLogout, btnProfile, btnUser, btnBook, btnHistory, btnClose);
+		//home.initObjects();
 	}
 	
 	public void memberButton() {
 		lblTitle.setText("  MEMBERS");
+		member = new Members();
 		panelContent.add(member);
 		enableContent(false, false, false, false, true);
 		buttonClick(btnUser, btnHome, btnLogout, btnProfile, btnBook, btnHistory, btnClose);
@@ -286,6 +294,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void bookButton() {
 		lblTitle.setText("  BOOKS");
+		table = new Books();
 		panelContent.add(table);
 		enableContent(false, false, false, true, false);
 		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnUser, btnHistory, btnClose);
@@ -293,21 +302,27 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void historyButton() {
 		lblTitle.setText("  HISTORY OF USER LOGIN");
-		//history = new UserLoginHistory();
+		history = new UserLoginHistory();
 		panelContent.add(history);
 		enableContent(true, false, false, false, false);
 		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);
 	}
 	
 	public void logoutButton() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
-		Date date = new Date();
-		adminClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+		int confirm = JOptionPane.showConfirmDialog(null, "Do you want to Log-Out?", "Log-Out...", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
 		
-		lblTitle.setText("  USER LOGOUT");
-		Main.content.add(Main.log);
-		buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);
-    	Main.enableContent(true, false, false, false);
+		if(confirm == JOptionPane.OK_OPTION) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+			Date date = new Date();
+			adminClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+			
+			lblTitle.setText("  USER LOGOUT");
+			Main.content.add(Main.log);
+			//buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);
+	    	Main.enableContent(true, false, false, false);
+		}
+		else 
+			return;
 	}
 	
 	public void barButton() {
