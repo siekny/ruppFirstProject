@@ -52,6 +52,7 @@ public class Home extends JPanel {
 		panelTop.add(panelBook);
 		panelBook.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		
 		JButton btnBooksManagement = new JButton("          Books         ");
 		btnBooksManagement.setForeground(Color.WHITE);
 		btnBooksManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -112,6 +113,7 @@ public class Home extends JPanel {
 		panelTop.add(panelUser);
 		panelUser.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		
 		JButton btnUsersManagement = new JButton("          Users         ");
 		btnUsersManagement.setForeground(Color.WHITE);
 		btnUsersManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -140,11 +142,13 @@ public class Home extends JPanel {
 		panelContent.add(panelBody, BorderLayout.CENTER);
 		
 		JLabel lblImage = new JLabel("");
+		
 		lblImage.setIcon(new ImageIcon("images/book.gif"));
 		panelBody.add(lblImage);
 	}
 	public void initObjects() {
 		UserConnection connect = new UserConnection();
+
 		btnCountBooks.setText(connect.countTable("books") + "");
 		btnCountUsers.setText(connect.countTable("users") + "");
 		btnCountBorrows.setText(connect.countTable("borrows") + "");

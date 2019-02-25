@@ -1,6 +1,7 @@
 package adminPage;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
@@ -12,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 import java.awt.Cursor;
@@ -30,6 +32,8 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -217,10 +221,6 @@ public class Members extends JPanel {
 				panelNorth.add(lblLogo, CENTER_ALIGNMENT);
 				
 				JPanel panelCenter = new JPanel(new GridLayout(12, 2));
-				JLabel lblId = new JLabel("ID");
-				panelCenter.add(lblId);
-				JTextField txtId = new JTextField();
-				panelCenter.add(txtId);
 				JLabel lblName = new JLabel("Full Name");
 				panelCenter.add(lblName);
 				JTextField txtName = new JTextField();
@@ -235,8 +235,11 @@ public class Members extends JPanel {
 				panelCenter.add(txtPassword);
 				JLabel lblSex = new JLabel("Sex");
 				panelCenter.add(lblSex);
-				JTextField txtSex = new JTextField();
-				panelCenter.add(txtSex);
+				JComboBox<String> cboSex = new JComboBox<String>();
+				cboSex.addItem("Male");
+				cboSex.addItem("Female");
+				cboSex.setSelectedIndex(0);
+				panelCenter.add(cboSex);
 				JLabel lblAddress = new JLabel("Address");
 				panelCenter.add(lblAddress);
 				JTextField txtAddress = new JTextField();
@@ -251,16 +254,15 @@ public class Members extends JPanel {
 				panelCenter.add(txtPhone);
 				JLabel lblDOB = new JLabel("Date of Birth");
 				panelCenter.add(lblDOB);
-				JTextField txtDOB = new JTextField("dd-MM-yyyy");
+				JTextField txtDOB = new JTextField("Day-Month-Year");
 				panelCenter.add(txtDOB);
 				JLabel lblType = new JLabel("Type of Membership");
 				panelCenter.add(lblType);
-				JTextField txtType = new JTextField();
-				panelCenter.add(txtType);
-				JLabel lblStatus = new JLabel("Status");
-				panelCenter.add(lblStatus);
-				JTextField txtStatus = new JTextField();
-				panelCenter.add(txtStatus);
+				JComboBox<String> cboType = new JComboBox<String>();
+				cboType.addItem("Admin");
+				cboType.addItem("Member");
+				cboType.setSelectedIndex(0);
+				panelCenter.add(cboType);
 				JLabel lblDateofMem = new JLabel("Date of Membership");
 				panelCenter.add(lblDateofMem);
 				JTextField txtDateofMem = new JTextField();
@@ -288,52 +290,26 @@ public class Members extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 					
-					UserClass user = new UserClass(
-							Integer.parseInt(txtId.getText()),
-							txtName.getText(),
-							txtUsername.getText(),
-							txtPassword.getText(),
-							txtSex.getText(),
-							txtAddress.getText(),
-							txtEmail.getText(),
-							txtPhone.getText(),
-							txtDOB.getText(),
-							txtDateofMem.getText(),
-							Integer.parseInt(txtStatus.getText())
-							);
-					
 					Connection conn;
 					Statement stm;
-					ResultSet rss;
-					//ArrayList<UserClass> Userlist = new ArrayList<UserClass>();
+					
 					try {
 					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
-					stm = conn.createStatement();
-					String command = "Select * from users";
+					stm = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 					
-					String sql = "INSERT INTO users( fullname, username, password, sex, address, email, phone, dateofbirth, typeofmembership, dateofmembership, status ) "
-							+ "VALUES( '" 
-									//+ txtId.getText()+ "', '"
+					String sql = "INSERT INTO users( fullname, username, password, sex, address, email, phone, dateofbirth, dateofmembership, status) "
+							+ "VALUES ( '" 
 									+ txtName.getText()+"', '"
 									+ txtUsername.getText()+"', '"
 									+ txtPassword.getText()+"', '"
-									+ txtSex.getText()+"', '"
+									+ (cboSex.getSelectedIndex() == 0 ? 'M' : 'F')+"', '"
 									+ txtAddress.getText()+"', '"
 									+ txtEmail.getText()+"', '"
 									+ txtPhone.getText()+"', '"
 									+ txtDOB.getText()+"', '"
-									+ txtType.getText()+"', '"
-									+ txtDateofMem.getText()+"', '"
-									+ txtStatus.getText()		
-							+"');";
-					
-					//String sql = "INSERT INTO tblStudents (id, fullname, username, password) VALUES ('" + id + "', '" + name + "', '" + sex + "', " + score + ");";
-					rss = stm.executeQuery(command);
-					
-					rss.last();
+									+ txtDateofMem.getText()+"', "
+									+ (cboType.getSelectedIndex() == 0 ? 1 : 2) + ")";
 					stm.execute(sql);
-					
-					rss.close();
 					stm.close();
 					conn.close();
 					
@@ -348,6 +324,7 @@ public class Members extends JPanel {
 				});
 			}
 		});
+		
 		btnNewUser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\new-user.png"));
 		btnNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewUser.setFocusPainted(false);
@@ -426,7 +403,18 @@ public class Members extends JPanel {
 		
 		btnDeleteuser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Connection conn ;
+				
+				int index = table.getSelectedRow();
+				int ID;
+				
+				try {
+					ID =Integer.parseInt(model.getValueAt(index, 0).toString());
+				}
+				catch(Exception e) {
+					return;
+				}
+				
+				Connection conn;
 				Statement stm;
 				ResultSet rss;
 				try {
@@ -434,10 +422,7 @@ public class Members extends JPanel {
 					stm = conn.createStatement();
 					rss = stm.executeQuery("SELECT * FROM users");
 					
-					int index = table.getSelectedRow();
-					int ID =Integer.parseInt(model.getValueAt(index, 0).toString());
-					
-					String sql = "DELETE FROM users where id = "+ ID; 
+					String sql = "DELETE FROM users WHERE id = "+ ID; 
 					
 					stm.execute(sql);
 					rss.close();
@@ -454,13 +439,15 @@ public class Members extends JPanel {
 		btnResetpassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Connection conn ;
-				Statement stm;
-				ResultSet rss;
-				
 				int index = table.getSelectedRow();
-				int ID =Integer.parseInt(model.getValueAt(index, 0).toString());
-				
+				int ID;
+				try{
+					ID = Integer.parseInt(model.getValueAt(index, 0).toString());
+				}
+				catch(Exception e) {
+					return;
+				}
+
 				JFrame frameChangePassword = new JFrame("Reset Password");
 				JPanel panelcontent = new JPanel(new BorderLayout());
 				
@@ -469,7 +456,7 @@ public class Members extends JPanel {
 				lblLogo.setAlignmentX(CENTER_ALIGNMENT);
 				panelcontent.add(lblLogo, BorderLayout.NORTH);
 				
-				JPanel panelcenter = new JPanel(new GridLayout(3, 2)); 
+				JPanel panelcenter = new JPanel(new GridLayout(4, 2)); 
 				
 				JLabel lblUsername = new JLabel("Username");
 				panelcenter.add(lblUsername);
@@ -479,18 +466,17 @@ public class Members extends JPanel {
 				txtUsername.setEditable(false);
 				panelcenter.add(txtUsername);
 				
-				JLabel lbloldpassword = new JLabel("Old Password");
+				JLabel lbloldpassword = new JLabel("New Password");
 				panelcenter.add(lbloldpassword);
 				
-				JTextField txtoldpassword = new JTextField();
-				txtoldpassword.setEditable(false);
-				panelcenter.add(txtoldpassword);
+				JPasswordField password1 = new JPasswordField();
+				panelcenter.add(password1);
 				
-				JLabel lblnewpassword = new JLabel("New Password");
+				JLabel lblnewpassword = new JLabel("Confirm New Password");
 				panelcenter.add(lblnewpassword);
 				
-				JTextField txtnewpassword = new JTextField();
-				panelcenter.add(txtnewpassword);
+				JPasswordField password2 = new JPasswordField();
+				panelcenter.add(password2);
 				
 				JButton btnChange = new JButton("Change Password");
 				JPanel panelbtn = new JPanel(new BorderLayout());
@@ -498,24 +484,6 @@ public class Members extends JPanel {
 				panelcontent.add(panelcenter, BorderLayout.CENTER);
 				panelcontent.add(panelbtn, BorderLayout.SOUTH);
 				
-				try {
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
-					stm = conn.createStatement();
-					//rss = stm.executeQuery("SELECT * FROM users");
-					rss = stm.executeQuery("SELECT * FROM users WHERE id = " + ID);
-					rss.next();
-					txtoldpassword.setText(rss.getString("password"));
-					//String sql2 = "UPDATE uses SET password = '" + newpassword +"' WHERE id = " + ID;
-					
-					//stm.execute(sql2);
-					rss.close();
-					stm.close();
-					conn.close();
-					btnRefresh.doClick();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				frameChangePassword.getContentPane().add(panelcontent);
 				frameChangePassword.setSize(400, 300);
 				frameChangePassword.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -526,14 +494,19 @@ public class Members extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
+						
+						if(!String.valueOf(password1.getPassword()).equals(String.valueOf(password2.getPassword()))) {
+							JOptionPane.showMessageDialog(null, "Password is not match.", "Error", JOptionPane.PLAIN_MESSAGE);
+							return;
+						}
+						
 						Connection cnn;
 						Statement sta;
 						
-						String newpassword = txtnewpassword.getText();
 						try {
 							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
-							sta = cnn.createStatement();
-							String sql2 = "UPDATE users SET password = '" + newpassword +"' WHERE id = " + ID;
+							sta = cnn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+							String sql2 = "UPDATE users SET password = '" + String.valueOf(password1.getPassword()) +"' WHERE id = " + ID;
 							sta.execute(sql2);
 							sta.close();
 							cnn.close();
@@ -551,6 +524,16 @@ public class Members extends JPanel {
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			//Frame
+				
+				int index = table.getSelectedRow();
+				int ID;
+				try{
+					ID = Integer.parseInt(model.getValueAt(index, 0).toString());
+				}
+				catch(Exception ex) {
+					return;
+				}
+				
 				JFrame frameEditinfo = new JFrame("Registering New User");
 				JPanel panelOverallEditing = new JPanel(new BorderLayout());
 				
@@ -567,7 +550,7 @@ public class Members extends JPanel {
 				panelCenter.add(lblId);
 				JTextField txtId = new JTextField();
 				panelCenter.add(txtId);
-				JLabel lblName = new JLabel("Full Name");
+				JLabel lblName = new JLabel("Fullname");
 				panelCenter.add(lblName);
 				JTextField txtName = new JTextField();
 				panelCenter.add(txtName);
@@ -575,14 +558,13 @@ public class Members extends JPanel {
 				panelCenter.add(lblUsername);
 				JTextField txtUsername = new JTextField();
 				panelCenter.add(txtUsername);
-				JLabel lblPassword = new JLabel("Password");
-				panelCenter.add(lblPassword);
-				JTextField txtPassword = new JTextField();
-				panelCenter.add(txtPassword);
 				JLabel lblSex = new JLabel("Sex");
 				panelCenter.add(lblSex);
-				JTextField txtSex = new JTextField();
-				panelCenter.add(txtSex);
+				JComboBox<String> cboSex = new JComboBox<String>();
+				cboSex.addItem("Male");
+				cboSex.addItem("Female");
+				cboSex.setSelectedIndex(0);
+				panelCenter.add(cboSex);
 				JLabel lblAddress = new JLabel("Address");
 				panelCenter.add(lblAddress);
 				JTextField txtAddress = new JTextField();
@@ -601,22 +583,15 @@ public class Members extends JPanel {
 				panelCenter.add(txtDOB);
 				JLabel lblType = new JLabel("Type of Membership");
 				panelCenter.add(lblType);
-				JTextField txtType = new JTextField();
-				panelCenter.add(txtType);
-				JLabel lblStatus = new JLabel("Status");
-				panelCenter.add(lblStatus);
-				JTextField txtStatus = new JTextField();
-				panelCenter.add(txtStatus);
-				JLabel lblDateofMem = new JLabel("Date of Membership");
-				panelCenter.add(lblDateofMem);
-				JTextField txtDateofMem = new JTextField();
-				//txtDateofMem.setText(new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime()));
-				txtDateofMem.setEditable(true);
-				panelCenter.add(txtDateofMem);
+				JComboBox<String> cboType = new JComboBox<String>();
+				cboType.addItem("Admin");
+				cboType.addItem("Member");
+				cboType.setSelectedIndex(0);
+				panelCenter.add(cboType);
+
 				JPanel panelbutton = new JPanel(new BorderLayout());
-				JButton btnUpdate = new JButton("Register");
-				panelbutton.add(btnUpdate, BorderLayout.CENTER);
-				
+				JButton btnUpdate = new JButton("Update");
+				panelbutton.add(btnUpdate, BorderLayout.CENTER);			
 				
 				panelOverallEditing.add(panelNorth, BorderLayout.NORTH);
 				panelOverallEditing.add(panelCenter,BorderLayout.CENTER);
@@ -628,9 +603,7 @@ public class Members extends JPanel {
 				frameEditinfo.setSize(400, 400);
 				frameEditinfo.setLocationRelativeTo(null);
 				frameEditinfo.setVisible(true);
-				
-				int index = table.getSelectedRow();
-				int ID =Integer.parseInt(model.getValueAt(index, 0).toString());
+
 				String sql1= "SELECT * FROM users WHERE id = " + ID;
 				
 				Connection con;
@@ -647,25 +620,18 @@ public class Members extends JPanel {
 						txtId.setEditable(false);
 						txtName.setText(res.getString("fullname"));
 						txtUsername.setText(res.getString("username"));
-						txtPassword.setText(res.getString("password"));
-						txtSex.setText(res.getString("sex"));
+						cboSex.setSelectedIndex((res.getString("sex").equals("M") ? 0 : 1));
 						txtAddress.setText(res.getString("address"));
 						txtEmail.setText(res.getString("email"));
 						txtPhone.setText(res.getString("phone"));
 						txtDOB.setText(res.getString("dateofbirth"));
-						txtType.setText(res.getString("typeofmembership"));
-						txtDateofMem.setText(res.getString("dateofmembership"));
-						txtStatus.setText(res.getString("status"));
+						cboType.setSelectedIndex(res.getInt("status")-1);
 					res.close();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
-				
-				
-				
+
 				btnUpdate.addActionListener(new ActionListener() {
 					
 					@Override
@@ -673,29 +639,24 @@ public class Members extends JPanel {
 					
 					Connection cnn;
 					Statement sta;
-					ResultSet res;
 					
 						try {
 							cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project", "root", "");
 							sta = cnn.createStatement();
 							
 							
-							String sql2 = "UPDATE users SET password = '"
-								+ txtName.getText()+"', '"
-								+ txtUsername.getText()+"', '"
-								+ txtPassword.getText()+"', '"
-								+ txtSex.getText()+"', '"
-								+ txtAddress.getText()+"', '"
-								+ txtEmail.getText()+"', '"
-								+ txtPhone.getText()+"', '"
-								+ txtDOB.getText()+"', '"
-								+ txtType.getText()+"', '"
-								+ txtDateofMem.getText()+"', '"
-								+ txtStatus.getText()
-								+"' WHERE id = " + ID;
+							String sql2 = "UPDATE users SET " 
+									+ "fullname = '" + txtName.getText() + "', "
+									+ "username = '" + txtUsername.getText() + "', "
+									+ "sex = '" + (cboSex.getSelectedIndex() == 0 ? 'M' : 'F') + "', "
+									+ "address = '" + txtAddress.getText() + "', "
+									+ "email = '" + txtEmail.getText() + "', " 
+									+ "phone = '" + txtPhone.getText() + "', "
+									+ "dateofbirth = '" + txtDOB.getText() + "', "
+									+ "status = " + (cboType.getSelectedIndex() == 0 ? 1 : 2) + " "
+									+ "WHERE id = " + ID;
 							
 							sta.execute(sql2);
-							//rss.close();
 							sta.close();
 							cnn.close();
 							btnRefresh.doClick();
