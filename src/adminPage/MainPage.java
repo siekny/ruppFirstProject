@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -22,6 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
 
 import classMembers.AdminClass;
+import classMembers.InformationClass;
+import classMembers.LibrarianClass;
 
 
 public class MainPage extends JPanel implements ActionListener{
@@ -42,6 +46,7 @@ public class MainPage extends JPanel implements ActionListener{
 	private Profile profile;
 	private Books table;
 	private Home home;
+	private static AdminClass adminClass;
 
 	/**
 	 * Create the panel.
@@ -228,7 +233,7 @@ public class MainPage extends JPanel implements ActionListener{
 	public void initObjects () {
 		member = new Members();
 		history = new UserLoginHistory();
-		profile = new Profile(new AdminClass(1,"Five Remji","123","M","Phnom Penh","fiveremji5@gmail.com","012121212","01-01-2001","Admin",1));
+		profile = new Profile(new LibrarianClass());
 		table = new Books();
 		home = new Home();
 		
@@ -259,6 +264,7 @@ public class MainPage extends JPanel implements ActionListener{
 
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
+		profile = new Profile(adminClass);
 		panelContent.add(profile);
 		enableContent(false, false, true, false, false);
 		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnBook, btnHistory, btnClose);
@@ -287,12 +293,17 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void historyButton() {
 		lblTitle.setText("  HISTORY OF USER LOGIN");
+		//history = new UserLoginHistory();
 		panelContent.add(history);
 		enableContent(true, false, false, false, false);
 		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);
 	}
 	
 	public void logoutButton() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+		Date date = new Date();
+		adminClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+		
 		lblTitle.setText("  USER LOGOUT");
 		Main.content.add(Main.log);
 		buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);
@@ -340,4 +351,9 @@ public class MainPage extends JPanel implements ActionListener{
 		member.setVisible(isUsers);
 		
 	}
+
+	public static void addLibrarianId(AdminClass newAdminClass) {
+		adminClass = newAdminClass;
+	}
+
 }

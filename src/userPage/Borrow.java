@@ -59,6 +59,7 @@ public class Borrow extends JPanel implements ActionListener {
 		panelInner.add(panelTop, BorderLayout.NORTH);
 		panelTop.setLayout(new GridLayout(2, 1, 0, 0));
 		
+		
 		JLabel lblNewLabel = new JLabel("Book Transaction");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -196,6 +197,7 @@ public class Borrow extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		try {
 			if(e.getSource() == btnAddNew)
 				newBorrower();
@@ -216,6 +218,8 @@ public class Borrow extends JPanel implements ActionListener {
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
+		else if(e.getSource() == txtSearch)
+			searchBorrower();
 	}
 	public void borrowedBookOnly() {
 		model.setRowCount(0);
@@ -284,6 +288,7 @@ public class Borrow extends JPanel implements ActionListener {
 		
 	}
 
+	
 	public void removeBorrowers() throws Exception {
 		if(table.getSelectionModel().isSelectionEmpty())
 			JOptionPane.showConfirmDialog(null, "Please select at least one row to Remove", "",  JOptionPane.CLOSED_OPTION , JOptionPane.ERROR_MESSAGE);
@@ -297,9 +302,11 @@ public class Borrow extends JPanel implements ActionListener {
 	                int modelRow = table.convertRowIndexToModel( row );
 	                String id = table.getModel().getValueAt(modelRow, 0).toString();
 	                
+	               
 	                if(table.getModel().getValueAt(modelRow, 8).toString().equals("0")) {
 	                	new UserConnection().removeBorrowed(Integer.parseInt(id));
 	               
+					
 						model.removeRow( modelRow );
 			            row = table.getSelectedRow();  
 	                }

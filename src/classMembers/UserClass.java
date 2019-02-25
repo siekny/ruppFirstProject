@@ -1,26 +1,14 @@
 package classMembers;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
+import connection.DBConnection;
+
 public class UserClass extends LibrarianClass{
-	
-	/*
-	
-	private int id;
-	private String fullname;
-	private String password;
-	private String sex;
-	private String address;
-	private String email;
-	private String phone;
-	private String dateofbirth;
-	private String typeofmembership;
-	private int status;
-	
-	//*/
-	
-	private String dateofmembership;
-	private String username;
 	
 	public UserClass(
 			int id,
@@ -32,71 +20,91 @@ public class UserClass extends LibrarianClass{
 			String email,
 			String phone,
 			String dateofbirth,
-			String typeofmembership,
 			String dateofmembership,
 			int status
 			){
 		
-			/*
+			super(id, fullname, username, password, sex, address, email, phone, dateofbirth, dateofmembership, status);
+
+	}
+	
+	public UserClass() {
 		
-			this.id = id;
-			this.fullname = fullname;		
-			this.password = password;
-			this.sex = sex;
-			this.address = address;
-			this.email = email;
-			this.phone = phone;
-			this.dateofbirth = dateofbirth;
-			this.status = status;
-			this.typeofmembership = typeofmembership;
+	}
+
+	public static UserClass getUser(String username, String password) {
 		
-			//*/
+		try {
+			Connection connection = DBConnection.connectDB();
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			String sql = "SELECT * FROM users WHERE status != 1";
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			while(resultSet.next()) {
+				if(
+						username.equals(resultSet.getString("username")) &&
+						password.equals(resultSet.getString("password"))
+				  ) { 
+					return new UserClass(
+											resultSet.getInt("id"),
+											resultSet.getString("fullname"),
+											resultSet.getString("username"),
+											resultSet.getString("password"),
+											resultSet.getString("sex"),
+											resultSet.getString("address"),
+											resultSet.getString("email"),
+											resultSet.getString("phone"),
+											resultSet.getString("dateofbirth"),
+											resultSet.getString("dateofmembership"),
+											resultSet.getInt("status")
+										  );
+					
+					}
+			}
+			
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
 		
-			super(id, fullname, password, sex, address, email, phone, dateofbirth, typeofmembership, status);
-			this.username = username;
-			this.dateofmembership = dateofmembership;
+		return null;
 	}
 	
-	public String getUsername() {
-		return this.username;
-	}
-	public String getDateofmembership() {
-		return this.dateofmembership;
-	}
-	
-	/*
-	
-	public int getID() {
-		return this.id;
-	}
-	public String getFullname() {
-		return this.fullname;
-	}
-	public String getAddress() {
-		return this.address;
-	}
-	
-	public String getTypeofmembership() {
-		return this.typeofmembership;
-	}
-	public int getStatus() {
-		return this.status;
-	}
-	public String getPassword() {
-		return this.password;
-	}
-	public String getSex() {
-		return this.sex;
-	}
-	public String getEmail() {
-		return this.email;
-	}
-	public String getPhone() {
-		return this.phone;
-	}
-	public String getDOB() {
-		return this.dateofbirth;
+	public static UserClass getUser(int id) {
+		
+		UserClass userClass;
+		
+		try {
+			Connection connection = DBConnection.connectDB();
+			Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			String sql = "SELECT * FROM users WHERE id = " + id;
+			ResultSet resultSet = statement.executeQuery(sql);
+			
+			resultSet.next();
+			
+			userClass = new UserClass(
+									resultSet.getInt("id"),
+									resultSet.getString("fullname"),
+									resultSet.getString("username"),
+									resultSet.getString("password"),
+									resultSet.getString("sex"),
+									resultSet.getString("address"),
+									resultSet.getString("email"),
+									resultSet.getString("phone"),
+									resultSet.getString("dateofbirth"),
+									resultSet.getString("dateofmembership"),
+									resultSet.getInt("status")
+								  );
+			
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		
+		return userClass;
 	}
 	
-	//*/
 }

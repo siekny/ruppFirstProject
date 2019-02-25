@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -23,6 +25,7 @@ import javax.swing.border.MatteBorder;
 
 import adminPage.Home;
 import adminPage.Profile;
+import classMembers.InformationClass;
 import classMembers.UserClass;
 
 
@@ -45,6 +48,8 @@ public class HomePage extends JPanel implements ActionListener{
 	//private HomeUser home;
 	private Home home;
 	private Register register;
+	
+	private static UserClass userClass;
 
 	/**
 	 * Create the panel.
@@ -231,7 +236,7 @@ public class HomePage extends JPanel implements ActionListener{
 	public void initObjects () {
 		book = new Book();
 		borrow = new Borrow();
-		profile = new Profile(new UserClass(1,"M Ember","thisismember","123","F","USA","member@gmail.com","0989898","10-10-2010","Member","20-10-2020",2));
+		profile = new Profile(new UserClass());
 		home = new Home();
 		register = new Register();
 		BorderLayout borderLayout = (BorderLayout) home.getLayout();
@@ -265,6 +270,7 @@ public class HomePage extends JPanel implements ActionListener{
 
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
+		profile = new Profile(userClass);
 		panelContent.add(profile);
 		enableContent(false, false, true, false, false);
 		buttonClick(btnProfile, btnLogout, btnHome, btnBorrow, btnBook, btnRegister);
@@ -298,7 +304,11 @@ public class HomePage extends JPanel implements ActionListener{
 		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnBorrow, btnRegister);
 	}
 
-	public void logoutButton() {
+	public void logoutButton() {	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+		Date date = new Date();
+		userClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
+		
 		lblTitle.setText("  USER LOGOUT");
 		Main.content.add(Main.log);
 		buttonClick(btnLogout, btnProfile, btnHome, btnBorrow, btnBook, btnRegister);
@@ -344,5 +354,9 @@ public class HomePage extends JPanel implements ActionListener{
 		book.setVisible(isBook);
 		register.setVisible(isRegister);
 		
+	}
+
+	public static void addUser(UserClass newUserClass) {
+		userClass = newUserClass;
 	}
 }

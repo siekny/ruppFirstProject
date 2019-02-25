@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import java.awt.Font;
@@ -14,6 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.border.MatteBorder;
+
+import adminPage.MainPage;
+import classMembers.AdminClass;
+import classMembers.InformationClass;
+import classMembers.LibrarianClass;
+import connection.DBConnection;
 import main.Main;
 
 import java.awt.Cursor;
@@ -21,20 +28,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JPasswordField;
 
 public class AdminLogin extends JPanel {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
+	
 	private JLabel labelSignUp;
 	
-	/**
-	 * Create the panel.
-	 */
+	private AdminClass adminClass;
+	private JPasswordField passwordField;
+
 	public AdminLogin(JPanel content) {
 		
 		setLayout(new BorderLayout(0, 0));
@@ -167,9 +179,9 @@ public class AdminLogin extends JPanel {
 		JLabel lblNewLabel_4 = new JLabel("Login Password");
 		panel_7.add(lblNewLabel_4);
 		
-		txtPassword = new JTextField();
-		panel_7.add(txtPassword);
-		txtPassword.setColumns(20);
+		
+		passwordField = new JPasswordField();
+		panel_7.add(passwordField);
 		
 		JLabel label_2 = new JLabel("");
 		panel_7.add(label_2);
@@ -189,9 +201,22 @@ public class AdminLogin extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				adminClass = AdminClass.getAdmin(txtUsername.getText(), String.valueOf(passwordField.getPassword()));
 				
-				Main.enableContent(false, false, true, false);
-				content.add(Main.mainPage);
+				
+				if(adminClass != null) {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy / HH:mm");
+					Date date = new Date();
+					adminClass.addAction(new InformationClass(sdf.format(date), "Log-In"));
+					
+					MainPage.addLibrarianId(adminClass);
+					Main.enableContent(false, false, true, false);
+					content.add(Main.mainPage);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Username or Password is incorrect", "Error", JOptionPane.PLAIN_MESSAGE);
+				}
 			}
 		});
 		
@@ -207,9 +232,8 @@ public class AdminLogin extends JPanel {
 				
 				Main.enableContent(true, false, false, false);
 				content.add(Main.log);
-		        
-				
-				
+		     
+
 			}
 		});
 		labelSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

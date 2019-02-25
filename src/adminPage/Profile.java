@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
+import classMembers.InformationClass;
 import classMembers.LibrarianClass;
 import classMembers.UserClass;
 
@@ -54,14 +56,6 @@ public class Profile extends JPanel {
 		initLabel();
 		initTable();
 		
-	}
-
-	public Profile() {
-		setLayout(new BorderLayout(0, 0));
-
-		initObject();
-		initLabel();
-		initTable();		
 	}
 	
 	private void initObject() {
@@ -249,28 +243,16 @@ public class Profile extends JPanel {
 		lblEmail.setText(librarianClass.getEmail());
 		lblPhone.setText(librarianClass.getPhone());
 		lblDob.setText(librarianClass.getDateofbirth());
-		lblTom.setText(librarianClass.getTypeofmembership());
-		
-		if(librarianClass instanceof UserClass) {
-			UserClass temp = (UserClass) librarianClass;
-			lblUsername.setText(temp.getUsername());
-			lblDom.setText(temp.getDateofmembership());
-		}
-		
-		/////////////////////
-		
-		boolean isAdmin = (librarianClass.getStatus() == 1);
+		lblUsername.setText(librarianClass.getUsername());
+		lblDom.setText(librarianClass.getDateofmembership());
+		lblTom.setText((librarianClass.getStatus() == 1 ? "Admin" : "Member"));
 		
 		panel_11.add(lblNewLabel);
 		panel_11.add(lblId);
 		panel_11.add(lblNewLabel_1);
 		panel_11.add(lblFullname);	
-		
-		if(!isAdmin) {
-			panel_11.add(lblNewLabel_2);
-			panel_11.add(lblUsername);
-		}
-		
+		panel_11.add(lblNewLabel_2);
+		panel_11.add(lblUsername);
 		panel_11.add(lblNewLabel_3);
 		panel_11.add(lblSex);
 		panel_11.add(lblNewLabel_4);
@@ -283,15 +265,16 @@ public class Profile extends JPanel {
 		panel_11.add(lblDob);
 		panel_11.add(lblNewLabel_8);
 		panel_11.add(lblTom);
+		panel_11.add(lblNewLabel_9);
+		panel_11.add(lblDom);
 		
-		if(!isAdmin) {
-			panel_11.add(lblNewLabel_9);
-			panel_11.add(lblDom);
-		}
 	}
 	
 	private void initTable() {
 		table = new DefaultTableModel(null, new Object[] {"Date/Time", "Action"});
+		List<InformationClass> infos = LibrarianClass.getListOfAction(librarianClass.getID());
+		for(InformationClass temp : infos)
+			table.addRow(new Object[] {temp.getDate(), temp.getAction()});
 		
 		jTable = new JTable(table);
 		jTable.setRowHeight(23);
