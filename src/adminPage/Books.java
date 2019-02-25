@@ -3,7 +3,11 @@ package adminPage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.DriverManager;
@@ -11,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -42,7 +47,10 @@ public class Books extends JPanel {
 	private JLabel lblNoUsers;
 	private JTextField txtQty;
 	private JTextField txtPrice;
+	
+	private JComboBox cboEdition;
 	String s;
+	
 	
 	/**
 	 * Create the panel.
@@ -51,8 +59,10 @@ public class Books extends JPanel {
 	public Books() {
 		
 		initialize();
+		
 		initObjects();
 	}
+	
 	
 	
 	public void initialize () {
@@ -90,6 +100,8 @@ public class Books extends JPanel {
 		txtSearch = new JTextField();
 		panelSearch.add(txtSearch);
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) SystemColor.textInactiveText));
+		
+	
 		txtSearch.setColumns(33);		
 		JLabel lblNewLabel_3 = new JLabel("#Book(s) : ");
 		panelSearch.add(lblNewLabel_3);
@@ -105,13 +117,16 @@ public class Books extends JPanel {
 		FlowLayout fl_panelNumUsers = (FlowLayout) panelNumUsers.getLayout();
 		fl_panelNumUsers.setAlignment(FlowLayout.RIGHT);
 		
+	
 		JPanel panelTable = new JPanel();
 		panelTable.setBackground(new Color(255, 255, 255));
 		panel.add(panelTable, BorderLayout.CENTER);
 		
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
+		
 		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price"};
+		
 		
 		
 		model = new DefaultTableModel(null, colsName) {	
@@ -119,6 +134,7 @@ public class Books extends JPanel {
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		        return column == 0;
+		    
 		    }				 
 		};
 		
@@ -131,6 +147,7 @@ public class Books extends JPanel {
 		TableColumnModel tm = table.getColumnModel();
 		table.removeColumn(tm.getColumn(0));
 		
+
 		JPanel panelButtonLeft = new JPanel();
 		panel.add(panelButtonLeft, BorderLayout.SOUTH);
 		panelButtonLeft.setBackground(new Color(255, 255, 255));
@@ -157,7 +174,7 @@ public class Books extends JPanel {
 				rss = stm.executeQuery(command);
 				
 					 while(rss.next()) {
-				        	BookClass book = new BookClass( rss.getInt("id"),rss.getString("isbn"), rss.getString("title"), "", rss.getInt("qty"), 
+				        	BookClass book = new BookClass( rss.getInt("id"),rss.getString("isbn"), rss.getString("title") , "", rss.getInt("qty"), 
 									 rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), 0);
 							
 				list.add(book);
@@ -260,10 +277,12 @@ public class Books extends JPanel {
 		JPanel panelBodyRight = new JPanel();
 		panelBodyRight.setBackground(SystemColor.desktop);
 		panelContent.add(panelBodyRight, BorderLayout.CENTER);
+		
 		panelBodyRight.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelInner = new JPanel();
 		panelInner.setBackground(SystemColor.desktop);
+
 		panelBodyRight.add(panelInner, BorderLayout.CENTER);
 		panelInner.setLayout(new GridLayout(14, 2, 0, 5));
 		
@@ -279,6 +298,7 @@ public class Books extends JPanel {
 		
 		JLabel lblImage = new JLabel("     Image : ");
 		panelInner.add(lblImage);
+		
 		
 		JButton btnImage = new JButton("Choose Image");
 		btnImage.setFocusPainted(false);
@@ -378,6 +398,7 @@ public class Books extends JPanel {
 		label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		label_7.setForeground(Color.RED);
 		panelEdition.add(label_7);
+		
 		
 		JComboBox cboEdition = new JComboBox();
 		cboEdition.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
@@ -520,12 +541,16 @@ public class Books extends JPanel {
 		panelInner.add(panelClear);
 		
 		btnClear = new JButton("Clear");
+		
 		panelClear.add(btnClear);
 		btnClear.setFocusPainted(false);
 		btnClear.setBackground(SystemColor.menu);
+	
+		
 		btnClear.addActionListener(new ActionListener() {
 			
 			@Override
+			
 			public void actionPerformed(ActionEvent e) {
 				txtISBN.setText("");
 				txtTitle.setText("");
@@ -534,15 +559,14 @@ public class Books extends JPanel {
 				cboEdition.setSelectedIndex(0);
 				txtPrice.setText("");
 				
+				
 			}
 		});
 			
 	}
 	
-	public void initObjects () {
-		
-		
-	}
 
-	
+	public void initObjects () {
+	}	
+		
 }
