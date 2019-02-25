@@ -3,20 +3,27 @@ package adminPage;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
 
-
 import classMembers.BookClass;
+import connection.BookConnection;
+import connection.UserConnection;
+import popForm.FormBookUser;
 
-
+public class Books extends JPanel implements ActionListener {
 
 	/**
 	 * 
@@ -33,28 +40,32 @@ import classMembers.BookClass;
 	private JTextField txtAuthor;
 	private JTable table;
 	private DefaultTableModel model;
-	
+	private JButton btnSave, btnClear, btnImage, btnEdit, btnRemove;
 	private JLabel lblNoUsers;
 	private JTextField txtQty;
 	private JTextField txtPrice;
-
+	private JLabel lblShowimage;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cboEdition;
 	
 	
+	private String imageName;
+	private File selectedPath;
 	
+	
+
 	/**
 	 * Create the panel.
 	 */
-
 	public Books() {
 		
 		initialize();
-	
+		initButton();
+		initTable();
 		initObjects();
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })	
-
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void initialize () {
 		setBackground(new Color(236,240,245));
 		setLayout(new BorderLayout(20, 0));
@@ -90,7 +101,7 @@ import classMembers.BookClass;
 		txtSearch = new JTextField();
 		panelSearch.add(txtSearch);
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) SystemColor.textInactiveText));
-		
+		txtSearch.setColumns(33);
 		
 		JLabel lblNewLabel_3 = new JLabel("#Book(s) : ");
 		panelSearch.add(lblNewLabel_3);
@@ -106,25 +117,28 @@ import classMembers.BookClass;
 		FlowLayout fl_panelNumUsers = (FlowLayout) panelNumUsers.getLayout();
 		fl_panelNumUsers.setAlignment(FlowLayout.RIGHT);
 		
-
+		
 		JPanel panelTable = new JPanel();
 		panelTable.setBackground(new Color(255, 255, 255));
 		panel.add(panelTable, BorderLayout.CENTER);
 		
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
+		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price", "In Stock"};
 		
 		
-		
-		
+		model = new DefaultTableModel(null, colsName) {
+
+			/**
+			 * 
+			 */
 			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		        return column == 0;
-		   
-		    }		
+		    }
 		};
-	
 		panelTable.setLayout(new BorderLayout(0, 0));
 		table.setModel(model);
 		JScrollPane scroll = new JScrollPane(table);
@@ -134,7 +148,6 @@ import classMembers.BookClass;
 		TableColumnModel tm = table.getColumnModel();
 		table.removeColumn(tm.getColumn(0));
 		
-
 		JPanel panelContent = new JPanel();
 		panelContent.setBackground(SystemColor.desktop);
 		add(panelContent, BorderLayout.CENTER);
@@ -143,7 +156,6 @@ import classMembers.BookClass;
 		
 		JPanel panelTopRight = new JPanel();
 		panelTopRight.setBackground(SystemColor.desktop);
-	
 		
 		JLabel lblNewLabel_12 = new JLabel("Insertion a New Book");
 		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -153,12 +165,12 @@ import classMembers.BookClass;
 		JPanel panelBodyRight = new JPanel();
 		panelBodyRight.setBackground(SystemColor.desktop);
 		panelContent.add(panelBodyRight, BorderLayout.CENTER);
+		panelBodyRight.setLayout(new BorderLayout(0, 10));
 		
-
-	
 		JPanel panelInner = new JPanel();
 		panelInner.setBackground(SystemColor.desktop);
-
+		panelBodyRight.add(panelInner, BorderLayout.NORTH);
+		panelInner.setLayout(new GridLayout(9, 2, 0, 5));
 		
 		JLabel lblNewLabel_4 = new JLabel("     Table Information");
 		panelInner.add(lblNewLabel_4);
@@ -173,12 +185,10 @@ import classMembers.BookClass;
 		JLabel lblImage = new JLabel("     Image : ");
 		panelInner.add(lblImage);
 		
-	
-		
+		btnImage = new JButton("Choose Image");
 		btnImage.setFocusPainted(false);
 		btnImage.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelInner.add(btnImage);
-		
 		
 		JPanel panelISBN = new JPanel();
 		panelISBN.setBackground(SystemColor.desktop);
@@ -253,8 +263,7 @@ import classMembers.BookClass;
 		label_7.setForeground(Color.RED);
 		panelEdition.add(label_7);
 		
-	
-		
+		cboEdition = new JComboBox();
 		cboEdition.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		cboEdition.setBackground(Color.WHITE);
 		panelInner.add(cboEdition);
@@ -295,14 +304,11 @@ import classMembers.BookClass;
 		panelInner.add(txtPrice);
 		txtPrice.setColumns(10);
 		
-Inner.add(label_2);
-	
 		JPanel panelSave = new JPanel();
 		panelSave.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout_6 = (FlowLayout) panelSave.getLayout();
 		flowLayout_6.setAlignment(FlowLayout.RIGHT);
 		panelInner.add(panelSave);
-		
 		
 		btnSave = new JButton("Save");
 		btnSave.setIcon(new ImageIcon("images/add.png"));
@@ -312,19 +318,182 @@ Inner.add(label_2);
 		btnSave.setForeground(SystemColor.desktop);
 		
 		btnClear = new JButton("Clear");
-		
+		panelSave.add(btnClear);
 		btnClear.setFocusPainted(false);
 		btnClear.setBackground(SystemColor.menu);
-	
 		
+		JPanel panelUpdate = new JPanel();
+		panelUpdate.setBackground(new Color(255, 255, 255));
+		FlowLayout fl_panelUpdate = (FlowLayout) panelUpdate.getLayout();
+		fl_panelUpdate.setAlignment(FlowLayout.LEFT);
+		panelInner.add(panelUpdate);
+		
+		btnRemove = new JButton("Remove");
+		btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnRemove.setForeground(Color.WHITE);
+		btnRemove.setFocusPainted(false);
+		btnRemove.setBackground(new Color(221, 75, 57));
+		panelUpdate.add(btnRemove);
+		
+		btnEdit = new JButton("Update");
+		btnEdit.setForeground(Color.WHITE);
+		btnEdit.setBackground(new Color(0, 166, 90));
+		panelUpdate.add(btnEdit);
+		
+		JPanel panelShowImage = new JPanel();
+		panelShowImage.setBackground(Color.WHITE);
+		panelBodyRight.add(panelShowImage, BorderLayout.CENTER);
+		
+		lblShowimage = new JLabel("Image");
+		lblShowimage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShowimage.setIcon(new ImageIcon("images/image.png"));
+		lblShowimage.setHorizontalTextPosition(JButton.CENTER);
+		lblShowimage.setVerticalTextPosition(JButton.BOTTOM);
+		panelShowImage.add(lblShowimage);
+		
+		
+	}
+
+	
+	public void initButton() {
+		btnImage.addActionListener(this);
+		btnSave.addActionListener(this);
+		btnClear.addActionListener(this);
+		btnEdit.addActionListener(this);
+		btnRemove.addActionListener(this);
+		
+	}
+	public void initObjects () {
+		model.setRowCount(0);
+		ArrayList<BookClass> bookList = new UserConnection().bookView();
+		
+		for(BookClass boo: bookList) {
+			model.addRow(boo.getBookList());
+		}
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			if(e.getSource() == btnImage)
+				chooseImage();
+			else if(e.getSource() == btnClear)
+				clearTextFields();
+			else if(e.getSource() == btnSave)
+				saveBook();
+			else if(e.getSource() == btnRemove)
+				removeBook();
+			else if(e.getSource() == btnEdit)
+				editBook();
+		}catch(Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+		}
+		
+	}
+	
+	public void initTable() {
+		table.addMouseListener(new MouseAdapter() {
 
 			@Override
-			
+			public void mousePressed(MouseEvent e) {
+				btnEdit.setEnabled(true);
+				
+				int[] row = table.getSelectedRows();
+				if(row.length == 1) {
+					String getId = table.getModel().getValueAt(row[0], 0).toString();
+					ArrayList<BookClass> bookList = new UserConnection().detailBook(Integer.parseInt(getId));
+						
+						if(e.getClickCount() == 1) {
+							for(int i=0; i<bookList.size(); i++) {
+								BookClass book = bookList.get(i);
+								lblShowimage.setText(book.getImg());
+								lblShowimage.setIcon(new ImageIcon(new ImageIcon("uploads/" + book.getImg()).getImage().getScaledInstance(250, 200, Image.SCALE_DEFAULT)));
+								txtISBN.setText(book.getIsbn());
+								txtTitle.setText(book.getTitle());
+								txtAuthor.setText(book.getAuthor());
+								cboEdition.setSelectedItem(book.getEdition() + "");
+								txtQty.setText(book.getQty() + "");
+								txtPrice.setText(book.getPrice() + "");
+							}
+						}
+						if (e.getClickCount() == 2) {
+							for(int i=0; i<bookList.size(); i++) {
+								BookClass book = bookList.get(i);
+								new FormBookUser(book);
+							}
+							
+						}
+					
+				}
+					
+				else {
+					btnEdit.setEnabled(false);
+					
+					clearTextFields();
+				}
+				
+				
 				
 				
 			}
 		});
+	}
+	
+	
+	public void saveBook() throws Exception {
+		if(lblShowimage.getText().equals("Image"))
+			throw new Exception("Image is required");
+		
+		else if(txtISBN.getText().isEmpty())
+			throw new Exception("ISBN is required");
+		
+		else if(txtTitle.getText().isEmpty()) 
+			throw new Exception("Book Title is required");
+		
+		else if(txtAuthor.getText().isEmpty())
+			throw new Exception("Author cannot be null");
+		
+		else if(txtQty.getText().isEmpty())
+			throw new Exception("QTY cannot be null");
+		
+		else if(Integer.parseInt(txtQty.getText()) <= 0)
+			throw new Exception("QTY cannot be equal or less than zero");
+		
+		else if(txtPrice.getText().isEmpty())
+			throw new Exception("Price cannot be null");
+		
+		else if(Double.parseDouble(txtPrice.getText()) <= 0)
+			throw new Exception("Price cannot be equal or less than zero");
+		
+		else {
+			Date date = new Date();
+			BufferedImage img = ImageIO.read(selectedPath);
+		    String strDateFormat = "yyyy_MMM_dd_hh_mm_ss";
+		    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+		    String formattedDate= dateFormat.format(date);
+		    
+			String location = "uploads/" +formattedDate + imageName;
+			String format = "PNG";
+			ImageIO.write(img, format, new File(location));
 			
+			BookClass book = new BookClass(txtISBN.getText(), txtTitle.getText(), formattedDate + imageName, Integer.parseInt(txtQty.getText()), 
+							Double.parseDouble(txtPrice.getText()), txtAuthor.getText(), Integer.parseInt(cboEdition.getSelectedItem().toString()), 0);
+			new BookConnection().addNewBook(book);
+			model.setRowCount(0);
+			initObjects();
+		}
+	}
+	public void clearTextFields() {
+		txtISBN.setText("");
+		txtTitle.setText("");
+		txtPrice.setText("");
+		txtQty.setText("");
+		txtAuthor.setText("");
+		cboEdition.setSelectedItem("1");
+		
+		lblShowimage.setText("Image");
+		lblShowimage.setIcon(new ImageIcon("images/image.png"));
 	}
 	
 	public void removeBook() {
@@ -394,7 +563,7 @@ Inner.add(label_2);
 							JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
 						}
 						else {
-							JOptionPane.showConfirmDialog(null, "Cannot delete becuase this book is borrowed!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				}
@@ -418,4 +587,31 @@ Inner.add(label_2);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("* .Image", "jpg", "gif", "png", "jpeg");
 		filechooser.addChoosableFileFilter(filter);
 		
+		int result = filechooser.showSaveDialog(null);
+		if(result == JFileChooser.APPROVE_OPTION) {
+			selectedPath = filechooser.getSelectedFile();
+			String path = selectedPath.getAbsolutePath();
+			lblShowimage.setIcon(resizeImage(path));
+			imageName = selectedPath.getName();
+			lblShowimage.setText(imageName);
+//			System.out.println(imageName);
+		}
+		else if(result == JFileChooser.CANCEL_OPTION) {
+			JOptionPane.showMessageDialog(null, "No Image", "", JOptionPane.OK_OPTION);
+		}
+	}
+	
+	
+	//Method To Resize The ImageIcon
+    public ImageIcon resizeImage(String imgPath){
+        ImageIcon MyImage = new ImageIcon(imgPath);
+        Image img = MyImage.getImage();
+        Image newImage = img.getScaledInstance(lblShowimage.getWidth(), lblShowimage.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
+    }
+
+	
+
+	
 }
