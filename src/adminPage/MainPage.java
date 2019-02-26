@@ -270,6 +270,7 @@ public class MainPage extends JPanel implements ActionListener{
 
 	public void profileButton() {
 		lblTitle.setText("  MY PROFILE");
+		profile = new Profile(adminClass);
 		panelContent.add(profile);
 		enableContent(false, false, true, false, false);
 		buttonClick(btnProfile, btnLogout, btnHome, btnUser, btnBook, btnHistory, btnClose);

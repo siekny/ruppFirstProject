@@ -79,9 +79,9 @@ public class UserLoginHistory extends JPanel {
 		panelTop.add(panelSearch);
 		
 		JButton btnRefresh = new JButton("Reload");
-		btnRefresh.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\reload.png"));
-		btnRefresh.setForeground(new Color(255, 255, 255));
-		btnRefresh.setBackground(new Color(0,166,90));
+		//btnRefresh.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\reload.png"));
+		//btnRefresh.setForeground(new Color(255, 255, 255));
+		btnRefresh.setForeground(new Color(0,166,90));
 		btnRefresh.setFocusPainted(false);
 		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
 		btnRefresh.addActionListener(new ActionListener() {

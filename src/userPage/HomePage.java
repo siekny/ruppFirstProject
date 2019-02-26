@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JButton;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -62,6 +63,7 @@ public class HomePage extends JPanel implements ActionListener{
 	}
 	
 	public void initialize () {
+		 
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelWhole = new JPanel();

@@ -7,6 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import javax.swing.table.*;
 
 import classMembers.BookClass;
 import connection.BookConnection;
+import connection.DBConnection;
 import connection.UserConnection;
 import popForm.FormBookUser;
 
@@ -41,7 +44,6 @@ public class Books extends JPanel implements ActionListener {
 	private JTable table;
 	private DefaultTableModel model;
 	private JButton btnSave, btnClear, btnImage, btnEdit, btnRemove;
-	private JLabel lblNoUsers;
 	private JTextField txtQty;
 	private JTextField txtPrice;
 	private JLabel lblShowimage;
@@ -102,20 +104,6 @@ public class Books extends JPanel implements ActionListener {
 		panelSearch.add(txtSearch);
 		txtSearch.setBorder(new MatteBorder(0, 0, 1, 0, (Color) SystemColor.textInactiveText));
 		txtSearch.setColumns(33);
-		
-		JLabel lblNewLabel_3 = new JLabel("#Book(s) : ");
-		panelSearch.add(lblNewLabel_3);
-		
-		lblNoUsers = new JLabel("");
-		panelSearch.add(lblNoUsers);
-		lblNoUsers.setForeground(Color.BLUE);
-		lblNoUsers.setHorizontalAlignment(SwingConstants.RIGHT);
-		
-		JPanel panelNumUsers = new JPanel();
-		panelSearch.add(panelNumUsers);
-		panelNumUsers.setBackground(SystemColor.desktop);
-		FlowLayout fl_panelNumUsers = (FlowLayout) panelNumUsers.getLayout();
-		fl_panelNumUsers.setAlignment(FlowLayout.RIGHT);
 		
 		
 		JPanel panelTable = new JPanel();
@@ -311,11 +299,11 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(panelSave);
 		
 		btnSave = new JButton("Save");
-		btnSave.setIcon(new ImageIcon("images/add.png"));
+		//btnSave.setIcon(new ImageIcon("images/add.png"));
 		panelSave.add(btnSave);
 		btnSave.setFocusPainted(false);
-		btnSave.setBackground(new Color(60,141,188));
-		btnSave.setForeground(SystemColor.desktop);
+		btnSave.setForeground(new Color(60,141,188));
+		//btnSave.setForeground(SystemColor.desktop);
 		
 		btnClear = new JButton("Clear");
 		panelSave.add(btnClear);
@@ -330,18 +318,18 @@ public class Books extends JPanel implements ActionListener {
 		
 		btnRemove = new JButton("Remove");
 		btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
-		btnRemove.setForeground(Color.WHITE);
+		//btnRemove.setForeground(Color.WHITE);
 		btnRemove.setFocusPainted(false);
-		btnRemove.setBackground(new Color(221, 75, 57));
+		btnRemove.setForeground(new Color(221, 75, 57));
 		panelUpdate.add(btnRemove);
 		
 		btnEdit = new JButton("Update");
-		btnEdit.setForeground(Color.WHITE);
+		//btnEdit.setForeground(Color.WHITE);
 		btnEdit.setBackground(new Color(0, 166, 90));
 		panelUpdate.add(btnEdit);
 		
 		JPanel panelShowImage = new JPanel();
-		panelShowImage.setBackground(Color.WHITE);
+		panelShowImage.setForeground(Color.WHITE);
 		panelBodyRight.add(panelShowImage, BorderLayout.CENTER);
 		
 		lblShowimage = new JLabel("Image");
@@ -361,6 +349,7 @@ public class Books extends JPanel implements ActionListener {
 		btnClear.addActionListener(this);
 		btnEdit.addActionListener(this);
 		btnRemove.addActionListener(this);
+		txtSearch.addActionListener(this);
 		
 	}
 	public void initObjects () {
@@ -386,6 +375,8 @@ public class Books extends JPanel implements ActionListener {
 				removeBook();
 			else if(e.getSource() == btnEdit)
 				editBook();
+			else if(e.getSource() == txtSearch)
+				searchBook();
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
@@ -560,10 +551,10 @@ public class Books extends JPanel implements ActionListener {
 									Double.parseDouble(txtPrice.getText()), txtAuthor.getText(), Integer.parseInt(cboEdition.getSelectedItem().toString()), 0);
 							new BookConnection().updateBook(Integer.parseInt(getId), book);
 							initObjects();
-							JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showConfirmDialog(null, "Data has been updated successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
 						}
 						else {
-							JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showConfirmDialog(null, "Cannot delete becuase this book is borrowed!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				}
@@ -609,6 +600,34 @@ public class Books extends JPanel implements ActionListener {
         Image newImage = img.getScaledInstance(lblShowimage.getWidth(), lblShowimage.getHeight(),Image.SCALE_SMOOTH);
         ImageIcon image = new ImageIcon(newImage);
         return image;
+    }
+    
+    
+    public void searchBook() {
+    	if(txtSearch.getText().isEmpty()) 
+    		initObjects();
+    	else {
+    		try {
+    			Statement stmt = DBConnection.connectDB().createStatement();
+    			String search = txtSearch.getText();
+    			String sql = "SELECT * FROM books b WHERE b.isbn LIKE '%" + search + "%' OR " +
+    					  "b.title LIKE '%" + search + "%' OR " + 
+    					  "b.author LIKE '%" + search + "%' OR " + 
+    					  "b.edition LIKE '%" + search + "%'";
+
+    			ResultSet rss = stmt.executeQuery(sql);
+    			model.setRowCount(0);
+    			while(rss.next()) {
+    				BookClass book = new BookClass(rss.getInt("id"), rss.getString("isbn"), rss.getString("title"), rss.getString("image"), rss.getInt("qty"),
+    						rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("numBorrow"));
+    				
+    				model.addRow(book.getBookList());
+    			}
+    			stmt.close();
+    		}catch(Exception e) {
+    			e.getStackTrace();
+    		}
+    	}
     }
 
 	

@@ -34,8 +34,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
-import java.awt.FlowLayout;
-import javax.swing.border.EmptyBorder;
 
 public class Profile extends JPanel {
 	

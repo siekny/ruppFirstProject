@@ -187,8 +187,8 @@ public class AdminLogin extends JPanel {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFocusPainted(false);
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLogin.setBackground(new Color(0, 102, 204));
-		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setForeground(new Color(0, 102, 204));
+		//btnLogin.setForeground(new Color(255, 255, 255));
 		panelButton.add(btnLogin);
 		
 		btnLogin.addActionListener(new ActionListener() {

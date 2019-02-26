@@ -74,18 +74,20 @@ public class Borrow extends JPanel implements ActionListener {
 		panelTop.add(panelSearch);
 		
 		btnReLoad = new JButton("Reload");
-		btnReLoad.setIcon(new ImageIcon("images/reload.png"));
-		btnReLoad.setForeground(new Color(255, 255, 255));
-		btnReLoad.setBackground(new Color(0,166,90));
+		btnReLoad.setFont(new Font("Tahoma", Font.BOLD, 11));
+		//btnReLoad.setIcon(new ImageIcon("images/reload.png"));
+		//btnReLoad.setForeground(new Color(255, 255, 255));
+		btnReLoad.setForeground(new Color(0,166,90));
 		btnReLoad.setFocusPainted(false);
 		btnReLoad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelSearch.add(btnReLoad);
 		
 		btnBorrowonly = new JButton("Borrow Only");
+		btnBorrowonly.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBorrowonly.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBorrowonly.setFocusPainted(false);
-		btnBorrowonly.setBackground(new Color(128, 128, 128));
-		btnBorrowonly.setForeground(Color.WHITE);
+		btnBorrowonly.setForeground(Color.BLACK);
+		//btnBorrowonly.setForeground(Color.WHITE);
 		panelSearch.add(btnBorrowonly);
 		
 		JLabel lblNewLabel_1 = new JLabel("          Search : ");
@@ -139,38 +141,43 @@ public class Borrow extends JPanel implements ActionListener {
 	public void initButton() {
 		
 		btnAddNew = new JButton("Add New");
-		btnAddNew.setForeground(new Color(255, 255, 255));
-		btnAddNew.setBackground(new Color(65, 105, 225));
+		btnAddNew.setFont(new Font("Tahoma", Font.BOLD, 11));
+		//btnAddNew.setForeground(new Color(255, 255, 255));
+		btnAddNew.setForeground(new Color(65, 105, 225));
 		btnAddNew.setFocusPainted(false);
 		btnAddNew.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelButton.add(btnAddNew);
 		
 		btnReturn = new JButton("Return");
-		btnReturn.setBackground(new Color(105, 105, 105));
+		btnReturn.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFocusPainted(false);
 		btnReturn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnReturn.setForeground(Color.WHITE);
+		//btnReturn.setForeground(Color.WHITE);
 		panelButton.add(btnReturn);
 		btnReturn.addActionListener(this);
 		
 		btnEdit = new JButton("Edit");
+		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnEdit.setFocusPainted(false);
-		btnEdit.setForeground(new Color(255, 255, 255));
+		//btnEdit.setForeground(new Color(255, 255, 255));
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEdit.setBackground(new Color(46, 139, 87));
+		btnEdit.setForeground(new Color(46, 139, 87));
 		panelButton.add(btnEdit);
 		btnEdit.addActionListener(this);
 		
 		btnRemove = new JButton("Remove");
+		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRemove.setBackground(new Color(178, 34, 34));
+		btnRemove.setForeground(new Color(178, 34, 34));
 		btnRemove.setFocusPainted(false);
-		btnRemove.setForeground(new Color(255, 255, 255));
+		//btnRemove.setForeground(new Color(255, 255, 255));
 		panelButton.add(btnRemove);
 		
 		btnRecycleBin = new JButton("Recycle Bin");
-		btnRecycleBin.setBackground(new Color(255, 255, 255));
-		btnRecycleBin.setForeground(new Color(0, 0, 0));
+		btnRecycleBin.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRecycleBin.setForeground(new Color(139, 69, 19));
+		//btnRecycleBin.setForeground(new Color(0, 0, 0));
 		btnRecycleBin.setFocusPainted(false);
 		btnRecycleBin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelButton.add(btnRecycleBin);

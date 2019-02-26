@@ -33,6 +33,7 @@ public class Main extends JFrame {
 			public void run() {
 				try {
 					Main frame = new Main();
+					
 					frame.setVisible(true);
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				} catch (Exception e) {
@@ -56,6 +57,8 @@ public class Main extends JFrame {
 	
 	public void initialize () {
 		//setTitle("Library Management System");
+//		setUndecorated(true);
+//		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 885, 633);
 		contentPane = new JPanel();

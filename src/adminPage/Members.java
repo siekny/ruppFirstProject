@@ -33,8 +33,6 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -166,12 +164,6 @@ public class Members extends JPanel {
 		
 		panelSearch.add(txtSearch);
 		txtSearch.setColumns(30);
-		
-		JLabel lblNewLabel_2 = new JLabel("#Users  :  ");
-		panelSearch.add(lblNewLabel_2);
-		
-		JLabel lblNoUsers = new JLabel("");
-		panelSearch.add(lblNoUsers);
 		
 		JPanel panelTable = new JPanel();
 		panelInner.add(panelTable, BorderLayout.CENTER);
@@ -326,33 +318,33 @@ public class Members extends JPanel {
 			}
 		});
 		
-		btnNewUser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\new-user.png"));
+		//btnNewUser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\new-user.png"));
 		btnNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewUser.setFocusPainted(false);
-		btnNewUser.setForeground(new Color(255, 255, 255));
-		btnNewUser.setBackground(new Color(0,154,191));
+		//btnNewUser.setForeground(new Color(255, 255, 255));
+		btnNewUser.setForeground(new Color(0,154,191));
 		panelBottom.add(btnNewUser);
 		
 		JButton btnResetpassword = new JButton("Reset Password");
-		btnResetpassword.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\key.png"));
+		//btnResetpassword.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\key.png"));
 		btnResetpassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnResetpassword.setFocusPainted(false);
 		btnResetpassword.setForeground(new Color(255, 255, 255));
-		btnResetpassword.setBackground(new Color(0,166,90));
+		btnResetpassword.setForeground(new Color(0,166,90));
 		panelBottom.add(btnResetpassword);
 		
 		JButton btnDeleteuser = new JButton("Delete User(s)");
-		btnDeleteuser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\trash.png"));
+		//btnDeleteuser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\trash.png"));
 		btnDeleteuser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDeleteuser.setFocusPainted(false);
-		btnDeleteuser.setForeground(new Color(255, 255, 255));
-		btnDeleteuser.setBackground(new Color(221,75,57));
+		//btnDeleteuser.setForeground(new Color(255, 255, 255));
+		btnDeleteuser.setForeground(new Color(221,75,57));
 		panelBottom.add(btnDeleteuser);
 		
 		JButton btnEdit = new JButton("Edit Member");
-		btnEdit.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\rupp_project\\images\\edit.png"));
-		btnEdit.setBackground(new Color(255, 140, 0));
-		btnEdit.setForeground(new Color(255, 255, 255));
+		//btnEdit.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\rupp_project\\images\\edit.png"));
+		btnEdit.setForeground(new Color(255, 140, 0));
+		//btnEdit.setForeground(new Color(255, 255, 255));
 		panelBottom.add(btnEdit);
 		
 		
