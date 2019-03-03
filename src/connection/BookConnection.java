@@ -75,12 +75,12 @@ public class BookConnection {
 		try {
 			Statement stmt = conn.createStatement();
 			
-			String sqlSelect = "SELECT image FROM books WHERE id = '" + id + "'";
-			ResultSet rss = stmt.executeQuery(sqlSelect);
-			while(rss.next()) {
-				File file = new File("uploads/" + rss.getString("image"));
-				file.delete();
-			}
+//			String sqlSelect = "SELECT image FROM books WHERE id = '" + id + "'";
+//			ResultSet rss = stmt.executeQuery(sqlSelect);
+//			while(rss.next()) {
+//				File file = new File("uploads/" + rss.getString("image"));
+//				file.delete();
+//			}
 			
 			String sql = "UPDATE books SET image = '" + book.getImg() + "', isbn = '" + book.getIsbn() + "', title = '" + 
 					book.getTitle() +"', qty = '" + book.getQty() + "', price = '" + book.getPrice() + "', author = '" + 

@@ -60,7 +60,7 @@ public class Main extends JFrame {
 //		setUndecorated(true);
 //		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 885, 633);
+		setBounds(100, 100, 818, 440);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(236,240,245));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -76,10 +76,10 @@ public class Main extends JFrame {
 	public void initObjects () {
 		
 		
-		log = new UserLogin(content);
-		adminLogin = new AdminLogin(content);
+		log = new UserLogin();
+		adminLogin = new AdminLogin();
 		mainPage = new MainPage (content);
-		homePage = new HomePage(content);
+		homePage = new HomePage();
 		
 		content.add(log);
 		enableContent(true, false, false, false);

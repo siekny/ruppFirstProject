@@ -8,7 +8,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -48,6 +50,8 @@ public class MainPage extends JPanel implements ActionListener{
 	private Books table;
 	private Home home;
 	private static AdminClass adminClass;
+	private JPanel panelInner1_3;
+	private JLabel lblTime;
 
 	/**
 	 * Create the panel.
@@ -56,6 +60,7 @@ public class MainPage extends JPanel implements ActionListener{
 		
 		initialize();
 		initObjects();
+		clock();
 	}
 	
 	public void initialize () {
@@ -201,12 +206,21 @@ public class MainPage extends JPanel implements ActionListener{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panelInner1_2.add(lblNewLabel, BorderLayout.CENTER);
 		
+		panelInner1_3 = new JPanel();
+		panelInn1.add(panelInner1_3, BorderLayout.EAST);
+		panelInner1_3.setBackground(new Color(54,127,169));
+		panelInner1_3.setLayout(new BorderLayout(0, 0));
+		
+		lblTime = new JLabel("Time");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setFont(new Font("Hobo Std", Font.PLAIN, 20));
+		panelInner1_3.add(lblTime);
+		
 		JPanel panelInn2 = new JPanel();
 		panelInn2.setBackground(new Color(236,240,245));
 		panelInn2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
-		FlowLayout flowLayout_1 = (FlowLayout) panelInn2.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelInn.add(panelInn2);
+		panelInn2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		lblTitle = new JLabel("");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -371,5 +385,26 @@ public class MainPage extends JPanel implements ActionListener{
 	public static void addLibrarianId(AdminClass newAdminClass) {
 		adminClass = newAdminClass;
 	}
-
+	
+	public void clock() {
+		Thread clock = new Thread()
+		{
+			public void run() {
+				try {
+					while(true) {
+						Calendar cal = new GregorianCalendar();
+								
+						int second = cal.get(Calendar.SECOND);
+						int minute = cal.get(Calendar.MINUTE);
+						int hour = cal.get(Calendar.HOUR_OF_DAY);
+						
+						lblTime.setText(hour + " : " + minute + " : " + second + "     ");
+					}
+				}catch(Exception e) {
+					e.getStackTrace();
+				}
+			}
+		};
+		clock.start();
+	}
 }

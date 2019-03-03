@@ -79,11 +79,13 @@ public class UserLoginHistory extends JPanel {
 		panelTop.add(panelSearch);
 		
 		JButton btnRefresh = new JButton("Reload");
-		//btnRefresh.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\reload.png"));
-		//btnRefresh.setForeground(new Color(255, 255, 255));
-		btnRefresh.setForeground(new Color(0,166,90));
-		btnRefresh.setFocusPainted(false);
-		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));		
+		btnRefresh.setContentAreaFilled(false);
+		btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRefresh.setIcon(new ImageIcon("images/reload.png"));
+		btnRefresh.setForeground(new Color(255, 255, 255));
+		btnRefresh.setBackground(new Color(0,166,90));
+		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));	
+		btnRefresh.setOpaque(true);
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				txtSearch.setText("");
@@ -184,6 +186,7 @@ public class UserLoginHistory extends JPanel {
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));
@@ -197,7 +200,10 @@ public class UserLoginHistory extends JPanel {
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
 		JButton btnDetail = new JButton("View Detail");
-		btnDetail.setIcon(new ImageIcon("C:\\Users\\Acer\\Downloads\\eye.png"));
+		btnDetail.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDetail.setContentAreaFilled(false);
+		btnDetail.setIcon(new ImageIcon("images/eye.png"));
+		btnDetail.setOpaque(true);
 		btnDetail.setBackground(new Color(255, 140, 0));
 		btnDetail.setForeground(new Color(255, 255, 255));
 		btnDetail.addActionListener(new ActionListener() {

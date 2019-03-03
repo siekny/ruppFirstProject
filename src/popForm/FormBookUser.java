@@ -57,6 +57,7 @@ public class FormBookUser extends JPanel {
 		panel.setLayout(new BorderLayout(0, 10));
 		
 		JPanel panelTitle = new JPanel();
+		panelTitle.setBackground(new Color(255, 255, 255));
 		panelTitle.setBorder(new MatteBorder(0, 0, 3, 0, new Color(54,127,169)));
 		panel.add(panelTitle, BorderLayout.NORTH);
 		

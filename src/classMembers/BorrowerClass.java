@@ -5,50 +5,52 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BorrowerClass {
+public class BorrowerClass extends HistoryBookBorrowClass{
 	
 	private int id;
-	private String student_id;
-//	private int book_id;
 	private BookClass book;
-	
-	
-	private String studentName;
-	private String studentCurrentPhone;
 	private String bookISBN;
 	
 	private int borrowQTY;
 	private String borrowedDate;
-	
-	private String returnDate;
+	private String returnDate; 
+	private int overDate;
 	private int status;
 	
-	public BorrowerClass() {}
+	public BorrowerClass() {
+		
+	}
 	
-	public BorrowerClass(String student_id, int book_id, String studentName, String studentCurrentPhone,
-			String bookISBN, int borrowQTY, String borrowedDate, int status) {
+	public BorrowerClass(int id, BookClass book, String bookISBN, int borrowQTY, String borrowedDate, String returnDate,
+			int status) {
 		super();
-		 book = new BookClass();
-		this.student_id = student_id;
+		this.id = id;
+		this.book = book;
+		this.bookISBN = bookISBN;
+		this.borrowQTY = borrowQTY;
+		this.borrowedDate = borrowedDate;
+		this.returnDate = returnDate;
+		this.status = status;
+	}
+
+	public BorrowerClass(String student_id, int book_id, String studentName, String student_phone,
+			String bookISBN, int borrowQTY, String borrowedDate, int status) {
+		super(student_id, studentName, student_phone);
+		book = new BookClass();
 		this.book.setID(book_id);
-		this.studentName = studentName;
-		this.studentCurrentPhone = studentCurrentPhone;
 		this.bookISBN = bookISBN;
 		this.borrowQTY = borrowQTY;
 		this.borrowedDate = borrowedDate;
 		this.status = status;
 	}
 	
-	public BorrowerClass(int id, String student_id, int book_id, String studentName, String studentCurrentPhone,
+	public BorrowerClass(int id, String student_id, int book_id, String studentName, String student_phone,
 			String bookISBN, int borrowQTY, String borrowedDate, String returnDate,
 			int status) {
-		super();
+		super(student_id, studentName, student_phone);
 		 book = new BookClass();
 		this.id = id;
-		this.student_id = student_id;
 		this.book.setID(book_id);
-		this.studentName = studentName;
-		this.studentCurrentPhone = studentCurrentPhone;
 		this.bookISBN = bookISBN;
 		this.borrowQTY = borrowQTY;
 		this.borrowedDate = borrowedDate;
@@ -56,16 +58,26 @@ public class BorrowerClass {
 		this.status = status;
 		
 	}
-	public BorrowerClass(int id, String student_id, String returnDate) {
+	public BorrowerClass(int id, String student_id, int book_id, String studentName, String student_phone,
+			String bookISBN, int borrowQTY, String borrowedDate, String returnDate, int overDate, int status) {
+		super(student_id, studentName, student_phone);
+		 book = new BookClass();
 		this.id = id;
-		this.student_id = student_id;
+		this.book.setID(book_id);
+		this.bookISBN = bookISBN;
+		this.borrowQTY = borrowQTY;
+		this.borrowedDate = borrowedDate;
 		this.returnDate = returnDate;
+		this.overDate = overDate;
+		this.status = status;
+		
 	}
 	
 	public Object[] getBorrowColumns() {
-		
-		return new Object[] {id, student_id, book.getID(), studentName, studentCurrentPhone, bookISBN, borrowQTY, borrowedDate, actualReturnDate()};
+		//System.out.println(super.getName() + "\t" + super.getPhone());
+		return new Object[] {id, super.getStu_id(), book.getID(), super.getName(), super.getPhone(),  bookISBN, borrowQTY, borrowedDate, actualReturnDate()};
 	}
+	
 	
 	public BookClass getBook() {
 		return book;
@@ -97,8 +109,8 @@ public class BorrowerClass {
 		return return_date;
 		
 	}
-	public int getSubstractDays() {
-		int diffDays = 0;
+	public int getOverDate() {
+		overDate = 0;
 		try {
 			DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
 			String actualReturnDate = df.format(new Date());
@@ -109,14 +121,14 @@ public class BorrowerClass {
 			// getTime() returns the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by this Date object
 			long diff = getactualReturnDate.getTime() - getreturnDate.getTime();
  
-			diffDays = (int) (diff / (24 * 60 * 60 * 1000));
-			if(diffDays <1)
-				diffDays = 0;
+			overDate = (int) (diff / (24 * 60 * 60 * 1000));
+			if(overDate <1)
+				overDate = 0;
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return diffDays;
+		return overDate;
 	}
 	
 	public double getFineOverDays(int overDays) {
@@ -128,30 +140,13 @@ public class BorrowerClass {
 		return id;
 	}
 	
-	public String getstudent_id() {
-		return student_id;
-	}
-	public void setstudent_id(String student_id) {
-		this.student_id = student_id;
-	}
 	public int getBook_id() {
 		return book.getID();
 	}
 	public void setBook_id(int book_id) {
 		this.book.setID(book_id);
 	}
-	public String getStudentName() {
-		return studentName;
-	}
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-	public String getStudentCurrentPhone() {
-		return studentCurrentPhone;
-	}
-	public void setStudentCurrentPhone(String studentCurrentPhone) {
-		this.studentCurrentPhone = studentCurrentPhone;
-	}
+	
 	public String getBookISBN() {
 		return bookISBN;
 	}

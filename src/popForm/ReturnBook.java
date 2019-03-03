@@ -183,6 +183,11 @@ public class ReturnBook extends JPanel {
 		panelRight.add(label);
 		
 		btnReturn = new JButton("Return");
+		btnReturn.setBackground(new Color(60, 179, 113));
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setOpaque(true);
+		btnReturn.setForeground(new Color(255, 255, 255));
+		btnReturn.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnReturn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelRight.add(btnReturn);
 		
@@ -192,6 +197,7 @@ public class ReturnBook extends JPanel {
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
 		lblBorrowedid = new JLabel("");
+		lblBorrowedid.setVisible(false);
 		lblBorrowedid.setBackground(new Color(255, 255, 255));
 		panelBottom.add(lblBorrowedid);
 		
@@ -205,14 +211,14 @@ public class ReturnBook extends JPanel {
 		
 		DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
 		
-		txtTxtstudentid.setText(borrowedReturn.getstudent_id() + "");
-		txtStudentname.setText(borrowedReturn.getStudentName());
+		txtTxtstudentid.setText(borrowedReturn.getStu_id() + "");
+		txtStudentname.setText(borrowedReturn.getName());
 		txtBookisbn.setText(borrowedReturn.getBookISBN() + "");
 		txtQty.setText(borrowedReturn.getBorrowQTY() + "");
 		txtBorroweddate.setText(borrowedReturn.getBorrowedDate());
 		txtReturndate.setText(borrowedReturn.getReturnDate());
 		txtActualreturndate.setText(df.format(new Date()));
-		txtOverdays.setText(borrowedReturn.getSubstractDays() + "");
+		txtOverdays.setText(borrowedReturn.getOverDate() + "");
 		txtFineamount.setText(borrowedReturn.getFineOverDays(Integer.parseInt(txtOverdays.getText())) + "");
 		
 		lblBorrowedid.setText(borrowedReturn.getId() + "");

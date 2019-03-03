@@ -18,6 +18,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Cursor;
+import java.awt.Color;
+import java.awt.Font;
 
 public class RecycleofBorrowed extends JPanel implements ActionListener {
 
@@ -36,6 +38,7 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public RecycleofBorrowed() {
+		setBackground(new Color(255, 255, 255));
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -58,6 +61,7 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	
 	public void initComponent() {
 		panelContent = new JPanel();
+		panelContent.setBackground(new Color(255, 255, 255));
 		add(panelContent, BorderLayout.CENTER);
 		panelContent.setLayout(new BorderLayout(0, 0));
 		panelContent.setPreferredSize(new Dimension(800, 500));
@@ -78,17 +82,28 @@ public class RecycleofBorrowed extends JPanel implements ActionListener {
 	
 	public void initBtn() {
 		panelBtn = new JPanel();
+		panelBtn.setBackground(new Color(255, 255, 255));
 		FlowLayout flowLayout = (FlowLayout) panelBtn.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		panelContent.add(panelBtn, BorderLayout.SOUTH);
 		
 		btnRestore = new JButton("Restore");
+		btnRestore.setContentAreaFilled(false);
+		btnRestore.setBackground(new Color(60, 179, 113));
+		btnRestore.setForeground(new Color(255, 255, 255));
+		btnRestore.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRestore.setFocusPainted(false);
 		btnRestore.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRestore.setOpaque(true);
 		panelBtn.add(btnRestore);
 		
 		btnDelete = new JButton("Delete");
+		btnDelete.setContentAreaFilled(false);
+		btnDelete.setForeground(new Color(255, 255, 255));
+		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDelete.setBackground(new Color(220, 20, 60));
 		btnDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDelete.setOpaque(true);
 		btnDelete.setFocusPainted(false);
 		panelBtn.add(btnDelete);
 		

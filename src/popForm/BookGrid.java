@@ -33,6 +33,7 @@ public class BookGrid extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
@@ -57,6 +58,7 @@ public class BookGrid extends JPanel {
 			btnBook[i].setFont(new Font("Tahoma", Font.PLAIN, 15));
 			panelBook[i].add(btnBook[i]);
 			btnBook[i].setFocusPainted(false);
+			btnBook[i].setBackground(Color.WHITE);
 			btnBook[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnBook[i].setBackground(Color.WHITE);
 			btnBook[i].setIcon(new ImageIcon(new ImageIcon("uploads/" + book.getImg()).getImage().getScaledInstance(150, 90, Image.SCALE_SMOOTH)));

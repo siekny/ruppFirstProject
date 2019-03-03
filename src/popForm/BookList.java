@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class BookList extends JPanel{
 		};
 		
 		table = new JTable(model);
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
 		
 		
 		JScrollPane scroll = new JScrollPane(table);

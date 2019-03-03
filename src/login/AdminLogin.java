@@ -41,7 +41,7 @@ public class AdminLogin extends JPanel {
 	private AdminClass adminClass;
 	private JPasswordField passwordField;
 
-	public AdminLogin(JPanel content) {
+	public AdminLogin() {
 		
 		setLayout(new BorderLayout(0, 0));
 		
@@ -161,9 +161,10 @@ public class AdminLogin extends JPanel {
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(new Color(255, 255, 255));
 		panel_6.add(panel_7, BorderLayout.CENTER);
-		panel_7.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_7.setLayout(new GridLayout(7, 1, 0, 0));
 		
 		JLabel lblNewLabel_3 = new JLabel("Login Username");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_7.add(lblNewLabel_3);
 		
 		txtUsername = new JTextField();
@@ -171,10 +172,12 @@ public class AdminLogin extends JPanel {
 		txtUsername.setColumns(30);
 		
 		JLabel lblNewLabel_4 = new JLabel("Login Password");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_7.add(lblNewLabel_4);
 		
 		
 		passwordField = new JPasswordField();
+		passwordField.setColumns(30);
 		panel_7.add(passwordField);
 		
 		JLabel label_2 = new JLabel("");
@@ -185,10 +188,13 @@ public class AdminLogin extends JPanel {
 		panel_7.add(panelButton);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setContentAreaFilled(false);
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLogin.setFocusPainted(false);
 		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLogin.setForeground(new Color(0, 102, 204));
-		//btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setBackground(new Color(0, 102, 204));
+		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setOpaque(true);
 		panelButton.add(btnLogin);
 		
 		btnLogin.addActionListener(new ActionListener() {
@@ -206,7 +212,8 @@ public class AdminLogin extends JPanel {
 					
 					MainPage.addLibrarianId(adminClass);
 					Main.enableContent(false, false, true, false);
-					content.add(Main.mainPage);
+					//Main.mainPage = new MainPage();
+					Main.content.add(Main.mainPage);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Username or Password is incorrect", "Error", JOptionPane.PLAIN_MESSAGE);
@@ -220,12 +227,14 @@ public class AdminLogin extends JPanel {
 		
 		
 		labelSignUp = new JLabel("Or go to User Login ?");
+		labelSignUp.setFont(new Font("Tahoma", Font.BOLD, 11));
 		labelSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				
 				Main.enableContent(true, false, false, false);
-				content.add(Main.log);
+				Main.content.add(Main.log);
 		     
 
 			}
@@ -233,11 +242,6 @@ public class AdminLogin extends JPanel {
 		labelSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		labelSignUp.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_7.add(labelSignUp);
-		
-		JPanel panel_12 = new JPanel();
-		add(panel_12, BorderLayout.NORTH);
-		panel_12.setPreferredSize(new Dimension(500, 100));
-		panel_12.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
 		//JOptionPane.showOptionDialog(null, panelContent,"Create an Account of user", JOptionPane.CLOSED_OPTION,JOptionPane.CLOSED_OPTION, null, new Object[]{}, null);

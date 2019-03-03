@@ -26,6 +26,7 @@ public class Borrow extends JPanel implements ActionListener {
 	private JButton btnReturn;
 	private JButton btnBorrowonly;
 	private JButton btnRecycleBin;
+	private JButton btnReturnonly;
 
 	/**
 	 * Create the panel.
@@ -75,20 +76,31 @@ public class Borrow extends JPanel implements ActionListener {
 		
 		btnReLoad = new JButton("Reload");
 		btnReLoad.setFont(new Font("Tahoma", Font.BOLD, 11));
-		//btnReLoad.setIcon(new ImageIcon("images/reload.png"));
-		//btnReLoad.setForeground(new Color(255, 255, 255));
-		btnReLoad.setForeground(new Color(0,166,90));
-		btnReLoad.setFocusPainted(false);
+		btnReLoad.setIcon(new ImageIcon("images/reload.png"));
+		btnReLoad.setForeground(new Color(255, 255, 255));
+		btnReLoad.setBackground(new Color(0,166,90));
+		btnReLoad.setContentAreaFilled(false);
+		btnReLoad.setOpaque(true);
 		btnReLoad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelSearch.add(btnReLoad);
 		
 		btnBorrowonly = new JButton("Borrow Only");
+		btnBorrowonly.setContentAreaFilled(false);
 		btnBorrowonly.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBorrowonly.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnBorrowonly.setFocusPainted(false);
-		btnBorrowonly.setForeground(Color.BLACK);
-		//btnBorrowonly.setForeground(Color.WHITE);
+		btnBorrowonly.setBackground(new Color(65, 105, 225));
+		btnBorrowonly.setForeground(Color.WHITE);
+		btnBorrowonly.setOpaque(true);
 		panelSearch.add(btnBorrowonly);
+		
+		btnReturnonly = new JButton("Return Only");
+		btnReturnonly.setBackground(new Color(255, 153, 51));
+		btnReturnonly.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReturnonly.setContentAreaFilled(false);
+		btnReturnonly.setForeground(new Color(255, 255, 255));
+		btnReturnonly.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnReturnonly.setOpaque(true);
+		panelSearch.add(btnReturnonly);
 		
 		JLabel lblNewLabel_1 = new JLabel("          Search : ");
 		panelSearch.add(lblNewLabel_1);
@@ -115,7 +127,8 @@ public class Borrow extends JPanel implements ActionListener {
 	}
 	
 	public void initTable() {
-		String[] colsName = new String[] {"id", "StudentID", "BookID", "Full Name", "Contact", "Book ISBN", "Borrowed BookQTY", "Borrowed Date", "Return Date"};
+		String[] colsName = new String[] {"id", "BookID", "StudentID"
+				, "Full Name", "Contact", "Book ISBN", "Borrowed BookQTY", "Borrowed Date", "Return Date"};
 		model = new DefaultTableModel(null, colsName) {
 			private static final long serialVersionUID = 1L;
 
@@ -128,6 +141,7 @@ public class Borrow extends JPanel implements ActionListener {
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));
@@ -142,44 +156,50 @@ public class Borrow extends JPanel implements ActionListener {
 		
 		btnAddNew = new JButton("Add New");
 		btnAddNew.setFont(new Font("Tahoma", Font.BOLD, 11));
-		//btnAddNew.setForeground(new Color(255, 255, 255));
-		btnAddNew.setForeground(new Color(65, 105, 225));
-		btnAddNew.setFocusPainted(false);
+		btnAddNew.setForeground(new Color(255, 255, 255));
+		btnAddNew.setBackground(new Color(65, 105, 225));
 		btnAddNew.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelButton.add(btnAddNew);
+		btnAddNew.setContentAreaFilled(false);
+		btnAddNew.setOpaque(true);
 		
 		btnReturn = new JButton("Return");
 		btnReturn.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnReturn.setForeground(Color.BLACK);
-		btnReturn.setFocusPainted(false);
+		btnReturn.setBackground(new Color(139, 69, 19));
 		btnReturn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		//btnReturn.setForeground(Color.WHITE);
+		btnReturn.setForeground(Color.WHITE);
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setOpaque(true);
 		panelButton.add(btnReturn);
 		btnReturn.addActionListener(this);
 		
 		btnEdit = new JButton("Edit");
 		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnEdit.setFocusPainted(false);
-		//btnEdit.setForeground(new Color(255, 255, 255));
+		btnEdit.setForeground(new Color(255, 255, 255));
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEdit.setForeground(new Color(46, 139, 87));
+		btnEdit.setBackground(new Color(46, 139, 87));
+		btnEdit.setContentAreaFilled(false);
+		btnEdit.setOpaque(true);
 		panelButton.add(btnEdit);
 		btnEdit.addActionListener(this);
 		
 		btnRemove = new JButton("Remove");
 		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRemove.setForeground(new Color(178, 34, 34));
-		btnRemove.setFocusPainted(false);
-		//btnRemove.setForeground(new Color(255, 255, 255));
+		btnRemove.setBackground(new Color(178, 34, 34));
+		btnRemove.setForeground(new Color(255, 255, 255));
+		btnRemove.setContentAreaFilled(false);
+		btnRemove.setOpaque(true);
 		panelButton.add(btnRemove);
 		
 		btnRecycleBin = new JButton("Recycle Bin");
+		btnRecycleBin.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		btnRecycleBin.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnRecycleBin.setForeground(new Color(139, 69, 19));
-		//btnRecycleBin.setForeground(new Color(0, 0, 0));
-		btnRecycleBin.setFocusPainted(false);
+		btnRecycleBin.setBackground(new Color(255,255,255));
+		btnRecycleBin.setForeground(new Color(0, 0, 0));
 		btnRecycleBin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRecycleBin.setContentAreaFilled(false);
+		btnRecycleBin.setOpaque(true);
 		panelButton.add(btnRecycleBin);
 		
 		btnReLoad.addActionListener(this);
@@ -187,15 +207,38 @@ public class Borrow extends JPanel implements ActionListener {
 		btnRemove.addActionListener(this);
 		btnBorrowonly.addActionListener(this);
 		btnRecycleBin.addActionListener(this);
+		btnReturnonly.addActionListener(this);
 		
 		txtSearch.addActionListener(this);
+		
+		doubleClickTable();
+	}
+	
+	// Double Click on row of table
+	public void doubleClickTable() {
+		table.addMouseListener(new MouseAdapter() {
+	
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+			int row = table.getSelectedRow();
+			String id = table.getModel().getValueAt(row, 0).toString();
+			
+			BorrowerClass detail = new UserConnection().borrowDetail(Integer.parseInt(id));
+			
+			if (e.getClickCount() == 2) {
+					new BorrowDetail(detail);
+				}
+				
+			}
+		});
 	}
 	
 	public void showBorrower() {
 		
 		model.setRowCount(0);
 		
-		ArrayList<BorrowerClass> borrowList = new UserConnection().borrowView(1); // show return date
+		ArrayList<BorrowerClass> borrowList = new UserConnection().borrowView(0); // show both return date 
 		
 		for(int i=0; i<borrowList.size(); i++) {
 			BorrowerClass book = borrowList.get(i);
@@ -214,7 +257,9 @@ public class Borrow extends JPanel implements ActionListener {
 			else if(e.getSource() == btnRemove)
 				removeBorrowers();
 			else if(e.getSource() == btnBorrowonly)
-				borrowedBookOnly();
+				borrowedBookOnly(1);
+			else if(e.getSource() == btnReturnonly)
+				borrowedBookOnly(2);
 			else if(e.getSource() == btnReLoad)
 				showBorrower();
 			else if(e.getSource() == btnRecycleBin)
@@ -228,13 +273,24 @@ public class Borrow extends JPanel implements ActionListener {
 		}
 		
 	}
-	public void borrowedBookOnly() {
+	public void borrowedBookOnly(int category) {
+		final int BORROWED = 1;
+		final int RETURNED = 2;
+		
 		model.setRowCount(0);
 		
-		ArrayList<BorrowerClass> borrowList = new UserConnection().borrowView(0); // not show return date
-		
-		for(int i=0; i<borrowList.size(); i++) {
-			BorrowerClass book = borrowList.get(i);
+		ArrayList<BorrowerClass> list = null;
+		switch(category) {
+			case BORROWED:
+				list = new UserConnection().borrowView(1); 
+				break;
+			case RETURNED:
+				list = new UserConnection().borrowView(3); 
+				break;
+		}
+	
+		for(int i=0; i<list.size(); i++) {
+			BorrowerClass book = list.get(i);
 			model.addRow(book.getBorrowColumns());
 		}
 	}
@@ -250,6 +306,7 @@ public class Borrow extends JPanel implements ActionListener {
 				if(table.getModel().getValueAt(row[0], 8).toString().equals("0")) {
 					BorrowerClass borrowed = new UserConnection().borrowedBook(Integer.parseInt(getId));
 					new NewBorrower(borrowed, 0);	// 0 is form for editing borrower
+					showBorrower();
 				}
 				else {
 					JOptionPane.showConfirmDialog(null, "This Book's been returned!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);

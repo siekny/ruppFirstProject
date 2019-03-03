@@ -8,7 +8,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 
@@ -41,7 +43,7 @@ public class HomePage extends JPanel implements ActionListener{
 	
 	private JButton btnLibrary, btnHome, btnProfile, btnBorrow, btnBook, btnBar, btnClose, btnLogout;
 	public JPanel content;
-	private JLabel lblTitle;
+	private JLabel lblTitle, lblTime;
 	private JPanel panelContent;
 	
 	// initialize objects
@@ -56,10 +58,11 @@ public class HomePage extends JPanel implements ActionListener{
 	/**
 	 * Create the panel.
 	 */
-	public HomePage(JPanel content) {
+	public HomePage() {
 		
 		initialize();
 		initObjects();
+		clock();
 	}
 	
 	public void initialize () {
@@ -195,6 +198,16 @@ public class HomePage extends JPanel implements ActionListener{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panelInner1_2.add(lblNewLabel, BorderLayout.CENTER);
 		
+		JPanel panelInner1_3 = new JPanel();
+		panelInner1_3.setBackground(new Color(54,127,169));
+		panelInn1.add(panelInner1_3, BorderLayout.EAST);
+		panelInner1_3.setLayout(new BorderLayout(0, 0));
+		
+		lblTime = new JLabel("Time");
+		lblTime.setFont(new Font("Hobo Std", Font.PLAIN, 20));
+		lblTime.setForeground(Color.WHITE);
+		panelInner1_3.add(lblTime);
+		
 		JPanel panelInn2 = new JPanel();
 		panelInn2.setBackground(new Color(236,240,245));
 		panelInn2.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(128, 128, 128)));
@@ -303,7 +316,7 @@ public class HomePage extends JPanel implements ActionListener{
 			userClass.addAction(new InformationClass(sdf.format(date), "Log-Out"));
 			
 			lblTitle.setText("  USER LOGOUT");
-			Main.log = new UserLogin(Main.content);
+			Main.log = new UserLogin();
 			Main.content.add(Main.log);
 			//buttonClick(btnLogout, btnProfile, btnHome, btnBorrow, btnBook, btnRegister);
 	    	Main.enableContent(true, false, false, false);
@@ -351,5 +364,27 @@ public class HomePage extends JPanel implements ActionListener{
 
 	public static void addUser(UserClass newUserClass) {
 		userClass = newUserClass;
+	}
+	
+	public void clock() {
+		Thread clock = new Thread()
+		{
+			public void run() {
+				try {
+					while(true) {
+						Calendar cal = new GregorianCalendar();
+								
+						int second = cal.get(Calendar.SECOND);
+						int minute = cal.get(Calendar.MINUTE);
+						int hour = cal.get(Calendar.HOUR_OF_DAY);
+						
+						lblTime.setText(hour + " : " + minute + " : " + second + "     ");
+					}
+				}catch(Exception e) {
+					e.getStackTrace();
+				}
+			}
+		};
+		clock.start();
 	}
 }

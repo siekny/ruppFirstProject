@@ -53,6 +53,7 @@ public class Books extends JPanel implements ActionListener {
 	
 	private String imageName;
 	private File selectedPath;
+	private String tmpImage;
 	
 	
 
@@ -111,10 +112,11 @@ public class Books extends JPanel implements ActionListener {
 		panel.add(panelTable, BorderLayout.CENTER);
 		
 		table = new JTable();
+		table.setSelectionBackground(new Color(51, 153, 204));
 		table.setBackground(new Color(255, 255, 255));
 		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price", "In Stock"};
-		
-		
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
 		model = new DefaultTableModel(null, colsName) {
 
 			/**
@@ -174,6 +176,7 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(lblImage);
 		
 		btnImage = new JButton("Choose Image");
+		btnImage.setBackground(Color.LIGHT_GRAY);
 		btnImage.setFocusPainted(false);
 		btnImage.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelInner.add(btnImage);
@@ -299,16 +302,23 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(panelSave);
 		
 		btnSave = new JButton("Save");
-		//btnSave.setIcon(new ImageIcon("images/add.png"));
+		btnSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSave.setContentAreaFilled(false);
+		btnSave.setOpaque(true);
+		btnSave.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panelSave.add(btnSave);
-		btnSave.setFocusPainted(false);
-		btnSave.setForeground(new Color(60,141,188));
-		//btnSave.setForeground(SystemColor.desktop);
+		btnSave.setBackground(new Color(60,141,188));
+		btnSave.setForeground(SystemColor.desktop);
+		
 		
 		btnClear = new JButton("Clear");
+		btnClear.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnClear.setBackground(new Color(255,255,255));
+		btnClear.setForeground(new Color(0, 0, 0));
+		btnClear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnClear.setOpaque(true);
 		panelSave.add(btnClear);
-		btnClear.setFocusPainted(false);
-		btnClear.setBackground(SystemColor.menu);
+		
 		
 		JPanel panelUpdate = new JPanel();
 		panelUpdate.setBackground(new Color(255, 255, 255));
@@ -317,18 +327,26 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(panelUpdate);
 		
 		btnRemove = new JButton("Remove");
+		btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRemove.setContentAreaFilled(false);
+		btnRemove.setOpaque(true);
+		btnRemove.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
-		//btnRemove.setForeground(Color.WHITE);
-		btnRemove.setFocusPainted(false);
-		btnRemove.setForeground(new Color(221, 75, 57));
+		btnRemove.setForeground(Color.WHITE);
+		btnRemove.setBackground(new Color(221, 75, 57));
 		panelUpdate.add(btnRemove);
 		
 		btnEdit = new JButton("Update");
-		//btnEdit.setForeground(Color.WHITE);
+		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEdit.setContentAreaFilled(false);
+		btnEdit.setOpaque(true);
+		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEdit.setForeground(Color.WHITE);
 		btnEdit.setBackground(new Color(0, 166, 90));
 		panelUpdate.add(btnEdit);
 		
 		JPanel panelShowImage = new JPanel();
+		panelShowImage.setBackground(Color.WHITE);
 		panelShowImage.setForeground(Color.WHITE);
 		panelBodyRight.add(panelShowImage, BorderLayout.CENTER);
 		
@@ -406,6 +424,7 @@ public class Books extends JPanel implements ActionListener {
 								cboEdition.setSelectedItem(book.getEdition() + "");
 								txtQty.setText(book.getQty() + "");
 								txtPrice.setText(book.getPrice() + "");
+								tmpImage = lblShowimage.getText();
 							}
 						}
 						if (e.getClickCount() == 2) {
@@ -536,17 +555,26 @@ public class Books extends JPanel implements ActionListener {
 						String getId = table.getModel().getValueAt(row[0], 0).toString();
 						
 						if(table.getModel().getValueAt(row[0], 7).toString().equals(table.getModel().getValueAt(row[0], 5).toString())) {
+							String formattedDate;
+							if(tmpImage.equals(lblShowimage.getText())) {
+								imageName = tmpImage;
+								formattedDate = "";
+							}
+							else {
+								Date date = new Date();
+								BufferedImage img = ImageIO.read(selectedPath);
+							    String strDateFormat = "yyyy_MMM_dd_hh_mm_ss";
+							    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+							    formattedDate= dateFormat.format(date);
+							    imageName = lblShowimage.getText();
+								String location = "uploads/" +formattedDate + imageName;
+								String format = "PNG";
+								ImageIO.write(img, format, new File(location));
+								
+								File file = new File("uploads/" + tmpImage);
+								file.delete();
 							
-							Date date = new Date();
-							BufferedImage img = ImageIO.read(selectedPath);
-						    String strDateFormat = "yyyy_MMM_dd_hh_mm_ss";
-						    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-						    String formattedDate= dateFormat.format(date);
-						    
-							String location = "uploads/" +formattedDate + imageName;
-							String format = "PNG";
-							ImageIO.write(img, format, new File(location));
-							
+							}
 							BookClass book = new BookClass(txtISBN.getText(), txtTitle.getText(), formattedDate + imageName, Integer.parseInt(txtQty.getText()), 
 									Double.parseDouble(txtPrice.getText()), txtAuthor.getText(), Integer.parseInt(cboEdition.getSelectedItem().toString()), 0);
 							new BookConnection().updateBook(Integer.parseInt(getId), book);

@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 
 public class Book extends JPanel implements ActionListener {
 
@@ -53,11 +54,21 @@ public class Book extends JPanel implements ActionListener {
 		panelTop.add(panelOptionList, BorderLayout.CENTER);
 		
 		btnList = new JButton("List");
+		btnList.setContentAreaFilled(false);
+		btnList.setOpaque(true);
+		btnList.setBackground(new Color(60, 179, 113));
+		btnList.setForeground(Color.WHITE);
+		btnList.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelOptionList.add(btnList);
 		btnList.setFocusPainted(false);
 		
 		btnGrid = new JButton("Grid");
+		btnGrid.setContentAreaFilled(false);
+		btnGrid.setOpaque(true);
+		btnGrid.setBackground(new Color(65, 105, 225));
+		btnGrid.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGrid.setForeground(Color.WHITE);
 		btnGrid.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelOptionList.add(btnGrid);
 		btnGrid.setFocusPainted(false);

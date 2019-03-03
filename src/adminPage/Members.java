@@ -91,10 +91,12 @@ public class Members extends JPanel {
 		panelTop.add(panelSearch);
 		
 		JButton btnRefresh = new JButton("Reload");
-		btnRefresh.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\reload.png"));
+		btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRefresh.setContentAreaFilled(false);
+		btnRefresh.setIcon(new ImageIcon("images/reload.png"));
 		btnRefresh.setForeground(new Color(255, 255, 255));
 		btnRefresh.setBackground(new Color(0,166,90));
-		btnRefresh.setFocusPainted(false);
+		btnRefresh.setOpaque(true);
 		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panelSearch.add(btnRefresh);
 		
@@ -187,10 +189,11 @@ public class Members extends JPanel {
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
+		table.getTableHeader().setBackground(new Color(60, 141, 188));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));
-		panelTable.add(scroll);
+		panelTable.add(scroll, BorderLayout.SOUTH);
 		
 		TableColumnModel tm = table.getColumnModel();
 		table.removeColumn(tm.getColumn(0));
@@ -200,6 +203,8 @@ public class Members extends JPanel {
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
 		JButton btnNewUser = new JButton("Create New User");
+		btnNewUser.setContentAreaFilled(false);
+		btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame FrameCreatingnewUser = new JFrame("Registering New User");
@@ -318,33 +323,42 @@ public class Members extends JPanel {
 			}
 		});
 		
-		//btnNewUser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\new-user.png"));
+		btnNewUser.setIcon(new ImageIcon("images/new-user.png"));
 		btnNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnNewUser.setFocusPainted(false);
-		//btnNewUser.setForeground(new Color(255, 255, 255));
-		btnNewUser.setForeground(new Color(0,154,191));
+		btnNewUser.setForeground(new Color(255, 255, 255));
+		btnNewUser.setBackground(new Color(0,154,191));
+		btnNewUser.setOpaque(true);
+		btnNewUser.setContentAreaFilled(false);
 		panelBottom.add(btnNewUser);
 		
 		JButton btnResetpassword = new JButton("Reset Password");
-		//btnResetpassword.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\key.png"));
+		btnResetpassword.setContentAreaFilled(false);
+		btnResetpassword.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnResetpassword.setIcon(new ImageIcon("images/key.png"));
 		btnResetpassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnResetpassword.setFocusPainted(false);
+		btnResetpassword.setOpaque(true);
 		btnResetpassword.setForeground(new Color(255, 255, 255));
-		btnResetpassword.setForeground(new Color(0,166,90));
+		btnResetpassword.setBackground(new Color(0,166,90));
 		panelBottom.add(btnResetpassword);
 		
 		JButton btnDeleteuser = new JButton("Delete User(s)");
-		//btnDeleteuser.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\ruppFirstProject\\images\\trash.png"));
+		btnDeleteuser.setContentAreaFilled(false);
+		btnDeleteuser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDeleteuser.setIcon(new ImageIcon("images/trash.png"));
 		btnDeleteuser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDeleteuser.setFocusPainted(false);
-		//btnDeleteuser.setForeground(new Color(255, 255, 255));
-		btnDeleteuser.setForeground(new Color(221,75,57));
+		btnDeleteuser.setForeground(new Color(255, 255, 255));
+		btnDeleteuser.setBackground(new Color(221,75,57));
+		btnDeleteuser.setOpaque(true);
 		panelBottom.add(btnDeleteuser);
 		
 		JButton btnEdit = new JButton("Edit Member");
-		//btnEdit.setIcon(new ImageIcon("D:\\programs\\Rupp\\year 3\\java\\project\\rupp_project\\images\\edit.png"));
-		btnEdit.setForeground(new Color(255, 140, 0));
-		//btnEdit.setForeground(new Color(255, 255, 255));
+		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnEdit.setContentAreaFilled(false);
+		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEdit.setIcon(new ImageIcon("images/edit.png"));
+		btnEdit.setBackground(new Color(255, 140, 0));
+		btnEdit.setForeground(new Color(255, 255, 255));
+		btnEdit.setOpaque(true);
 		panelBottom.add(btnEdit);
 		
 		

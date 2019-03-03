@@ -1,5 +1,6 @@
 package connection;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,8 +11,10 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import adminPage.Home;
 import classMembers.BookClass;
 import classMembers.BorrowerClass;
+import popForm.NewBorrower;
 
 public class UserConnection {
 	
@@ -19,19 +22,33 @@ public class UserConnection {
 	int numBorrow = 0;
 	
 	// COUNT TABLES
-	public int countTable(String name) {
+	public int countTable(int name) {
 		int count = 0;
 		String sql = null;
 		try {
 			Statement stmt = conn.createStatement();
-			if(name.equals("books"))
-				sql = "SELECT id FROM books";
+			switch(name) {
 			
-			else if(name.equals("borrows"))
-				sql = "SELECT id FROM borrows";
-			
-			else if(name.equals("users"))
-				sql = "SELECT id FROM users";
+				case Home.BOOK: 
+					sql = "SELECT id FROM books";
+					break;
+					
+				case Home.USER:
+					sql = "SELECT id FROM users WHERE status = '" + 2 + "'";
+					break;
+					
+				case Home.ALLUSERS:
+					sql = "SELECT id FROM users";
+					break;
+					
+				case Home.BORROW: 
+					sql = "SELECT id FROM borrows WHERE returnDate = '" + 0 + "'";
+					break;
+					
+				case Home.ALLBORROWS:
+					sql = "SELECT id FROM borrows";
+					break;
+			}
 			
 	        ResultSet rss = stmt.executeQuery(sql);
 	        
@@ -112,7 +129,7 @@ public class UserConnection {
 			BookClass book = null;
 			try {
 				Statement stmt = conn.createStatement();
-				String sql = "SELECT * FROM books WHERE isbn = '" + isbn + "' AND bookInStock > '" + 0 + "'";
+				String sql = "SELECT * FROM books WHERE isbn = '" + isbn + "'";
 		        ResultSet rss = stmt.executeQuery(sql);
 		        
 		        while(rss.next()) {
@@ -120,9 +137,13 @@ public class UserConnection {
 		        			rss.getDouble("price"), rss.getString("author"), rss.getInt("edition"), rss.getInt("numBorrow"));
 					bookList.add(book);
 		        }
-		        if(bookList.size() == 0)
-		        	throw new Exception("Sorry! We don't have this book yet!");
-
+		        if(bookList.size() == 0) {
+		        	NewBorrower.lblMsg2.setForeground(Color.RED);
+		        	NewBorrower.lblMsg2.setText("Sorry! We don't have this book yet!");
+		        	
+		        	//throw new Exception("Sorry! We don't have this book yet!");
+		        }
+		        
 				rss.close();
 				stmt.close();
 				
@@ -144,11 +165,13 @@ public class UserConnection {
 			String sql = null;
 			
 			if(isShow == 0)
-				sql = "SELECT * FROM borrows WHERE returnDate = '" + returnDate+ "'" + " && status_removed = '" + status_removed + "'";
-			else if(isShow == 1)
 				sql = "SELECT * FROM borrows WHERE status_removed = '" + status_removed + "'";
+			else if(isShow == 1)
+				sql = "SELECT * FROM borrows WHERE returnDate = '" + returnDate+ "'" + " && status_removed = '" + status_removed + "'";
 			else if(isShow == 2)
 				sql = "SELECT * FROM borrows WHERE status_removed = '" + 0 + "'";
+			else if(isShow == 3)
+				sql = "SELECT * FROM borrows WHERE returnDate <> '" + returnDate+ "'" + " && status_removed = '" + status_removed + "'";
 			
 	        ResultSet rss = stmt.executeQuery(sql);
 	        while(rss.next()) {
@@ -170,6 +193,31 @@ public class UserConnection {
 		return borrowList;
 	}
 	
+	public BorrowerClass borrowDetail(int id) {
+		BorrowerClass detail = null;
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "SELECT * FROM borrows WHERE id = '" + id + "'";
+			
+	        ResultSet rss = stmt.executeQuery(sql);
+	        while(rss.next()) {
+	        	detail = new BorrowerClass(rss.getInt("id"), rss.getString("student_id"), rss.getInt("book_id"), rss.getString("studentName"), 
+	        			rss.getString("studentCurrentPhone"), rss.getString("bookISBN"), rss.getInt("borrowQTY"), rss.getString("borrowedDate"), 
+	        			rss.getString("returnDate"), rss.getInt("overDays"), rss.getInt("status_removed"));
+
+	        }
+
+			rss.close();
+			stmt.close();
+			
+			
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		return detail;
+	}
+	
 	// GET RETURN DATE
 	public boolean getReturnDate(String studentID) 
 	{
@@ -177,13 +225,29 @@ public class UserConnection {
 		boolean returnDate = false;
 		
 		try {
+			ArrayList<String> getStudentID = new ArrayList<String>();
 			Statement stmt = conn.createStatement();
-			String sql = "SELECT * FROM borrows WHERE student_id = '" + studentID + "' AND returnDate = '" + 0 + "'";
+			String sql = "SELECT * FROM borrows WHERE student_id = '" + studentID + "'";
 			
 	        ResultSet rss = stmt.executeQuery(sql);
 	        
 	        while(rss.next()) {
-		        returnDate = true;
+	        	getStudentID.add(rss.getString("student_id"));
+	        	if(rss.getString("returnDate").equals("0")) {
+	        		returnDate = true;
+		        	
+	        	}
+	        	else {
+		        	
+		        	NewBorrower.txtStudentName.setText(rss.getString("studentName"));
+		        	NewBorrower.txtContact.setText(rss.getString("studentCurrentPhone"));
+		        }
+	        }
+	        
+	        if(getStudentID.size() == 0) {
+	        	NewBorrower.txtStudentName.setText("");
+	        	NewBorrower.txtContact.setText("");
+	        	
 	        }
 	       
 	        
@@ -202,11 +266,13 @@ public class UserConnection {
 		Statement stmt = null;
 		Statement stmt1 = null;
 		Statement stmt2 = null;
+		
 					
 		try {
+			
 		    stmt = conn.createStatement();
 		    String sql = "INSERT INTO borrows (student_id, book_id, studentName, studentCurrentPhone, bookISBN, borrowQTY, borrowedDate, status_removed) VALUES "
-		    		+ "('" + borrow.getstudent_id() + "', '" + borrow.getBook_id() + "', '"+ borrow.getStudentName() + "', '" + borrow.getStudentCurrentPhone() + "', "
+		    		+ "('" + borrow.getStu_id() + "', '" + borrow.getBook_id() + "', '"+ borrow.getName() + "', '" + borrow.getPhone() + "', "
 		    		+ "'"+ borrow.getBookISBN() + "', '"  + borrow.getBorrowQTY() + "', '" + borrow.getBorrowedDate() + "', '" + borrow.getStatus() + "')";
 		    stmt.execute(sql);
 		    
@@ -323,7 +389,7 @@ public class UserConnection {
 		try {
 			DateFormat df = new SimpleDateFormat("MMM-dd-yyyy");
 			Statement stmt = conn.createStatement();
-			String sql = "UPDATE borrows SET returnDate = '" + df.format(new Date()) + "'" + ", overDays = '" + borrow.getSubstractDays() + "'" + ", fine = '" + borrow.getFineOverDays(borrow.getSubstractDays()) + "'" + " WHERE id = '" + id + "'";
+			String sql = "UPDATE borrows SET returnDate = '" + df.format(new Date()) + "'" + ", overDays = '" + borrow.getOverDate() + "'" + ", fine = '" + borrow.getFineOverDays(borrow.getOverDate()) + "'" + " WHERE id = '" + id + "'";
 			stmt.executeUpdate(sql);
 			
 			Statement stmt1 = conn.createStatement();
@@ -338,7 +404,7 @@ public class UserConnection {
 	        	int numBorrow = rss.getInt("numBorrow") - borrow.getBorrowQTY();
 	        	String sql2 = "UPDATE books SET numBorrow = '" + numBorrow + "'" + ", bookInStock = '" +bookInStock+ "' WHERE id = '" + borrow.getBook_id()+ "'";
 	        	stmt2.executeUpdate(sql2);
-	        	System.out.println(borrow.getBook_id());
+	        	
 	        	
 	        	stmt2.close();
 	        }
@@ -378,12 +444,16 @@ public class UserConnection {
 			stmt.executeUpdate(sql);
 			
 			String sqlSelectBook = "SELECT numBorrow, bookInStock FROM books WHERE id = '" + bookID + "'" ;
+			System.out.println(bookID);
 			ResultSet rss = stmt.executeQuery(sqlSelectBook);
 			while(rss.next()) {
 				int updateNumBorrow = rss.getInt("numBorrow") - numBorrow;
 				int updateBookInStock = rss.getInt("bookInStock") + numBorrow;
+				
+				Statement stmt1 = conn.createStatement();
+				System.out.println(updateNumBorrow +"," + updateBookInStock + ", " + bookID);
 				String sqlUpdateBook = "UPDATE books SET numBorrow = '" + updateNumBorrow + "'" + ", bookInStock = '" + updateBookInStock + "'" + "WHERE id = '" + bookID+ "'";
-				stmt.executeUpdate(sqlUpdateBook);
+				stmt1.executeUpdate(sqlUpdateBook);
 			}
 
 			stmt.close();
