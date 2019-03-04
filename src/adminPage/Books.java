@@ -115,8 +115,27 @@ public class Books extends JPanel implements ActionListener {
 		table.setSelectionBackground(new Color(51, 153, 204));
 		table.setBackground(new Color(255, 255, 255));
 		String[] colsName = new String[] {"id", "ISBN", "Title", "Author", "Edition", "Quantity", "Price", "In Stock"};
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
+		
+		table.setSelectionBackground(new Color(173, 216, 230));
+		table.setGridColor(new Color(211, 211, 211));
+		table.setBackground(new Color(255, 255, 255));
+		
+		table.setRowHeight(25);
+		
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = 25;
+				return d;
+				
+			}
+		});
 		model = new DefaultTableModel(null, colsName) {
 
 			/**
@@ -302,6 +321,7 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(panelSave);
 		
 		btnSave = new JButton("Save");
+		btnSave.setFocusPainted(false);
 		btnSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSave.setContentAreaFilled(false);
 		btnSave.setOpaque(true);
@@ -312,6 +332,7 @@ public class Books extends JPanel implements ActionListener {
 		
 		
 		btnClear = new JButton("Clear");
+		btnClear.setFocusPainted(false);
 		btnClear.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnClear.setBackground(new Color(255,255,255));
 		btnClear.setForeground(new Color(0, 0, 0));
@@ -327,6 +348,7 @@ public class Books extends JPanel implements ActionListener {
 		panelInner.add(panelUpdate);
 		
 		btnRemove = new JButton("Remove");
+		btnRemove.setFocusPainted(false);
 		btnRemove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRemove.setContentAreaFilled(false);
 		btnRemove.setOpaque(true);
@@ -337,6 +359,7 @@ public class Books extends JPanel implements ActionListener {
 		panelUpdate.add(btnRemove);
 		
 		btnEdit = new JButton("Update");
+		btnEdit.setFocusPainted(false);
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEdit.setContentAreaFilled(false);
 		btnEdit.setOpaque(true);
@@ -525,10 +548,11 @@ public class Books extends JPanel implements ActionListener {
 			               
 							model.removeRow( modelRow );
 				            row = table.getSelectedRow();
+				            clearTextFields();
 				           
 		                }
 		                else
-		                	throw new Exception("Cannot delete becuase this book is borrowed!");
+		                	throw new Exception("The action can't be completed because the book is borrow in book transaction!");
 		            }
 	
 					JOptionPane.showConfirmDialog(null, "Data has been removed successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
@@ -582,7 +606,7 @@ public class Books extends JPanel implements ActionListener {
 							JOptionPane.showConfirmDialog(null, "Data has been updated successfully !", "",  JOptionPane.CLOSED_OPTION , JOptionPane.WARNING_MESSAGE);
 						}
 						else {
-							JOptionPane.showConfirmDialog(null, "Cannot delete becuase this book is borrowed!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showConfirmDialog(null, "The action can't be completed because the book is borrow in book transaction!", "", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				}

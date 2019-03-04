@@ -5,12 +5,14 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import classMembers.BookClass;
 import connection.UserConnection;
@@ -49,7 +51,26 @@ public class BookList extends JPanel{
 		};
 		
 		table = new JTable(model);
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
+		table.setSelectionBackground(new Color(173, 216, 230));
+		table.setGridColor(new Color(211, 211, 211));
+		table.setBackground(new Color(255, 255, 255));
+		
+		table.setRowHeight(25);
+		
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = 25;
+				return d;
+				
+			}
+		});
 		
 		
 		JScrollPane scroll = new JScrollPane(table);
@@ -95,7 +116,7 @@ public class BookList extends JPanel{
 		ArrayList<BookClass> bookList = connect.bookView();
 		
 		for(BookClass boo: bookList) {
-			model.addRow(boo.getBookList());
+			model.addRow(boo.getBookListLIST());
 		}
 	}
 

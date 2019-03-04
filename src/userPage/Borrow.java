@@ -115,12 +115,6 @@ public class Borrow extends JPanel implements ActionListener {
 		panelSearch.add(txtSearch);
 		txtSearch.setColumns(30);
 		
-		JLabel lblNewLabel_2 = new JLabel("#Borrowers  :  ");
-		panelSearch.add(lblNewLabel_2);
-		
-		JLabel lblNoUsers = new JLabel("");
-		panelSearch.add(lblNoUsers);
-		
 		panelTable = new JPanel();
 		panelInner.add(panelTable, BorderLayout.CENTER);
 		panelTable.setLayout(new BorderLayout(0, 0));
@@ -145,12 +139,29 @@ public class Borrow extends JPanel implements ActionListener {
 		
 		table = new JTable();
 		table.setSelectionBackground(new Color(173, 216, 230));
-		table.setGridColor(new Color(192, 192, 192));
+		table.setGridColor(new Color(211, 211, 211));
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
-		table.getTableHeader().setForeground(new Color(255,255,255));
+		
 		table.setRowHeight(25);
+		
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = 25;
+				return d;
+				
+			}
+		});
+		
+		//table.getTableHeader().setBackground(new Color(60, 141, 188));
+		//table.getTableHeader().setForeground(new Color(255,255,255));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));

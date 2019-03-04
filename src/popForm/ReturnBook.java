@@ -137,7 +137,7 @@ public class ReturnBook extends JPanel {
 		paneText.add(panelRight);
 		panelRight.setLayout(new GridLayout(5, 2, 0, 5));
 		
-		JLabel lblReturndate = new JLabel("Return Date");
+		JLabel lblReturndate = new JLabel("Due Date");
 		panelRight.add(lblReturndate);
 		
 		txtReturndate = new JTextField();

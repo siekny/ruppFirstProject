@@ -36,23 +36,27 @@ public class UserLogin extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField txtUsername;
+	public static JTextField txtUsername;
 	private JLabel labelSignUp;
 	private UserClass userClass;
-	private JPasswordField passwordField;
+	public static JPasswordField passwordField;
 	
 	/**
 	 * Create the panel.
 	 */
 	public UserLogin() {
-		
+
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelContent = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelContent.getLayout();
-		flowLayout.setVgap(0);
+		flowLayout.setVgap(100);
 		flowLayout.setHgap(0);
 		add(panelContent, BorderLayout.CENTER);
+		
+		JPanel paneltop = new JPanel();
+		panelContent.add(paneltop);
+		paneltop.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(0, 102, 204));
@@ -233,6 +237,9 @@ public class UserLogin extends JPanel {
 		labelSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				AdminLogin.txtUsername.setText("");
+				AdminLogin.passwordField.setText("");
 				
 				Main.enableContent(false, true, false, false);
 				

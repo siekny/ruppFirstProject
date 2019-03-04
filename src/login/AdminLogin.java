@@ -34,24 +34,29 @@ public class AdminLogin extends JPanel {
 
 	
 	private static final long serialVersionUID = 1L;
-	private JTextField txtUsername;
+	public static JTextField txtUsername;
 	
 	private JLabel labelSignUp;
 	
 	private AdminClass adminClass;
-	private JPasswordField passwordField;
+	public static JPasswordField passwordField;
 
 	public AdminLogin() {
 		
 		//Main.frame.setResizable(false);
 		
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelContent = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelContent.getLayout();
-		flowLayout.setVgap(0);
+		flowLayout.setVgap(100);
 		flowLayout.setHgap(0);
 		add(panelContent, BorderLayout.CENTER);
+		
+		JPanel panelTop = new JPanel();
+		panelContent.add(panelTop);
+		panelTop.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelLeft = new JPanel();
 		panelLeft.setBackground(new Color(0, 102, 204));
@@ -234,6 +239,8 @@ public class AdminLogin extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				UserLogin.passwordField.setText("");
+				UserLogin.txtUsername.setText("");
 				
 				Main.enableContent(true, false, false, false);
 				Main.content.add(Main.log);

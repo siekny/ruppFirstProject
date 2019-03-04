@@ -29,6 +29,7 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import classMembers.UserClass;
@@ -79,6 +80,7 @@ public class UserLoginHistory extends JPanel {
 		panelTop.add(panelSearch);
 		
 		JButton btnRefresh = new JButton("Reload");
+		btnRefresh.setFocusPainted(false);
 		btnRefresh.setContentAreaFilled(false);
 		btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRefresh.setIcon(new ImageIcon("images/reload.png"));
@@ -185,8 +187,27 @@ public class UserLoginHistory extends JPanel {
 				
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
+		table.setSelectionBackground(new Color(173, 216, 230));
+		table.setGridColor(new Color(211, 211, 211));
+		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
+		
+		table.setRowHeight(25);
+		
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = 25;
+				return d;
+				
+			}
+		});
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));
@@ -200,6 +221,7 @@ public class UserLoginHistory extends JPanel {
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
 		JButton btnDetail = new JButton("View Detail");
+		btnDetail.setFocusPainted(false);
 		btnDetail.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDetail.setContentAreaFilled(false);
 		btnDetail.setIcon(new ImageIcon("images/eye.png"));

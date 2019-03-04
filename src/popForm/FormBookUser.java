@@ -39,7 +39,7 @@ public class FormBookUser extends JPanel {
 		initialize();
 		getDetailEmp(emp);
 		
-		JOptionPane.showConfirmDialog(null	, contentPane, "Detail of an Employee", JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION);
+		JOptionPane.showConfirmDialog(null	, contentPane, "Detail of a Book", JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION);
 	}
 
 	public void initialize() {
@@ -151,7 +151,7 @@ public class FormBookUser extends JPanel {
 		lblTotalQty.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(220, 220, 220)));
 		panelRight.add(lblTotalQty);
 		
-		JLabel lblNewLabel_13 = new JLabel("Amount of Borrow : ");
+		JLabel lblNewLabel_13 = new JLabel("BorrowedQTY : ");
 		panelRight.add(lblNewLabel_13);
 		
 		lblNumBorrow = new JLabel("");

@@ -48,6 +48,10 @@ public class BookClass {
 		return new Object[] {id, isbn, title, author, edition, qty, price, numBookAvailable(numBorrow)};
 	}
 	
+	public Object[] getBookListLIST() {
+		return new Object[] {id, isbn, title, author, edition, qty, numBorrow, numBookAvailable(numBorrow)};
+	}
+	
 	public int getID() {
 		return id;
 	}

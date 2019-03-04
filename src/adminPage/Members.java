@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 
@@ -91,6 +92,7 @@ public class Members extends JPanel {
 		panelTop.add(panelSearch);
 		
 		JButton btnRefresh = new JButton("Reload");
+		btnRefresh.setFocusPainted(false);
 		btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnRefresh.setContentAreaFilled(false);
 		btnRefresh.setIcon(new ImageIcon("images/reload.png"));
@@ -189,7 +191,27 @@ public class Members extends JPanel {
 		table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		table.setModel(model);
-		table.getTableHeader().setBackground(new Color(60, 141, 188));
+
+		table.setSelectionBackground(new Color(173, 216, 230));
+		table.setGridColor(new Color(211, 211, 211));
+		table.setBackground(new Color(255, 255, 255));
+		
+		table.setRowHeight(25);
+		
+		table.setTableHeader(new JTableHeader(table.getColumnModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = 25;
+				return d;
+				
+			}
+		});
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBackground(new Color(255, 255, 255));
@@ -203,6 +225,7 @@ public class Members extends JPanel {
 		panelInner.add(panelBottom, BorderLayout.SOUTH);
 		
 		JButton btnNewUser = new JButton("Create New User");
+		btnNewUser.setFocusPainted(false);
 		btnNewUser.setContentAreaFilled(false);
 		btnNewUser.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewUser.addActionListener(new ActionListener() {
@@ -332,6 +355,7 @@ public class Members extends JPanel {
 		panelBottom.add(btnNewUser);
 		
 		JButton btnResetpassword = new JButton("Reset Password");
+		btnResetpassword.setFocusPainted(false);
 		btnResetpassword.setContentAreaFilled(false);
 		btnResetpassword.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnResetpassword.setIcon(new ImageIcon("images/key.png"));
@@ -342,6 +366,7 @@ public class Members extends JPanel {
 		panelBottom.add(btnResetpassword);
 		
 		JButton btnDeleteuser = new JButton("Delete User(s)");
+		btnDeleteuser.setFocusPainted(false);
 		btnDeleteuser.setContentAreaFilled(false);
 		btnDeleteuser.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDeleteuser.setIcon(new ImageIcon("images/trash.png"));
@@ -352,6 +377,7 @@ public class Members extends JPanel {
 		panelBottom.add(btnDeleteuser);
 		
 		JButton btnEdit = new JButton("Edit Member");
+		btnEdit.setFocusPainted(false);
 		btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEdit.setContentAreaFilled(false);
 		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));

@@ -58,7 +58,7 @@ public class Main extends JFrame {
 	public void initialize () {
 		//setTitle("Library Management System");
 //		setUndecorated(true);
-//		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 818, 440);
 		contentPane = new JPanel();

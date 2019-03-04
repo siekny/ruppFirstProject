@@ -38,7 +38,6 @@ INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `qty`, `numBorrow`, `bookIn
 	(14, '001', 'Book Gif', '2019_Feb_25_09_41_54book.gif', 122, 31, 91, 12.21, 'ny', 3),
 	(15, '002', 'Java', '2019_Mar_02_03_11_43java.jpg', 5, 2, 3, 30.12, 'Hebert Shilda', 7),
 	(17, '004', 'C Sharp', '2019_Mar_02_03_14_37c#.jpg', 4, 0, 4, 89.9, 'Herbert Schildt', 3),
-	(19, '003', 'Javascript', '2019_Mar_02_03_22_15js.jpg', 4, 0, 4, 40.54, 'Murach', 2),
 	(21, '006', 'Phyton', '2019_Mar_02_03_39_49phyton.jpg', 9, 0, 9, 67.76, 'Murach', 1),
 	(22, '007', 'PHP and SQL', '2019_Mar_02_03_59_38sql.jpg', 5, 3, 2, 98.9, 'Murach', 1),
 	(23, '009', 'IN', '2019_Mar_02_03_26_44internet-usage.jpg', 9, 3, 6, 9.1, 'fafa', 1),
@@ -62,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.borrows: ~3 rows (approximately)
+-- Dumping data for table rupp_project.borrows: ~5 rows (approximately)
 DELETE FROM `borrows`;
 /*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
 INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
@@ -108,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `users_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.users_info: 317 rows
+-- Dumping data for table rupp_project.users_info: 319 rows
 DELETE FROM `users_info`;
 /*!40000 ALTER TABLE `users_info` DISABLE KEYS */;
 INSERT INTO `users_info` (`id`, `userid`, `date`, `action`) VALUES
@@ -430,7 +429,30 @@ INSERT INTO `users_info` (`id`, `userid`, `date`, `action`) VALUES
 	(316, 4, '04-03-2019 / 22:17', 'Log-In'),
 	(317, 4, '04-03-2019 / 22:19', 'Log-In'),
 	(318, 4, '04-03-2019 / 22:22', 'Log-In'),
-	(319, 4, '04-03-2019 / 22:29', 'Log-In');
+	(319, 4, '04-03-2019 / 22:29', 'Log-In'),
+	(320, 4, '04-03-2019 / 22:43', 'Log-In'),
+	(321, 4, '04-03-2019 / 23:10', 'Log-In'),
+	(322, 4, '04-03-2019 / 23:12', 'Log-In'),
+	(323, 4, '04-03-2019 / 23:13', 'Log-In'),
+	(324, 4, '04-03-2019 / 23:13', 'Log-In'),
+	(325, 4, '04-03-2019 / 23:15', 'Log-In'),
+	(326, 4, '04-03-2019 / 23:16', 'Log-In'),
+	(327, 4, '04-03-2019 / 23:20', 'Log-In'),
+	(328, 4, '04-03-2019 / 23:21', 'Log-In'),
+	(329, 4, '04-03-2019 / 23:22', 'Log-Out'),
+	(330, 1, '04-03-2019 / 23:22', 'Log-In'),
+	(331, 1, '04-03-2019 / 23:23', 'Log-Out'),
+	(332, 4, '04-03-2019 / 23:33', 'Log-In'),
+	(333, 4, '04-03-2019 / 23:33', 'Log-Out'),
+	(334, 1, '04-03-2019 / 23:34', 'Log-In'),
+	(335, 4, '04-03-2019 / 23:37', 'Log-In'),
+	(336, 4, '04-03-2019 / 23:40', 'Log-Out'),
+	(337, 1, '04-03-2019 / 23:40', 'Log-In'),
+	(338, 4, '04-03-2019 / 23:43', 'Log-In'),
+	(339, 4, '04-03-2019 / 23:43', 'Log-Out'),
+	(340, 1, '04-03-2019 / 23:43', 'Log-In'),
+	(341, 1, '04-03-2019 / 23:46', 'Log-Out'),
+	(342, 4, '04-03-2019 / 23:46', 'Log-In');
 /*!40000 ALTER TABLE `users_info` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
