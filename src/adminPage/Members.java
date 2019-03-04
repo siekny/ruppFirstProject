@@ -366,44 +366,7 @@ public class Members extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				txtSearch.setText("");
-				sb.setLength(0);
-				Connection conn;
-				Statement stm;
-				ResultSet rss;
-				ArrayList<UserClass> Userlist = new ArrayList<UserClass>();
-				try {
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
-				stm = conn.createStatement();
-				String command = "Select * From Users WHERE status != 1";
-				rss = stm.executeQuery(command);
-				
-				while(rss.next()) {
-					UserClass temp = new UserClass(rss.getInt("id"), rss.getString("fullname"), rss.getString("username"),
-							rss.getString("password"), rss.getString("sex"), rss.getString("address"),rss.getString("email"),
-							rss.getString("phone"), rss.getString("dateofbirth"),
-							rss.getString("dateofmembership"), rss.getInt("status")
-							);
-					Userlist.add(temp);
-				}
-				
-				//for(int row = model.getRowCount(); row<=0;row--)model.removeRow(row);
-				model.setRowCount(0);
-				
-				for (int i=0;i<Userlist.size();i++) {
-					UserClass user = Userlist.get(i);
-					Object obj[]= { user.getID(), user.getFullname(), user.getUsername(),user.getSex(), user.getPhone(), user.getDateofmembership(),
-							"Member"
-					};
-					model.addRow(obj);
-				}
-				
-				rss.close();
-				stm.close();
-				conn.close();
-				}catch(SQLException ex) {
-					ex.printStackTrace();
-				}
+				initObj();
 			}
 			
 		});
@@ -684,8 +647,49 @@ public class Members extends JPanel {
 		btnRefresh.doClick();
 		/////////////////
 		
+		
 	}
 	
+	public void initObj() {
+		txtSearch.setText("");
+		sb.setLength(0);
+		Connection conn;
+		Statement stm;
+		ResultSet rss;
+		ArrayList<UserClass> Userlist = new ArrayList<UserClass>();
+		try {
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rupp_project","root", "");
+		stm = conn.createStatement();
+		String command = "Select * From Users WHERE status != 1";
+		rss = stm.executeQuery(command);
+		
+		while(rss.next()) {
+			UserClass temp = new UserClass(rss.getInt("id"), rss.getString("fullname"), rss.getString("username"),
+					rss.getString("password"), rss.getString("sex"), rss.getString("address"),rss.getString("email"),
+					rss.getString("phone"), rss.getString("dateofbirth"),
+					rss.getString("dateofmembership"), rss.getInt("status")
+					);
+			Userlist.add(temp);
+		}
+		
+		//for(int row = model.getRowCount(); row<=0;row--)model.removeRow(row);
+		model.setRowCount(0);
+		
+		for (int i=0;i<Userlist.size();i++) {
+			UserClass user = Userlist.get(i);
+			Object obj[]= { user.getID(), user.getFullname(), user.getUsername(),user.getSex(), user.getPhone(), user.getDateofmembership(),
+					"Member"
+			};
+			model.addRow(obj);
+		}
+		
+		rss.close();
+		stm.close();
+		conn.close();
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 	
 }
 	

@@ -61,6 +61,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 	
 	private String availableStuID = "Available to borrow!";
 	private String availablebookISBN = "";
+	//private String tempISBN;
 	
 	
 
@@ -379,7 +380,6 @@ public class NewBorrower extends JPanel implements ActionListener {
 			@Override
 			public void keyPressed(KeyEvent ke) {
 				
-				sbisbn.append(txtBookISBN.getText());
 				txtBookQty.setText("");
 				
 				if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE && sbisbn.length() > 0)
@@ -490,7 +490,11 @@ public class NewBorrower extends JPanel implements ActionListener {
 	
 	public void divideNewOrEditBorrower(BorrowerClass borrow, int isNew) {
 		if(isNew == 1)	return;
-		else if(isNew == 0)	setOldData(borrow);
+		else if(isNew == 0)	{
+			setOldData(borrow);
+			txtBookISBN.setText("");
+			txtBookQty.setText("");
+		}
 	}
 	
 	
@@ -502,7 +506,11 @@ public class NewBorrower extends JPanel implements ActionListener {
 		txtStudentID.setText(borrow.getStu_id());
 		txtStudentName.setText(borrow.getName());
 		txtContact.setText(borrow.getPhone());
+		
+		//tempISBN = borrow.getBookISBN();
 		txtBookISBN.setText(borrow.getBookISBN());
+		//txtBookISBN.setText("");
+		
 		oldBorrow = borrow;
 		
 		BookClass book = new UserConnection().getBookInfo(txtBookISBN.getText());
@@ -516,6 +524,7 @@ public class NewBorrower extends JPanel implements ActionListener {
 		txtStudentID.setEnabled(false);
 		txtStudentName.setEnabled(false);
 		txtContact.setEnabled(false);
+		btnClear.setVisible(false);
 	}
 	
 	

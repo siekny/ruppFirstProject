@@ -24,6 +24,7 @@ public class BookGrid extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel panel;
 
 	/**
 	 * Create the panel.
@@ -32,13 +33,19 @@ public class BookGrid extends JPanel {
 		
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
+		initObj();
+
+	}
+	
+	public void initObj() {
 		UserConnection connect = new UserConnection();
 		ArrayList<BookClass> bookList = null;
+		panel.removeAll();
 		JLabel[] label = null;
 		bookList = connect.bookView();
 		
@@ -97,7 +104,6 @@ public class BookGrid extends JPanel {
 				panel.setLayout(new GridLayout(size/6+1, 6, 0, 0));
 				
 		}
-
 	}
 
 }

@@ -22,30 +22,27 @@ CREATE TABLE IF NOT EXISTS `books` (
   `isbn` varchar(50) DEFAULT '0',
   `title` varchar(50) DEFAULT '0',
   `image` varchar(200) DEFAULT '0',
-  `publisher` varchar(50) DEFAULT '0',
-  `publishedYear` int(6) DEFAULT '0',
   `qty` int(10) DEFAULT '0',
   `numBorrow` int(10) DEFAULT '0',
   `bookInStock` int(10) DEFAULT '0',
   `price` double DEFAULT '0',
   `author` varchar(50) DEFAULT '0',
   `edition` int(5) DEFAULT '0',
-  `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table rupp_project.books: ~8 rows (approximately)
 DELETE FROM `books`;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `publisher`, `publishedYear`, `qty`, `numBorrow`, `bookInStock`, `price`, `author`, `edition`, `status`) VALUES
-	(14, '001', 'Book Gif', '2019_Feb_25_09_41_54book.gif', '0', 0, 122, 34, 88, 12.21, 'ny', 3, 0),
-	(15, '002', 'Java', '2019_Mar_02_03_11_43java.jpg', '0', 0, 5, 2, 3, 30.12, 'Hebert Shilda', 7, 0),
-	(17, '004', 'C Sharp', '2019_Mar_02_03_14_37c#.jpg', '0', 0, 4, -2, 6, 89.9, 'Herbert Schildt', 3, 0),
-	(19, '003', 'Javascript', '2019_Mar_02_03_22_15js.jpg', '0', 0, 4, 0, 4, 40.54, 'Murach', 2, 0),
-	(21, '006', 'Phyton', '2019_Mar_02_03_39_49phyton.jpg', '0', 0, 9, 0, 9, 67.76, 'Murach', 1, 0),
-	(22, '007', 'PHP and SQL', '2019_Mar_02_03_59_38sql.jpg', '0', 0, 5, 0, 5, 98.9, 'Murach', 1, 0),
-	(23, '009', 'IN', '2019_Mar_02_03_26_44internet-usage.jpg', '0', 0, 9, 0, 9, 9.1, 'fafa', 1, 0),
-	(24, '0010', 'Internet', '2019_Mar_02_03_38_47300px-InternetUsersWorldMap.svg.png', '0', 0, 2, 1, 1, 2.1, 'dont know', 1, 0);
+INSERT INTO `books` (`id`, `isbn`, `title`, `image`, `qty`, `numBorrow`, `bookInStock`, `price`, `author`, `edition`) VALUES
+	(14, '001', 'Book Gif', '2019_Feb_25_09_41_54book.gif', 122, 31, 91, 12.21, 'ny', 3),
+	(15, '002', 'Java', '2019_Mar_02_03_11_43java.jpg', 5, 2, 3, 30.12, 'Hebert Shilda', 7),
+	(17, '004', 'C Sharp', '2019_Mar_02_03_14_37c#.jpg', 4, 0, 4, 89.9, 'Herbert Schildt', 3),
+	(19, '003', 'Javascript', '2019_Mar_02_03_22_15js.jpg', 4, 0, 4, 40.54, 'Murach', 2),
+	(21, '006', 'Phyton', '2019_Mar_02_03_39_49phyton.jpg', 9, 0, 9, 67.76, 'Murach', 1),
+	(22, '007', 'PHP and SQL', '2019_Mar_02_03_59_38sql.jpg', 5, 3, 2, 98.9, 'Murach', 1),
+	(23, '009', 'IN', '2019_Mar_02_03_26_44internet-usage.jpg', 9, 3, 6, 9.1, 'fafa', 1),
+	(24, '0010', 'Internet', '2019_Mar_02_03_38_47300px-InternetUsersWorldMap.svg.png', 2, 1, 1, 2.1, 'dont know', 1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.borrows
@@ -63,20 +60,17 @@ CREATE TABLE IF NOT EXISTS `borrows` (
   `fine` int(11) DEFAULT '0',
   `status_removed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.borrows: ~9 rows (approximately)
+-- Dumping data for table rupp_project.borrows: ~3 rows (approximately)
 DELETE FROM `borrows`;
 /*!40000 ALTER TABLE `borrows` DISABLE KEYS */;
 INSERT INTO `borrows` (`id`, `student_id`, `studentName`, `studentCurrentPhone`, `book_id`, `bookISBN`, `borrowQTY`, `borrowedDate`, `returnDate`, `overDays`, `fine`, `status_removed`) VALUES
 	(29, '003', 'siekny', '098765432', 14, '001', 3, 'Mar-02-2019', 'Mar-03-2019', 0, 0, 1),
 	(30, '001', 'siekny', '012345678', 17, '004', 2, 'Feb-20-2019', 'Mar-04-2019', 5, 5000, 1),
-	(31, '001', 'siekny', '012345678', 19, '003', 1, 'Mar-02-2019', 'Mar-02-2019', 0, 0, 1),
-	(32, '001', 'siekny', '012345678', 14, '001', 3, 'Mar-02-2019', 'Mar-02-2019', 0, 0, 1),
-	(33, '001', 'siekny', '01234567', 15, '002', 1, 'Mar-02-2019', 'Mar-02-2019', 0, 0, 1),
-	(38, '1', '1', '1', 14, '001', 3, 'Mar-02-2019', 'Mar-02-2019', 0, 0, 1),
-	(60, '004', 'yaya', '098765432', 14, '001', 2, 'Mar-03-2019', '0', 0, 0, 1),
-	(61, '005', 'kaak', '010101010', 14, '001', 3, 'Mar-03-2019', '0', 0, 0, 1);
+	(63, '002', 'yaya', '098765432', 22, '007', 3, 'Mar-04-2019', '0', 0, 0, 1),
+	(65, '004', 'kaka', '098767809', 24, '0010', 1, 'Mar-04-2019', '0', 0, 0, 1),
+	(66, '005', 'lala', '010101010', 23, '009', 3, 'Mar-04-2019', '0', 0, 0, 1);
 /*!40000 ALTER TABLE `borrows` ENABLE KEYS */;
 
 -- Dumping structure for table rupp_project.users
@@ -99,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `sex`, `address`, `email`, `phone`, `dateofbirth`, `dateofmembership`, `status`) VALUES
-	(1, 'five remji', 'Sword', '123', 'M', 'Phnom Penh', 'fiveremji@gmail.com', '012121212', '01-01-2000', '20-12-2000', 1),
+	(1, 'five remji', 'Sword', 'sword123', 'M', 'Phnom Penh', 'fiveremji@gmail.com', '012121212', '01-01-2000', '20-12-2000', 1),
 	(2, 'leng', 'Akame', '123', 'M', 'Phnom Penh', 'leng@gmail.com', '012121212', '01-01-2000', '12-12-1999', 1),
 	(3, 'lenge', 'BoyBoy', '123', 'M', 'Phnom Penh', 'leng@gmail.com', '012121212', '01-01-2000', '10-10-2010', 2),
 	(4, 'abc', 'Abcmaan', '123', 'F', 'Phnom Penh', 'abc@yahoo.com', '012345678', '11-11-1991', '11-11-2011', 2);
@@ -112,9 +106,9 @@ CREATE TABLE IF NOT EXISTS `users_info` (
   `date` varchar(50) DEFAULT '0',
   `action` varchar(50) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=320 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table rupp_project.users_info: 296 rows
+-- Dumping data for table rupp_project.users_info: 317 rows
 DELETE FROM `users_info`;
 /*!40000 ALTER TABLE `users_info` DISABLE KEYS */;
 INSERT INTO `users_info` (`id`, `userid`, `date`, `action`) VALUES
@@ -419,7 +413,24 @@ INSERT INTO `users_info` (`id`, `userid`, `date`, `action`) VALUES
 	(299, 4, '03-03-2019 / 23:50', 'Log-In'),
 	(300, 4, '03-03-2019 / 23:51', 'Log-In'),
 	(301, 4, '03-03-2019 / 23:52', 'Log-In'),
-	(302, 4, '04-03-2019 / 00:00', 'Log-In');
+	(302, 4, '04-03-2019 / 00:00', 'Log-In'),
+	(303, 4, '04-03-2019 / 00:03', 'Log-In'),
+	(304, 4, '04-03-2019 / 17:01', 'Log-In'),
+	(305, 4, '04-03-2019 / 17:09', 'Log-Out'),
+	(306, 4, '04-03-2019 / 20:00', 'Log-In'),
+	(307, 4, '04-03-2019 / 20:02', 'Log-In'),
+	(308, 4, '04-03-2019 / 20:08', 'Log-In'),
+	(309, 4, '04-03-2019 / 20:24', 'Log-In'),
+	(310, 4, '04-03-2019 / 20:38', 'Log-In'),
+	(311, 4, '04-03-2019 / 20:59', 'Log-In'),
+	(312, 4, '04-03-2019 / 21:00', 'Log-Out'),
+	(313, 1, '04-03-2019 / 21:01', 'Log-In'),
+	(314, 1, '04-03-2019 / 21:03', 'Log-Out'),
+	(315, 4, '04-03-2019 / 22:08', 'Log-In'),
+	(316, 4, '04-03-2019 / 22:17', 'Log-In'),
+	(317, 4, '04-03-2019 / 22:19', 'Log-In'),
+	(318, 4, '04-03-2019 / 22:22', 'Log-In'),
+	(319, 4, '04-03-2019 / 22:29', 'Log-In');
 /*!40000 ALTER TABLE `users_info` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

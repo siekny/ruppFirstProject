@@ -284,7 +284,7 @@ public class HomePage extends JPanel implements ActionListener{
 	
 	public void homeButton() {
 		lblTitle.setText("  DASHBOARD");
-		home = new Home();
+		home.initObjects();
 		panelContent.add(home);
 		enableContent(false, true, false, false);
 		buttonClick(btnHome, btnProfile, btnLogout, btnBorrow, btnBook);
@@ -292,7 +292,7 @@ public class HomePage extends JPanel implements ActionListener{
 	
 	public void borrowButton() {
 		lblTitle.setText("  LIST OF BOOK TRANSACTION");
-		borrow = new Borrow();
+		borrow.showBorrower();
 		panelContent.add(borrow);
 		enableContent(true, false, false, false);
 		buttonClick(btnBorrow, btnHome, btnLogout, btnProfile, btnBook);
@@ -300,7 +300,8 @@ public class HomePage extends JPanel implements ActionListener{
 	
 	public void bookButton() {
 		lblTitle.setText("  LIST OF BOOKS");
-		book = new Book();
+		book.listBook();
+		book.gridBook();
 		panelContent.add(book);
 		enableContent(false, false, false, true);
 		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnBorrow);

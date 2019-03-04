@@ -43,6 +43,8 @@ public class AdminLogin extends JPanel {
 
 	public AdminLogin() {
 		
+		//Main.frame.setResizable(false);
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelContent = new JPanel();

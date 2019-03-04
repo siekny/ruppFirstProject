@@ -89,6 +89,8 @@ public class BookList extends JPanel{
 	
 	public void initObj() {
 		
+		model.setRowCount(0);
+		
 		UserConnection connect = new UserConnection();
 		ArrayList<BookClass> bookList = connect.bookView();
 		

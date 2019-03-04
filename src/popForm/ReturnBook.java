@@ -204,7 +204,7 @@ public class ReturnBook extends JPanel {
 		initTextBoxReturn(borrowed);
 		initButtonReturn(borrowed);
 		JOptionPane.showOptionDialog(null	, panelContent, "Return Book", JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION, null, new Object[]{}, null);
-
+		
 	}
 	
 	public void initTextBoxReturn(BorrowerClass borrowedReturn) {

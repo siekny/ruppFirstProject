@@ -100,14 +100,14 @@ public class Book extends JPanel implements ActionListener {
 	}
 	
 	public void listBook() {
-		list = new BookList();
+		list.initObj();
 		panel.add(list);
 		grid.setVisible(false);
 		list.setVisible(true);
 	}
 	
 	public void gridBook() {
-		grid = new BookGrid();
+		grid.initObj();
 		panel.add(grid);
 		list.setVisible(false);
 		grid.setVisible(true);

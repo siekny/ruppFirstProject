@@ -58,6 +58,7 @@ public class MainPage extends JPanel implements ActionListener{
 	 */
 	public MainPage(JPanel content) {
 		
+		//Main.frame.setResizable(true);
 		initialize();
 		initObjects();
 		clock();
@@ -292,7 +293,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void homeButton() {
 		lblTitle.setText("  DASHBAORD");
-		home = new Home();
+		home.initObjects();
 		panelContent.add(home);
 		enableContent(false, true, false, false, false);
 		buttonClick(btnHome, btnLogout, btnProfile, btnUser, btnBook, btnHistory, btnClose);
@@ -301,7 +302,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void memberButton() {
 		lblTitle.setText("  MEMBERS");
-		member = new Members();
+		
 		panelContent.add(member);
 		enableContent(false, false, false, false, true);
 		buttonClick(btnUser, btnHome, btnLogout, btnProfile, btnBook, btnHistory, btnClose);
@@ -309,7 +310,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void bookButton() {
 		lblTitle.setText("  BOOKS");
-		table = new Books();
+		table.initObjects();
 		panelContent.add(table);
 		enableContent(false, false, false, true, false);
 		buttonClick(btnBook, btnLogout, btnProfile, btnHome, btnUser, btnHistory, btnClose);
@@ -317,7 +318,7 @@ public class MainPage extends JPanel implements ActionListener{
 	
 	public void historyButton() {
 		lblTitle.setText("  HISTORY OF USER LOGIN");
-		history = new UserLoginHistory();
+		history.showAllUserInfo();
 		panelContent.add(history);
 		enableContent(true, false, false, false, false);
 		buttonClick(btnHistory, btnLogout, btnProfile, btnHome, btnUser, btnBook, btnClose);
