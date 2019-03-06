@@ -336,6 +336,8 @@ public class MainPage extends JPanel implements ActionListener{
 			Main.content.add(Main.log);
 			//buttonClick(btnLogout, btnProfile, btnHome, btnUser, btnBook, btnHistory, btnClose);
 	    	Main.enableContent(true, false, false, false);
+	    	
+	    	homeButton();
 		}
 		else 
 			return;

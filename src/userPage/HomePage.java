@@ -47,11 +47,11 @@ public class HomePage extends JPanel implements ActionListener{
 	private JPanel panelContent;
 	
 	// initialize objects
-	private Book book;
-	private Borrow borrow;
+	public static Book book;
+	public Borrow borrow;
 	private Profile profile;
 	//private HomeUser home;
-	private Home home;
+	public Home home;
 	
 	private static UserClass userClass;
 
@@ -321,6 +321,8 @@ public class HomePage extends JPanel implements ActionListener{
 			Main.content.add(Main.log);
 			//buttonClick(btnLogout, btnProfile, btnHome, btnBorrow, btnBook, btnRegister);
 	    	Main.enableContent(true, false, false, false);
+	    	
+	    	homeButton();
 		}
 		else 
 			return;

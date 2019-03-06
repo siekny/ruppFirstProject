@@ -203,6 +203,8 @@ public class ReturnBook extends JPanel {
 		
 		initTextBoxReturn(borrowed);
 		initButtonReturn(borrowed);
+		
+		btnReturn.setEnabled(true);
 		JOptionPane.showOptionDialog(null	, panelContent, "Return Book", JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION, null, new Object[]{}, null);
 		
 	}
@@ -233,6 +235,9 @@ public class ReturnBook extends JPanel {
 				if(confirm == JOptionPane.OK_OPTION) {
 					new UserConnection().returnBook(borrowed, Integer.parseInt(lblBorrowedid.getText()));
 					JOptionPane.showMessageDialog(null, "Book has been returned successfully!");
+					
+					btnReturn.setEnabled(false);
+					btnReturn.setBackground(Color.GRAY);
 				}
 				else
 					return;

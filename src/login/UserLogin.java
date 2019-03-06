@@ -219,6 +219,7 @@ public class UserLogin extends JPanel {
 					HomePage.addUser(userClass);
 					Main.enableContent(false, false, false, true);
 					//Main.homePage = new HomePage();
+					
 					Main.content.add(Main.homePage);
 				}
 				else {

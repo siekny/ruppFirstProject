@@ -546,5 +546,8 @@ public class NewBorrower extends JPanel implements ActionListener {
 				txtBookISBN.getText(), Integer.parseInt(cboBorrowQty.getSelectedItem().toString()) , txtBorrowedDate.getText(), status);
 		
 		new UserConnection().updateBorrower(oldBorrow, newBrrow);
+		
+		btnAddnew.setEnabled(false);
+		btnAddnew.setBackground(Color.GRAY);
 	}
 }
